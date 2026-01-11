@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, Heart, Share2, MessageSquare, Building2 } from "lucide-react"
+import { Star, Heart, Share2, MessageSquare, Building2, MapPin, Phone, Globe, Clock, CheckCircle2 } from "lucide-react"
+import Image from "next/image"
 
 interface BusinessPageHeaderProps {
   business: {
@@ -14,76 +15,154 @@ interface BusinessPageHeaderProps {
     priceRange: string
     featured: boolean
     claimed: boolean
+    currentlyOpen?: boolean
+    phone?: string
+    website?: string
     address: {
       full: string
     }
+    photos?: string[]
   }
 }
 
 export function BusinessPageHeader({ business }: BusinessPageHeaderProps) {
   const [isSaved, setIsSaved] = useState(false)
 
+  const heroImage = business.photos?.[0] || "/business-storefront-modern-professional.jpg"
+  const galleryImages = business.photos?.slice(1, 5) || [
+    "/restaurant-interior-dining.jpg",
+    "/food-plate-delicious.jpg",
+    "/happy-customers-restaurant.jpg",
+    "/chef-cooking-kitchen.jpg",
+  ]
+
   return (
-    <div className="bg-white border-b border-gray-200">
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between">
-          <div className="flex-1">
-            <div className="flex items-center space-x-3 mb-2">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{business.name}</h1>
-              {business.featured && <Badge className="bg-orange-500 hover:bg-orange-600">Featured</Badge>}
-            </div>
-
-            <div className="flex items-center space-x-4 mb-3">
-              <div className="flex items-center space-x-2">
-                <div className="flex items-center">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-5 h-5 ${
-                        i < Math.floor(business.rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
-                      }`}
-                    />
-                  ))}
+    <div className="bg-background">
+      <div className="container mx-auto px-4 pt-6">
+        <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[400px] rounded-2xl overflow-hidden">
+          {/* Main large image */}
+          <div className="col-span-2 row-span-2 relative group cursor-pointer">
+            <Image
+              src={heroImage || "/placeholder.svg"}
+              alt={business.name}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
+          {/* Gallery images */}
+          {galleryImages.map((img, index) => (
+            <div key={index} className="relative group cursor-pointer overflow-hidden">
+              <Image
+                src={img || "/placeholder.svg"}
+                alt={`${business.name} photo ${index + 2}`}
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors" />
+              {index === 3 && business.photos && business.photos.length > 5 && (
+                <div className="absolute inset-0 bg-foreground/60 flex items-center justify-center">
+                  <span className="text-primary-foreground font-semibold text-lg">
+                    +{business.photos.length - 5} more
+                  </span>
                 </div>
-                <span className="font-semibold text-lg">{business.rating}</span>
-                <span className="text-gray-500">({business.reviewCount} reviews)</span>
-              </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+          <div className="flex-1">
+            {/* Title and badges */}
+            <div className="flex flex-wrap items-center gap-3 mb-3">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground">{business.name}</h1>
+              {business.featured && <Badge className="bg-primary text-primary-foreground">Featured</Badge>}
+              {business.claimed && (
+                <Badge variant="outline" className="border-green-500 text-green-600">
+                  <CheckCircle2 className="w-3 h-3 mr-1" />
+                  Verified
+                </Badge>
+              )}
             </div>
 
-            <div className="flex items-center space-x-4 mb-4">
-              <p className="text-gray-600">{business.address.full}</p>
-              <span className="text-gray-400">•</span>
-              <p className="text-gray-600">{business.category}</p>
-              <span className="text-gray-400">•</span>
-              <p className="text-gray-600">{business.priceRange}</p>
+            {/* Rating */}
+            <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center bg-primary/10 px-3 py-1 rounded-full">
+                  <Star className="w-5 h-5 fill-yellow-400 text-yellow-400 mr-1" />
+                  <span className="font-bold text-lg">{business.rating}</span>
+                </div>
+                <span className="text-muted-foreground">({business.reviewCount} reviews)</span>
+              </div>
+              <span className="text-muted-foreground">•</span>
+              <span className="text-foreground font-medium">{business.category}</span>
+              <span className="text-muted-foreground">•</span>
+              <span className="text-foreground">{business.priceRange}</span>
+            </div>
+
+            {/* Quick info row */}
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              {business.currentlyOpen !== undefined && (
+                <Badge
+                  variant={business.currentlyOpen ? "default" : "secondary"}
+                  className={business.currentlyOpen ? "bg-green-600" : ""}
+                >
+                  <Clock className="w-3 h-3 mr-1" />
+                  {business.currentlyOpen ? "Open Now" : "Closed"}
+                </Badge>
+              )}
+              <div className="flex items-center gap-1 text-muted-foreground">
+                <MapPin className="w-4 h-4" />
+                <span>{business.address.full}</span>
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-3 mt-6 md:mt-0">
-            <Button className="bg-blue-600 hover:bg-blue-700">
+          <div className="flex flex-wrap gap-3">
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
+            >
               <MessageSquare className="w-4 h-4 mr-2" />
               Get Quote
             </Button>
 
-            {!business.claimed && (
-              <Button variant="outline">
-                <Building2 className="w-4 h-4 mr-2" />
-                Claim This Business
+            {business.phone && (
+              <Button size="lg" variant="outline" className="hover:bg-muted bg-transparent">
+                <Phone className="w-4 h-4 mr-2" />
+                Call
               </Button>
             )}
 
-            <Button variant="outline">
-              <Share2 className="w-4 h-4 mr-2" />
-              Share
-            </Button>
+            {business.website && (
+              <Button size="lg" variant="outline" className="hover:bg-muted bg-transparent">
+                <Globe className="w-4 h-4 mr-2" />
+                Website
+              </Button>
+            )}
+
+            {!business.claimed && (
+              <Button size="lg" variant="outline" className="hover:bg-muted bg-transparent">
+                <Building2 className="w-4 h-4 mr-2" />
+                Claim
+              </Button>
+            )}
 
             <Button
+              size="lg"
               variant="outline"
               onClick={() => setIsSaved(!isSaved)}
-              className={isSaved ? "text-red-600 border-red-600" : ""}
+              className={isSaved ? "border-red-500 text-red-500 hover:bg-red-50" : "hover:bg-muted"}
             >
-              <Heart className={`w-4 h-4 mr-2 ${isSaved ? "fill-red-600" : ""}`} />
-              Save
+              <Heart className={`w-4 h-4 mr-2 ${isSaved ? "fill-red-500" : ""}`} />
+              {isSaved ? "Saved" : "Save"}
+            </Button>
+
+            <Button size="lg" variant="outline" className="hover:bg-muted bg-transparent">
+              <Share2 className="w-4 h-4 mr-2" />
+              Share
             </Button>
           </div>
         </div>

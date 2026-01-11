@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Leander Scoop - Discover Local Excellence",
   description:
     "Find the best local businesses in Leander, Cedar Park, and Liberty Hill. Read reviews and connect with your community.",
-    generator: 'v0.dev'
+    generator: 'v0.app'
 }
 
 export default function RootLayout({

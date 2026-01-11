@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, MapPin, Phone, ExternalLink, Clock, MessageSquare } from "lucide-react"
+import { Star, MapPin, Phone, ExternalLink, Clock, MessageSquare, Navigation, CheckCircle } from "lucide-react"
+import Image from "next/image"
 
 interface BusinessSidebarProps {
   business: {
@@ -31,179 +32,206 @@ interface BusinessSidebarProps {
 
 export function BusinessSidebar({ business }: BusinessSidebarProps) {
   const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
-  const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+  const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+  const today = new Date().toLocaleDateString("en-US", { weekday: "long" }).toLowerCase()
 
   return (
-    <div className="space-y-6">
-      {/* Customer Reviews Quick Stats */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <MessageSquare className="w-5 h-5 mr-2" />
+    <div className="space-y-4">
+      <Card className="overflow-hidden border-border/50 shadow-sm">
+        <CardHeader className="bg-gradient-to-r from-primary/5 to-primary/10 pb-4">
+          <CardTitle className="flex items-center text-lg">
+            <MessageSquare className="w-5 h-5 mr-2 text-primary" />
             Customer Reviews
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div>
-            <h4 className="font-semibold mb-2">Quick Stats</h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span>Overall Rating</span>
-                <div className="flex items-center">
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
-                  <span>{business.quickStats.overallRating}/5</span>
-                </div>
+        <CardContent className="pt-4 space-y-4">
+          {/* Big rating display */}
+          <div className="flex items-center gap-4 p-4 bg-muted/50 rounded-xl">
+            <div className="text-4xl font-bold text-foreground">{business.quickStats.overallRating}</div>
+            <div className="flex-1">
+              <div className="flex items-center gap-1 mb-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`w-5 h-5 ${
+                      i < Math.floor(business.quickStats.overallRating)
+                        ? "fill-yellow-400 text-yellow-400"
+                        : "text-muted-foreground/30"
+                    }`}
+                  />
+                ))}
               </div>
-              <div className="flex justify-between">
-                <span>Total Reviews</span>
-                <span>{business.quickStats.totalReviews}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Response Rate</span>
-                <span>{business.quickStats.responseRate}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Avg Response Time</span>
-                <span>{business.quickStats.avgResponseTime}</span>
-              </div>
+              <p className="text-sm text-muted-foreground">{business.quickStats.totalReviews} reviews</p>
             </div>
           </div>
 
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-2xl font-bold">{business.quickStats.overallRating}</span>
-              <div className="text-right">
-                <div className="flex items-center">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < Math.floor(business.quickStats.overallRating)
-                          ? "fill-yellow-400 text-yellow-400"
-                          : "text-gray-300"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <p className="text-sm text-gray-500">{business.quickStats.totalReviews} total reviews</p>
-              </div>
-            </div>
-
-            {/* Rating Breakdown */}
-            <div className="space-y-1">
-              {[5, 4, 3, 2, 1].map((rating) => (
-                <div key={rating} className="flex items-center space-x-2 text-sm">
-                  <span className="w-3">{rating}★</span>
-                  <div className="flex-1 bg-gray-200 rounded-full h-2">
+          {/* Rating Breakdown with better bars */}
+          <div className="space-y-2">
+            {[5, 4, 3, 2, 1].map((rating) => {
+              const count = business.ratingBreakdown[rating as keyof typeof business.ratingBreakdown]
+              const percentage = (count / business.quickStats.totalReviews) * 100
+              return (
+                <div key={rating} className="flex items-center gap-3 text-sm">
+                  <span className="w-8 text-muted-foreground">{rating} ★</span>
+                  <div className="flex-1 bg-muted rounded-full h-2.5 overflow-hidden">
                     <div
-                      className="bg-yellow-400 h-2 rounded-full"
-                      style={{
-                        width: `${(business.ratingBreakdown[rating as keyof typeof business.ratingBreakdown] / business.quickStats.totalReviews) * 100}%`,
-                      }}
+                      className="bg-yellow-400 h-full rounded-full transition-all duration-500"
+                      style={{ width: `${percentage}%` }}
                     />
                   </div>
-                  <span className="w-4 text-right">
-                    {business.ratingBreakdown[rating as keyof typeof business.ratingBreakdown]}
-                  </span>
+                  <span className="w-8 text-right text-muted-foreground">{count}</span>
                 </div>
-              ))}
+              )
+            })}
+          </div>
+
+          {/* Quick stats grid */}
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <div className="p-3 bg-muted/50 rounded-lg text-center">
+              <p className="text-lg font-semibold text-foreground">{business.quickStats.responseRate}</p>
+              <p className="text-xs text-muted-foreground">Response Rate</p>
+            </div>
+            <div className="p-3 bg-muted/50 rounded-lg text-center">
+              <p className="text-lg font-semibold text-foreground">{business.quickStats.avgResponseTime}</p>
+              <p className="text-xs text-muted-foreground">Avg. Response</p>
             </div>
           </div>
 
-          <Button className="w-full">Write a Review</Button>
+          <Button className="w-full bg-primary hover:bg-primary/90 shadow-md hover:shadow-lg transition-all">
+            Write a Review
+          </Button>
         </CardContent>
       </Card>
 
-      {/* Contact Information */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Contact Information</CardTitle>
+      <Card className="overflow-hidden border-border/50 shadow-sm">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg">Contact Information</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-start space-x-3">
-            <MapPin className="w-5 h-5 text-gray-400 mt-0.5" />
-            <div>
-              <p className="font-medium">Address</p>
-              <p className="text-gray-600">{business.address.full}</p>
+          <a
+            href={`https://maps.google.com/?q=${encodeURIComponent(business.address.full)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group"
+          >
+            <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+              <MapPin className="w-5 h-5 text-primary" />
             </div>
-          </div>
+            <div>
+              <p className="font-medium text-foreground">Address</p>
+              <p className="text-sm text-muted-foreground">{business.address.full}</p>
+            </div>
+          </a>
 
-          <div className="flex items-center space-x-3">
-            <Phone className="w-5 h-5 text-gray-400" />
-            <div>
-              <p className="font-medium">Phone</p>
-              <p className="text-gray-600">{business.phone}</p>
+          <a
+            href={`tel:${business.phone}`}
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group"
+          >
+            <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-green-500/20 transition-colors">
+              <Phone className="w-5 h-5 text-green-600" />
             </div>
-          </div>
+            <div>
+              <p className="font-medium text-foreground">Phone</p>
+              <p className="text-sm text-muted-foreground">{business.phone}</p>
+            </div>
+          </a>
 
-          <div className="flex items-center space-x-3">
-            <ExternalLink className="w-5 h-5 text-gray-400" />
-            <div>
-              <p className="font-medium">Website</p>
-              <a href={business.website} className="text-blue-600 hover:underline">
-                Visit Website
-              </a>
+          <a
+            href={business.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group"
+          >
+            <div className="w-10 h-10 bg-blue-500/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/20 transition-colors">
+              <ExternalLink className="w-5 h-5 text-blue-600" />
             </div>
-          </div>
+            <div>
+              <p className="font-medium text-foreground">Website</p>
+              <p className="text-sm text-primary hover:underline">Visit Website</p>
+            </div>
+          </a>
+
+          <Button variant="outline" className="w-full bg-transparent" asChild>
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(business.address.full)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Navigation className="w-4 h-4 mr-2" />
+              Get Directions
+            </a>
+          </Button>
         </CardContent>
       </Card>
 
-      {/* Hours */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Clock className="w-5 h-5 mr-2" />
-            Hours
-          </CardTitle>
-          <div className="text-sm">
-            <Badge
-              variant={business.currentlyOpen ? "default" : "secondary"}
-              className={business.currentlyOpen ? "bg-green-600" : ""}
-            >
+      <Card className="overflow-hidden border-border/50 shadow-sm">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center text-lg">
+              <Clock className="w-5 h-5 mr-2 text-primary" />
+              Hours
+            </CardTitle>
+            <Badge className={business.currentlyOpen ? "bg-green-600" : "bg-muted text-muted-foreground"}>
               {business.currentlyOpen ? "Open Now" : "Closed"}
             </Badge>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
-            {days.map((day, index) => (
-              <div key={day} className="flex justify-between items-center text-sm">
-                <span className="font-medium">{dayNames[index]}</span>
-                <span className="text-gray-600">
-                  {business.hours[day].open} - {business.hours[day].close}
-                </span>
-              </div>
-            ))}
+          <div className="space-y-1">
+            {days.map((day, index) => {
+              const isToday = day === today
+              return (
+                <div
+                  key={day}
+                  className={`flex justify-between items-center py-2 px-3 rounded-lg text-sm ${
+                    isToday ? "bg-primary/10 font-medium" : ""
+                  }`}
+                >
+                  <span className={isToday ? "text-primary" : "text-foreground"}>{dayNames[index]}</span>
+                  <span className={isToday ? "text-primary" : "text-muted-foreground"}>
+                    {business.hours[day].isOpen
+                      ? `${business.hours[day].open} - ${business.hours[day].close}`
+                      : "Closed"}
+                  </span>
+                </div>
+              )
+            })}
           </div>
-          <p className="text-xs text-gray-500 mt-3">Hours may vary on holidays. Call ahead to confirm.</p>
         </CardContent>
       </Card>
 
-      {/* Amenities & Features */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Amenities & Features</CardTitle>
+      <Card className="overflow-hidden border-border/50 shadow-sm">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center text-lg">
+            <CheckCircle className="w-5 h-5 mr-2 text-primary" />
+            Amenities & Features
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-2 gap-2">
             {business.amenities.map((amenity) => (
-              <div key={amenity.name} className="flex items-center space-x-3">
-                <span className="text-lg">{amenity.icon}</span>
-                <span className="text-sm">{amenity.name}</span>
+              <div key={amenity.name} className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg text-sm">
+                <span className="text-base">{amenity.icon}</span>
+                <span className="text-foreground">{amenity.name}</span>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Location Map */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Location</CardTitle>
+      <Card className="overflow-hidden border-border/50 shadow-sm">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg">Location</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center">
-            <p className="text-gray-500">Interactive Map</p>
+        <CardContent className="p-0">
+          <div className="relative w-full h-48">
+            <Image src="/map-street-view-location-pin-texas.jpg" alt="Location map" fill className="object-cover" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Button variant="secondary" className="shadow-lg">
+                <Navigation className="w-4 h-4 mr-2" />
+                View on Map
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
