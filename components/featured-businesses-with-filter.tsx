@@ -84,35 +84,77 @@ export function FeaturedBusinessesWithFilter() {
           return
         }
 
-        // Build query
-        let query = supabase
-          .from('businesses')
-          .select('*', { count: 'exact' })
-          .eq('location_id', location.id)
+        // When "all" is selected, get diverse businesses from different categories
+        if (activeCategory === "all") {
+          const categoriesToFeature = ['restaurants', 'health', 'automotive', 'home', 'shopping', 'services', 'entertainment', 'pets']
+          const diverseBusinesses: Business[] = []
+          const seenNames = new Set<string>()
 
-        // Apply category filter
-        if (activeCategory !== "all") {
+          for (const category of categoriesToFeature) {
+            const { data: categoryBusinesses } = await supabase
+              .from('businesses')
+              .select('*')
+              .eq('location_id', location.id)
+              .eq('category', category)
+              .order('rating', { ascending: false })
+              .order('review_count', { ascending: false })
+              .limit(5)
+
+            if (categoryBusinesses) {
+              // Find first unique business in this category
+              for (const biz of categoryBusinesses) {
+                const normalizedName = biz.name.toLowerCase().trim()
+                if (!seenNames.has(normalizedName)) {
+                  seenNames.add(normalizedName)
+                  diverseBusinesses.push(biz)
+                  break
+                }
+              }
+            }
+          }
+
+          setBusinesses(diverseBusinesses)
+          setTotalCount(diverseBusinesses.length)
+        } else {
+          // For specific category, get businesses from that category
           const dbCategories = CATEGORY_MAP[activeCategory] || []
+
+          let query = supabase
+            .from('businesses')
+            .select('*', { count: 'exact' })
+            .eq('location_id', location.id)
+
           if (dbCategories.length > 0) {
             query = query.in('category', dbCategories)
           }
+
+          query = query
+            .order('rating', { ascending: false })
+            .order('review_count', { ascending: false })
+            .limit(50)
+
+          const { data, count, error } = await query
+
+          if (error) {
+            console.error('Error fetching businesses:', error)
+            return
+          }
+
+          // Dedupe by name
+          const uniqueBusinesses: Business[] = []
+          const seenNames = new Set<string>()
+
+          for (const biz of (data || [])) {
+            const normalizedName = biz.name.toLowerCase().trim()
+            if (!seenNames.has(normalizedName) && uniqueBusinesses.length < 8) {
+              seenNames.add(normalizedName)
+              uniqueBusinesses.push(biz)
+            }
+          }
+
+          setBusinesses(uniqueBusinesses)
+          setTotalCount(count || 0)
         }
-
-        // Order by featured first, then by rating
-        query = query
-          .order('is_featured', { ascending: false })
-          .order('rating', { ascending: false })
-          .limit(8)
-
-        const { data, count, error } = await query
-
-        if (error) {
-          console.error('Error fetching businesses:', error)
-          return
-        }
-
-        setBusinesses(data || [])
-        setTotalCount(count || 0)
       } catch (error) {
         console.error('Error:', error)
       } finally {

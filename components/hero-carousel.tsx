@@ -57,31 +57,40 @@ export function HeroCarousel() {
 
         if (!location) return
 
-        // Fetch top-rated businesses - get more than we need to dedupe (database has many duplicates)
-        const { data: allTopBusinesses } = await supabase
-          .from('businesses')
-          .select('*')
-          .eq('location_id', location.id)
-          .order('rating', { ascending: false })
-          .order('review_count', { ascending: false })
-          .limit(50)
+        // Define diverse categories to feature
+        const categoriesToFeature = ['restaurants', 'health', 'automotive', 'home', 'shopping', 'services']
 
-        if (allTopBusinesses && allTopBusinesses.length > 0) {
-          // Dedupe by name (database has duplicate entries with different slugs)
-          const uniqueBusinesses: Business[] = []
-          const seenNames = new Set<string>()
+        // Fetch top business from each category for diversity
+        const diverseBusinesses: Business[] = []
+        const seenNames = new Set<string>()
 
-          for (const biz of allTopBusinesses) {
-            const normalizedName = biz.name.toLowerCase().trim()
-            if (!seenNames.has(normalizedName)) {
-              seenNames.add(normalizedName)
-              uniqueBusinesses.push(biz)
+        for (const category of categoriesToFeature) {
+          const { data: categoryBusinesses } = await supabase
+            .from('businesses')
+            .select('*')
+            .eq('location_id', location.id)
+            .eq('category', category)
+            .order('rating', { ascending: false })
+            .order('review_count', { ascending: false })
+            .limit(10) // Get a few to find unique ones
+
+          if (categoryBusinesses) {
+            // Find first business in this category that isn't a duplicate
+            for (const biz of categoryBusinesses) {
+              const normalizedName = biz.name.toLowerCase().trim()
+              if (!seenNames.has(normalizedName)) {
+                seenNames.add(normalizedName)
+                diverseBusinesses.push(biz)
+                break // Only take one per category
+              }
             }
           }
+        }
 
-          // First 3 unique businesses for carousel, next 3 for sidebar
-          setFeaturedBusinesses(uniqueBusinesses.slice(0, 3))
-          setSponsoredBusinesses(uniqueBusinesses.slice(3, 6))
+        if (diverseBusinesses.length > 0) {
+          // First 3 for carousel, next 3 for sidebar
+          setFeaturedBusinesses(diverseBusinesses.slice(0, 3))
+          setSponsoredBusinesses(diverseBusinesses.slice(3, 6))
         }
       } catch (error) {
         console.error('Error fetching businesses:', error)

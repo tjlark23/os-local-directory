@@ -182,7 +182,19 @@ export function SearchPageContent() {
         return
       }
 
-      setBusinesses(data || [])
+      // Dedupe by name to remove duplicate businesses
+      const uniqueBusinesses: Business[] = []
+      const seenNames = new Set<string>()
+
+      for (const biz of (data || [])) {
+        const normalizedName = biz.name.toLowerCase().trim()
+        if (!seenNames.has(normalizedName)) {
+          seenNames.add(normalizedName)
+          uniqueBusinesses.push(biz)
+        }
+      }
+
+      setBusinesses(uniqueBusinesses)
       setTotalCount(count || 0)
     } catch (error) {
       console.error('Error:', error)
