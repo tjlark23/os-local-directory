@@ -32,3 +32,8 @@ nul
 
 # claude
 .claude/
+.env*.local
+
+# lock files (use npm)
+pnpm-lock.yaml
+yarn.lock
