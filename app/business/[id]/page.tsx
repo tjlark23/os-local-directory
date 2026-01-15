@@ -1,460 +1,306 @@
+import { Metadata } from "next"
 import { BusinessPageHeader } from "@/components/business-page-header"
 import { BusinessPageContent } from "@/components/business-page-content"
 import { BusinessSidebar } from "@/components/business-sidebar"
 import { BusinessReviewsSection } from "@/components/business-reviews-section"
+import { SimilarBusinesses } from "@/components/similar-businesses"
+import { notFound } from "next/navigation"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
+import Script from "next/script"
+import { supabase } from "@/lib/supabase"
 
-// Complete business data for all businesses
-const getBusinessData = (id: string) => {
-  const businesses = {
-    "bluebonnet-bbq": {
-      id: "bluebonnet-bbq",
-      name: "Bluebonnet BBQ",
-      category: "Restaurants",
-      rating: 4.6,
-      reviewCount: 10,
-      priceRange: "$$",
-      featured: true,
-      claimed: false,
-      address: {
-        street: "123 Main St",
-        city: "Leander",
-        state: "TX",
-        zip: "78641",
-        full: "123 Main St, Leander, TX 78641",
-      },
-      phone: "(512) 555-1234",
-      website: "https://bluebonnetbbq.com",
-      hours: {
-        monday: { open: "11:00 AM", close: "9:00 PM", isOpen: true },
-        tuesday: { open: "11:00 AM", close: "9:00 PM", isOpen: true },
-        wednesday: { open: "11:00 AM", close: "9:00 PM", isOpen: true },
-        thursday: { open: "11:00 AM", close: "9:00 PM", isOpen: true },
-        friday: { open: "11:00 AM", close: "9:00 PM", isOpen: true },
-        saturday: { open: "11:00 AM", close: "9:00 PM", isOpen: true },
-        sunday: { open: "11:00 AM", close: "6:00 PM", isOpen: true },
-      },
-      currentlyOpen: true,
-      description:
-        "Authentic Texas barbecue with slow-smoked brisket, ribs, and all the fixings. Family-owned since 1995, we pride ourselves on traditional smoking methods and homemade sides. Our pit master has over 25 years of experience and uses only the finest cuts of meat, smoked low and slow over oak wood for that perfect Texas flavor.",
-      specialties: ["Brisket", "Ribs", "Pulled Pork", "Sausage", "Mac & Cheese"],
-      amenities: [
-        { name: "Outdoor Seating", icon: "🪑" },
-        { name: "Takeout", icon: "🥡" },
-        { name: "Catering", icon: "🍽️" },
-        { name: "Family Friendly", icon: "👨‍👩‍👧‍👦" },
-        { name: "Parking", icon: "🅿️" },
-        { name: "WiFi", icon: "📶" },
-      ],
-      photos: [
-        "/smoked-brisket-bbq-texas-meat-platter-rustic.jpg",
-        "/bbq-restaurant-interior-rustic-wooden-tables.jpg",
-        "/baby-back-ribs-bbq-sauce-delicious.jpg",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-      ],
-      videos: [
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-      ],
-      quickStats: {
-        overallRating: 4.6,
-        totalReviews: 10,
-        responseRate: "95%",
-        avgResponseTime: "2 hours",
-      },
-      ratingBreakdown: {
-        5: 6,
-        4: 4,
-        3: 0,
-        2: 0,
-        1: 0,
-      },
-    },
-    "hill-country-cafe": {
-      id: "hill-country-cafe",
-      name: "Hill Country Cafe",
-      category: "Restaurants",
-      rating: 4.5,
-      reviewCount: 76,
-      priceRange: "$$$",
-      featured: true,
-      claimed: true,
-      address: {
-        street: "789 Bell Blvd",
-        city: "Cedar Park",
-        state: "TX",
-        zip: "78613",
-        full: "789 Bell Blvd, Cedar Park, TX 78613",
-      },
-      phone: "(512) 555-2345",
-      website: "https://hillcountrycafe.com",
-      hours: {
-        monday: { open: "7:00 AM", close: "9:00 PM", isOpen: true },
-        tuesday: { open: "7:00 AM", close: "9:00 PM", isOpen: true },
-        wednesday: { open: "7:00 AM", close: "9:00 PM", isOpen: true },
-        thursday: { open: "7:00 AM", close: "9:00 PM", isOpen: true },
-        friday: { open: "7:00 AM", close: "10:00 PM", isOpen: true },
-        saturday: { open: "8:00 AM", close: "10:00 PM", isOpen: true },
-        sunday: { open: "8:00 AM", close: "8:00 PM", isOpen: true },
-      },
-      currentlyOpen: true,
-      description:
-        "Farm-to-table dining featuring locally sourced ingredients and seasonal menus. Our chef works directly with local farmers to bring you the freshest produce, grass-fed meats, and artisanal products. Experience the true taste of Texas Hill Country in every bite.",
-      specialties: ["Farm-to-Table", "Seasonal Menu", "Local Ingredients", "Craft Cocktails", "Weekend Brunch"],
-      amenities: [
-        { name: "Outdoor Patio", icon: "🌿" },
-        { name: "Full Bar", icon: "🍸" },
-        { name: "Reservations", icon: "📅" },
-        { name: "Private Dining", icon: "🍽️" },
-        { name: "Valet Parking", icon: "🚗" },
-        { name: "Romantic", icon: "💕" },
-      ],
-      photos: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-      ],
-      videos: [
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-      ],
-      quickStats: {
-        overallRating: 4.5,
-        totalReviews: 76,
-        responseRate: "98%",
-        avgResponseTime: "1 hour",
-      },
-      ratingBreakdown: {
-        5: 45,
-        4: 25,
-        3: 4,
-        2: 1,
-        1: 1,
-      },
-    },
-    "wellness-center-leander": {
-      id: "wellness-center-leander",
-      name: "Wellness Center of Leander",
-      category: "Health & Beauty",
-      rating: 4.8,
-      reviewCount: 63,
-      priceRange: "$$",
-      featured: true,
-      claimed: true,
-      address: {
-        street: "654 Wellness Way",
-        city: "Leander",
-        state: "TX",
-        zip: "78641",
-        full: "654 Wellness Way, Leander, TX 78641",
-      },
-      phone: "(512) 555-3456",
-      website: "https://wellnesscenterleander.com",
-      hours: {
-        monday: { open: "6:00 AM", close: "8:00 PM", isOpen: true },
-        tuesday: { open: "6:00 AM", close: "8:00 PM", isOpen: true },
-        wednesday: { open: "6:00 AM", close: "8:00 PM", isOpen: true },
-        thursday: { open: "6:00 AM", close: "8:00 PM", isOpen: true },
-        friday: { open: "6:00 AM", close: "7:00 PM", isOpen: true },
-        saturday: { open: "8:00 AM", close: "6:00 PM", isOpen: true },
-        sunday: { open: "9:00 AM", close: "5:00 PM", isOpen: true },
-      },
-      currentlyOpen: true,
-      description:
-        "Comprehensive wellness services including massage therapy, acupuncture, yoga classes, and nutritional counseling. Our certified practitioners are dedicated to helping you achieve optimal health and wellness through holistic approaches and personalized care plans.",
-      specialties: ["Massage Therapy", "Acupuncture", "Yoga Classes", "Nutrition Counseling", "Wellness Coaching"],
-      amenities: [
-        { name: "Spa Services", icon: "🧘‍♀️" },
-        { name: "Group Classes", icon: "👥" },
-        { name: "Private Sessions", icon: "🏠" },
-        { name: "Wellness Shop", icon: "🛍️" },
-        { name: "Free Parking", icon: "🅿️" },
-        { name: "Sauna", icon: "🧖" },
-      ],
-      photos: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-      ],
-      videos: [
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-      ],
-      quickStats: {
-        overallRating: 4.8,
-        totalReviews: 63,
-        responseRate: "100%",
-        avgResponseTime: "30 minutes",
-      },
-      ratingBreakdown: {
-        5: 52,
-        4: 8,
-        3: 2,
-        2: 1,
-        1: 0,
-      },
-    },
-    "joes-pizza": {
-      id: "joes-pizza",
-      name: "Joe's Pizza",
-      category: "Restaurants",
-      rating: 4.6,
-      reviewCount: 94,
-      priceRange: "$",
-      featured: true,
-      claimed: false,
-      address: {
-        street: "890 Pizza Lane",
-        city: "Leander",
-        state: "TX",
-        zip: "78641",
-        full: "890 Pizza Lane, Leander, TX 78641",
-      },
-      phone: "(512) 555-4567",
-      website: "https://joespizzaleander.com",
-      hours: {
-        monday: { open: "11:00 AM", close: "10:00 PM", isOpen: true },
-        tuesday: { open: "11:00 AM", close: "10:00 PM", isOpen: true },
-        wednesday: { open: "11:00 AM", close: "10:00 PM", isOpen: true },
-        thursday: { open: "11:00 AM", close: "10:00 PM", isOpen: true },
-        friday: { open: "11:00 AM", close: "11:00 PM", isOpen: true },
-        saturday: { open: "11:00 AM", close: "11:00 PM", isOpen: true },
-        sunday: { open: "12:00 PM", close: "9:00 PM", isOpen: true },
-      },
-      currentlyOpen: true,
-      description:
-        "New York-style pizza made with authentic ingredients and traditional methods. Our dough is made fresh daily, and we use only the finest imported Italian tomatoes and premium mozzarella. Family recipes passed down through three generations.",
-      specialties: ["NY-Style Pizza", "Calzones", "Garlic Knots", "Italian Subs", "Homemade Gelato"],
-      amenities: [
-        { name: "Delivery", icon: "🚚" },
-        { name: "Takeout", icon: "🥡" },
-        { name: "Dine-In", icon: "🍽️" },
-        { name: "Family Friendly", icon: "👨‍👩‍👧‍👦" },
-        { name: "Late Night", icon: "🌙" },
-        { name: "BYOB", icon: "🍷" },
-      ],
-      photos: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-      ],
-      videos: [
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-      ],
-      quickStats: {
-        overallRating: 4.6,
-        totalReviews: 94,
-        responseRate: "85%",
-        avgResponseTime: "3 hours",
-      },
-      ratingBreakdown: {
-        5: 65,
-        4: 22,
-        3: 5,
-        2: 1,
-        1: 1,
-      },
-    },
-    "leander-pet-clinic": {
-      id: "leander-pet-clinic",
-      name: "Leander Pet Clinic",
-      category: "Pets",
-      rating: 4.7,
-      reviewCount: 89,
-      priceRange: "$$",
-      featured: true,
-      claimed: true,
-      address: {
-        street: "456 Pet Care Lane",
-        city: "Leander",
-        state: "TX",
-        zip: "78641",
-        full: "456 Pet Care Lane, Leander, TX 78641",
-      },
-      phone: "(512) 555-5678",
-      website: "https://leanderpetclinic.com",
-      hours: {
-        monday: { open: "7:00 AM", close: "6:00 PM", isOpen: true },
-        tuesday: { open: "7:00 AM", close: "6:00 PM", isOpen: true },
-        wednesday: { open: "7:00 AM", close: "6:00 PM", isOpen: true },
-        thursday: { open: "7:00 AM", close: "6:00 PM", isOpen: true },
-        friday: { open: "7:00 AM", close: "6:00 PM", isOpen: true },
-        saturday: { open: "8:00 AM", close: "4:00 PM", isOpen: true },
-        sunday: { open: "Closed", close: "Closed", isOpen: false },
-      },
-      currentlyOpen: true,
-      description:
-        "Full-service veterinary clinic providing comprehensive care for dogs, cats, and exotic pets. Our experienced veterinarians offer preventive care, surgery, dental services, and emergency treatment. We treat your pets like family.",
-      specialties: ["Preventive Care", "Surgery", "Dental Care", "Emergency Services", "Exotic Pet Care"],
-      amenities: [
-        { name: "Emergency Care", icon: "🚨" },
-        { name: "Surgery Suite", icon: "🏥" },
-        { name: "Boarding", icon: "🏠" },
-        { name: "Grooming", icon: "✂️" },
-        { name: "Pharmacy", icon: "💊" },
-        { name: "Lab Services", icon: "🔬" },
-      ],
-      photos: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-      ],
-      videos: [
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-      ],
-      quickStats: {
-        overallRating: 4.7,
-        totalReviews: 89,
-        responseRate: "95%",
-        avgResponseTime: "2 hours",
-      },
-      ratingBreakdown: {
-        5: 68,
-        4: 15,
-        3: 4,
-        2: 1,
-        1: 1,
-      },
-    },
-    "artisan-coffee-roasters": {
-      id: "artisan-coffee-roasters",
-      name: "Artisan Coffee Roasters",
-      category: "Coffee Shop",
-      rating: 4.8,
-      reviewCount: 127,
-      priceRange: "$$",
-      featured: false,
-      claimed: true,
-      address: {
-        street: "123 Main St",
-        city: "Leander",
-        state: "TX",
-        zip: "78641",
-        full: "123 Main St, Leander, TX 78641",
-      },
-      phone: "(512) 555-7890",
-      website: "https://artisancoffeeroasters.com",
-      hours: {
-        monday: { open: "6:00 AM", close: "8:00 PM", isOpen: true },
-        tuesday: { open: "6:00 AM", close: "8:00 PM", isOpen: true },
-        wednesday: { open: "6:00 AM", close: "8:00 PM", isOpen: true },
-        thursday: { open: "6:00 AM", close: "8:00 PM", isOpen: true },
-        friday: { open: "6:00 AM", close: "9:00 PM", isOpen: true },
-        saturday: { open: "7:00 AM", close: "9:00 PM", isOpen: true },
-        sunday: { open: "7:00 AM", close: "7:00 PM", isOpen: true },
-      },
-      currentlyOpen: true,
-      description:
-        "Locally roasted coffee with a cozy atmosphere perfect for work or relaxation. We source our beans directly from farmers and roast them in-house daily. Our skilled baristas craft each cup with precision and passion.",
-      specialties: ["Single Origin Coffee", "House Blends", "Espresso Drinks", "Cold Brew", "Pastries"],
-      amenities: [
-        { name: "WiFi", icon: "📶" },
-        { name: "Pet Friendly", icon: "🐕" },
-        { name: "Outdoor Seating", icon: "☀️" },
-        { name: "Study Space", icon: "📚" },
-        { name: "Local Art", icon: "🎨" },
-        { name: "Live Music", icon: "🎵" },
-      ],
-      photos: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-      ],
-      videos: [
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-        "/placeholder.svg?height=300&width=400",
-      ],
-      quickStats: {
-        overallRating: 4.8,
-        totalReviews: 127,
-        responseRate: "92%",
-        avgResponseTime: "1 hour",
-      },
-      ratingBreakdown: {
-        5: 98,
-        4: 22,
-        3: 5,
-        2: 1,
-        1: 1,
-      },
-    },
+// Category placeholder images
+const CATEGORY_PLACEHOLDERS: Record<string, string> = {
+  restaurants: "/images/placeholders/restaurant.svg",
+  health: "/images/placeholders/health.svg",
+  beauty: "/images/placeholders/beauty.svg",
+  fitness: "/images/placeholders/fitness.svg",
+  automotive: "/images/placeholders/automotive.svg",
+  shopping: "/images/placeholders/shopping.svg",
+  services: "/images/placeholders/services.svg",
+  education: "/images/placeholders/education.svg",
+  pets: "/images/placeholders/pets.svg",
+  financial: "/images/placeholders/financial.svg",
+  home: "/images/placeholders/home.svg",
+  entertainment: "/images/placeholders/entertainment.svg",
+}
+
+// Fetch business from Supabase by slug
+async function getBusinessBySlug(slug: string) {
+  // First get the location ID for Leander
+  const { data: location } = await supabase
+    .from('locations')
+    .select('id')
+    .eq('slug', 'leander')
+    .single()
+
+  if (!location) return null
+
+  const { data, error } = await supabase
+    .from('businesses')
+    .select('*')
+    .eq('location_id', location.id)
+    .eq('slug', slug)
+    .single()
+
+  if (error || !data) return null
+
+  // Transform to app format
+  return transformBusiness(data)
+}
+
+// Fetch similar businesses from Supabase
+async function getSimilarBusinesses(slug: string, category: string, limit = 4) {
+  const { data: location } = await supabase
+    .from('locations')
+    .select('id')
+    .eq('slug', 'leander')
+    .single()
+
+  if (!location) return []
+
+  const { data, error } = await supabase
+    .from('businesses')
+    .select('*')
+    .eq('location_id', location.id)
+    .eq('category', category)
+    .neq('slug', slug)
+    .order('rating', { ascending: false })
+    .limit(limit)
+
+  if (error || !data) return []
+
+  return data.map(transformBusiness)
+}
+
+// Normalize state abbreviation (some data has "Te" instead of "TX")
+function normalizeState(state: string) {
+  if (!state) return 'TX'
+  const normalized = state.trim().toUpperCase()
+  if (normalized === 'TE' || normalized === 'TEXAS') return 'TX'
+  return normalized.length > 2 ? 'TX' : normalized
+}
+
+// Transform database business to app format
+function transformBusiness(dbBusiness: any) {
+  // Clean up description - remove JSON if present
+  let description = dbBusiness.description || ''
+  if (description.startsWith('{') || description.startsWith('[')) {
+    description = `${dbBusiness.name} is a local business in ${dbBusiness.address_city}, TX.`
   }
 
-  return businesses[id as keyof typeof businesses] || null
+  // Normalize state
+  const state = normalizeState(dbBusiness.address_state)
+
+  // Get placeholder image based on category
+  const placeholderImage = CATEGORY_PLACEHOLDERS[dbBusiness.category] || "/images/placeholders/services.svg"
+
+  // Check if image is valid (not a placeholder or broken)
+  let image = dbBusiness.image
+  if (!image || image.includes('placeholder')) {
+    image = placeholderImage
+  }
+
+  return {
+    id: dbBusiness.slug,
+    name: dbBusiness.name,
+    description: description,
+    shortDescription: description.length > 150 ? description.slice(0, 150) + '...' : description,
+    customDescription: dbBusiness.custom_description || undefined,
+    category: dbBusiness.category,
+    subcategory: dbBusiness.subcategory || undefined,
+    filterCategory: dbBusiness.category, // Use same as category
+    image: image,
+    photos: dbBusiness.photos || [],
+    videos: dbBusiness.videos || [],
+    phone: dbBusiness.phone || '',
+    email: dbBusiness.email || undefined,
+    website: dbBusiness.website || undefined,
+    address: {
+      street: dbBusiness.address_street || '',
+      city: dbBusiness.address_city || '',
+      state: state,
+      zip: dbBusiness.address_zip || '',
+      full: `${dbBusiness.address_street || ''}, ${dbBusiness.address_city || ''}, ${state} ${dbBusiness.address_zip || ''}`,
+    },
+    latitude: dbBusiness.latitude ? Number(dbBusiness.latitude) : undefined,
+    longitude: dbBusiness.longitude ? Number(dbBusiness.longitude) : undefined,
+    hours: dbBusiness.hours || {
+      monday: { open: "9:00 AM", close: "5:00 PM", isOpen: true },
+      tuesday: { open: "9:00 AM", close: "5:00 PM", isOpen: true },
+      wednesday: { open: "9:00 AM", close: "5:00 PM", isOpen: true },
+      thursday: { open: "9:00 AM", close: "5:00 PM", isOpen: true },
+      friday: { open: "9:00 AM", close: "5:00 PM", isOpen: true },
+      saturday: { open: "10:00 AM", close: "4:00 PM", isOpen: true },
+      sunday: { open: "Closed", close: "Closed", isOpen: false },
+    },
+    currentlyOpen: true,
+    rating: Number(dbBusiness.rating) || 0,
+    reviewCount: dbBusiness.review_count || 0,
+    priceRange: dbBusiness.price_range || '$',
+    yearEstablished: dbBusiness.year_established || undefined,
+    owner: dbBusiness.owner || undefined,
+    specialties: dbBusiness.specialties || [],
+    amenities: (dbBusiness.amenities || []).map((a: any) => ({
+      name: a?.name || a,
+      icon: a?.icon || 'check'
+    })),
+    tags: dbBusiness.tags || [],
+    socialLinks: dbBusiness.social_links || undefined,
+    listingTier: dbBusiness.listing_tier || 'free',
+    isFeatured: dbBusiness.is_featured || false,
+    featured: dbBusiness.is_featured || false,
+    premiumSince: dbBusiness.premium_since || undefined,
+    backlinkEnabled: dbBusiness.backlink_enabled || false,
+    lastUpdated: dbBusiness.last_updated,
+    claimed: true,
+    quickStats: {
+      overallRating: Number(dbBusiness.rating) || 0,
+      totalReviews: dbBusiness.review_count || 0,
+      responseRate: "N/A",
+      avgResponseTime: "N/A",
+    },
+    ratingBreakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+  }
+}
+
+// Generate dynamic metadata for each business
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params
+  const business = await getBusinessBySlug(id)
+
+  if (!business) {
+    return {
+      title: "Business Not Found | Leander Scoop Directory",
+    }
+  }
+
+  const title = `${business.name} - ${business.category} in ${business.address.city}, TX`
+  const description = `${business.shortDescription || business.description.slice(0, 155)}... Read reviews, get directions, and contact ${business.name} in ${business.address.city}, Texas.`
+
+  return {
+    title,
+    description,
+    keywords: [
+      business.name,
+      business.category,
+      `${business.category} ${business.address.city}`,
+      `${business.address.city} Texas`,
+      ...business.tags,
+      ...business.specialties.slice(0, 5),
+    ],
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: `https://directory.leanderscoop.com/business/${business.id}`,
+      images: business.image ? [{ url: business.image, alt: business.name }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    alternates: {
+      canonical: `https://directory.leanderscoop.com/business/${business.id}`,
+    },
+  }
+}
+
+// JSON-LD structured data for local business
+function generateJsonLd(business: any) {
+  const isPremium = business.listingTier === "premium" || business.listingTier === "featured"
+
+  const baseSchema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `https://directory.leanderscoop.com/business/${business.id}`,
+    name: business.name,
+    description: business.customDescription || business.description,
+    image: business.photos.length > 0 ? business.photos : business.image,
+    telephone: business.phone,
+    url: business.website,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: business.address.street,
+      addressLocality: business.address.city,
+      addressRegion: business.address.state,
+      postalCode: business.address.zip,
+      addressCountry: "US",
+    },
+    geo: business.latitude && business.longitude ? {
+      "@type": "GeoCoordinates",
+      latitude: business.latitude,
+      longitude: business.longitude,
+    } : undefined,
+    aggregateRating: business.reviewCount > 0 ? {
+      "@type": "AggregateRating",
+      ratingValue: business.rating,
+      reviewCount: business.reviewCount,
+      bestRating: 5,
+      worstRating: 1,
+    } : undefined,
+    priceRange: business.priceRange,
+  }
+
+  return baseSchema
 }
 
 export default async function BusinessPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const business = getBusinessData(id)
+  const business = await getBusinessBySlug(id)
 
   if (!business) {
-    return (
-      <div className="min-h-screen bg-gray-50 pt-32">
-        <div className="container mx-auto px-4 py-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Business Not Found</h1>
-          <p className="text-gray-600 mb-8">The business you're looking for doesn't exist or has been removed.</p>
-          <a href="/" className="text-blue-600 hover:underline">
-            Return to Home
-          </a>
-        </div>
-      </div>
-    )
+    notFound()
   }
 
+  const similarBusinesses = await getSimilarBusinesses(id, business.category, 4)
+  const jsonLd = generateJsonLd(business)
+
   return (
-    <div className="min-h-screen bg-muted/30">
-      <BusinessPageHeader business={business} />
+    <>
+      {/* JSON-LD Structured Data */}
+      <Script
+        id="business-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            <BusinessPageContent business={business} />
-            <BusinessReviewsSection business={business} />
-          </div>
+      <div className="min-h-screen bg-muted/30">
+        {/* Back Button */}
+        <div className="container mx-auto px-4 pt-4">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/search" className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Search
+            </Link>
+          </Button>
+        </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <BusinessSidebar business={business} />
+        <BusinessPageHeader business={business} />
+
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-2 space-y-8">
+              <BusinessPageContent business={business} />
+              <BusinessReviewsSection business={business} />
+            </div>
+
+            {/* Sidebar */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-24 space-y-6">
+                <BusinessSidebar business={business} />
+                {similarBusinesses.length > 0 && (
+                  <SimilarBusinesses businesses={similarBusinesses} />
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

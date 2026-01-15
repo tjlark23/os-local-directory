@@ -69,16 +69,14 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* For Businesses */}
+          {/* About & Contact */}
           <div>
-            <h3 className="font-semibold mb-6 text-lg">For Businesses</h3>
+            <h3 className="font-semibold mb-6 text-lg">About</h3>
             <ul className="space-y-3 text-sm">
               {[
-                { name: "List Your Business", href: "/business/add" },
-                { name: "Claim Your Listing", href: "/business/claim" },
-                { name: "Advertise With Us", href: "/advertise" },
-                { name: "Business Resources", href: "/business/resources" },
-                { name: "Pricing Plans", href: "/pricing" },
+                { name: "Contact Us", href: "/contact" },
+                { name: "Privacy Policy", href: "/privacy" },
+                { name: "Terms of Service", href: "/terms" },
               ].map((link) => (
                 <li key={link.name}>
                   <Link

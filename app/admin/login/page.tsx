@@ -88,13 +88,6 @@ export default function AdminLoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 p-4 bg-gray-100 rounded-lg">
-            <p className="text-sm font-medium text-gray-700 mb-2">Demo Credentials:</p>
-            <div className="text-xs text-gray-600 space-y-1">
-              <div>Admin: admin@leanderscoop.com / admin123</div>
-              <div>Moderator: moderator@leanderscoop.com / mod123</div>
-            </div>
-          </div>
         </CardContent>
       </Card>
     </div>

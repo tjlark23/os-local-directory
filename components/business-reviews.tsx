@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Star, ThumbsUp, Flag } from "lucide-react"
-import { WriteReviewDialog } from "@/components/write-review-dialog"
 
 const mockReviews = [
   {
@@ -58,7 +57,6 @@ interface BusinessReviewsProps {
 
 export function BusinessReviews({ businessId }: BusinessReviewsProps) {
   const [filter, setFilter] = useState("all")
-  const [showWriteReview, setShowWriteReview] = useState(false)
 
   const averageRating = 4.8
   const totalReviews = 127
@@ -68,7 +66,6 @@ export function BusinessReviews({ businessId }: BusinessReviewsProps) {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-2xl">Reviews</CardTitle>
-          <Button onClick={() => setShowWriteReview(true)}>Write a Review</Button>
         </div>
 
         {/* Rating Summary */}
@@ -183,8 +180,6 @@ export function BusinessReviews({ businessId }: BusinessReviewsProps) {
           ))}
         </div>
       </CardContent>
-
-      <WriteReviewDialog open={showWriteReview} onOpenChange={setShowWriteReview} businessId={businessId} />
     </Card>
   )
 }

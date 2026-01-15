@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, Heart, Share2, MessageSquare, Building2, MapPin, Phone, Globe, Clock, CheckCircle2 } from "lucide-react"
+import { Star, Heart, Share2, MessageSquare, MapPin, Phone, Globe, Clock, CheckCircle2 } from "lucide-react"
 import Image from "next/image"
 
 interface BusinessPageHeaderProps {
@@ -140,13 +140,6 @@ export function BusinessPageHeader({ business }: BusinessPageHeaderProps) {
               <Button size="lg" variant="outline" className="hover:bg-muted bg-transparent">
                 <Globe className="w-4 h-4 mr-2" />
                 Website
-              </Button>
-            )}
-
-            {!business.claimed && (
-              <Button size="lg" variant="outline" className="hover:bg-muted bg-transparent">
-                <Building2 className="w-4 h-4 mr-2" />
-                Claim
               </Button>
             )}
 

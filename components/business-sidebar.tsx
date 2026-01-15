@@ -97,9 +97,6 @@ export function BusinessSidebar({ business }: BusinessSidebarProps) {
             </div>
           </div>
 
-          <Button className="w-full bg-primary hover:bg-primary/90 shadow-md hover:shadow-lg transition-all">
-            Write a Review
-          </Button>
         </CardContent>
       </Card>
 

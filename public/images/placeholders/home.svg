@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="#f0fdfa"/>
+  <rect x="50" y="50" width="500" height="300" rx="20" fill="#ccfbf1"/>
+  <path d="M300 120 L240 170 L240 230 L360 230 L360 170 Z" fill="#5eead4"/>
+  <path d="M300 120 L220 175 L380 175 Z" fill="#14b8a6"/>
+  <rect x="285" y="185" width="30" height="45" fill="#0f766e"/>
+  <rect x="250" y="185" width="25" height="25" fill="#0d9488"/>
+  <rect x="325" y="185" width="25" height="25" fill="#0d9488"/>
+  <text x="300" y="280" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" fill="#0f766e">Home Services</text>
+</svg>

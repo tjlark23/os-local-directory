@@ -1,79 +1,61 @@
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Star, MapPin } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-
-const similarBusinesses = [
-  {
-    id: "2",
-    name: "Bean There Coffee",
-    category: "Coffee Shop",
-    rating: 4.5,
-    reviewCount: 89,
-    image: "/placeholder.svg?height=150&width=200",
-    distance: "0.3 mi",
-  },
-  {
-    id: "3",
-    name: "Morning Brew Cafe",
-    category: "Coffee Shop",
-    rating: 4.7,
-    reviewCount: 156,
-    image: "/placeholder.svg?height=150&width=200",
-    distance: "0.6 mi",
-  },
-  {
-    id: "4",
-    name: "The Daily Grind",
-    category: "Coffee Shop",
-    rating: 4.4,
-    reviewCount: 203,
-    image: "/placeholder.svg?height=150&width=200",
-    distance: "0.8 mi",
-  },
-]
+import type { Business } from "@/lib/types"
 
 interface SimilarBusinessesProps {
-  currentBusinessId: string
+  businesses: Business[]
 }
 
-export function SimilarBusinesses({ currentBusinessId }: SimilarBusinessesProps) {
+export function SimilarBusinesses({ businesses }: SimilarBusinessesProps) {
+  if (businesses.length === 0) return null
+
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-6">Similar Businesses</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {similarBusinesses.map((business) => (
-          <Card key={business.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-            <div className="relative">
+    <Card>
+      <CardHeader className="pb-4">
+        <CardTitle className="text-lg">Similar Businesses</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {businesses.map((business) => (
+          <Link
+            key={business.id}
+            href={`/business/${business.id}`}
+            className="flex gap-3 group"
+          >
+            <div className="relative flex-shrink-0">
               <Image
                 src={business.image || "/placeholder.svg"}
                 alt={business.name}
-                width={200}
-                height={150}
-                className="w-full h-40 object-cover"
+                width={80}
+                height={60}
+                className="w-20 h-16 object-cover rounded-md"
               />
             </div>
-            <CardContent className="p-4">
-              <Link href={`/business/${business.id}`}>
-                <h3 className="font-semibold text-lg hover:text-primary cursor-pointer mb-1">{business.name}</h3>
-              </Link>
-              <p className="text-gray-600 mb-2">{business.category}</p>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-1">
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <span className="font-medium">{business.rating}</span>
-                  <span className="text-gray-500 text-sm">({business.reviewCount})</span>
+            <div className="flex-1 min-w-0">
+              <h4 className="font-medium text-sm group-hover:text-primary transition-colors truncate">
+                {business.name}
+              </h4>
+              <p className="text-xs text-muted-foreground truncate">
+                {business.category}
+              </p>
+              <div className="flex items-center gap-2 mt-1">
+                <div className="flex items-center gap-1">
+                  <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                  <span className="text-xs font-medium">{business.rating}</span>
                 </div>
-                <div className="flex items-center text-gray-500 text-sm">
-                  <MapPin className="w-3 h-3 mr-1" />
-                  <span>{business.distance}</span>
-                </div>
+                <span className="text-xs text-muted-foreground">
+                  ({business.reviewCount})
+                </span>
               </div>
-            </CardContent>
-          </Card>
+              <div className="flex items-center text-xs text-muted-foreground mt-1">
+                <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
+                <span className="truncate">{business.address.city}</span>
+              </div>
+            </div>
+          </Link>
         ))}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }

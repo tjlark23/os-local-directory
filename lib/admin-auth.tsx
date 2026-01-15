@@ -39,11 +39,28 @@ const ADMIN_USERS = [
   },
 ]
 
+// Dev mode: auto-login for easier testing
+const DEV_MODE = process.env.NODE_ENV === "development"
+
 export function AdminAuthProvider({ children }: { children: ReactNode }) {
   const [adminUser, setAdminUser] = useState<AdminUser | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    // In dev mode, auto-login as admin for easier testing
+    if (DEV_MODE) {
+      const devAdmin = {
+        id: "1",
+        email: "admin@leanderscoop.com",
+        name: "Dev Admin",
+        role: "super_admin" as const,
+        permissions: ["manage_businesses", "manage_users", "manage_reviews", "view_analytics", "manage_admins"],
+      }
+      setAdminUser(devAdmin)
+      setIsLoading(false)
+      return
+    }
+
     // Check for existing admin session
     const savedAdmin = localStorage.getItem("admin_user")
     if (savedAdmin) {
