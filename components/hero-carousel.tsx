@@ -57,14 +57,14 @@ export function HeroCarousel() {
 
         if (!location) return
 
-        // Define diverse categories to feature
-        const categoriesToFeature = ['restaurants', 'health', 'automotive', 'home', 'shopping', 'services']
-
-        // Fetch top business from each category for diversity
+        // First try to get diverse businesses by category
+        const categoriesToFeature = ['restaurants', 'health', 'automotive', 'home', 'shopping', 'services', 'beauty', 'entertainment', 'pets', 'financial', 'education', 'fitness']
         const diverseBusinesses: Business[] = []
         const seenNames = new Set<string>()
 
         for (const category of categoriesToFeature) {
+          if (diverseBusinesses.length >= 6) break
+
           const { data: categoryBusinesses } = await supabase
             .from('businesses')
             .select('*')
@@ -72,16 +72,38 @@ export function HeroCarousel() {
             .eq('category', category)
             .order('rating', { ascending: false })
             .order('review_count', { ascending: false })
-            .limit(10) // Get a few to find unique ones
+            .limit(10)
 
           if (categoryBusinesses) {
-            // Find first business in this category that isn't a duplicate
             for (const biz of categoryBusinesses) {
               const normalizedName = biz.name.toLowerCase().trim()
               if (!seenNames.has(normalizedName)) {
                 seenNames.add(normalizedName)
                 diverseBusinesses.push(biz)
-                break // Only take one per category
+                break
+              }
+            }
+          }
+        }
+
+        // If we don't have enough diverse businesses, fetch top-rated businesses overall
+        if (diverseBusinesses.length < 6) {
+          const { data: topBusinesses } = await supabase
+            .from('businesses')
+            .select('*')
+            .eq('location_id', location.id)
+            .order('is_featured', { ascending: false })
+            .order('rating', { ascending: false })
+            .order('review_count', { ascending: false })
+            .limit(30)
+
+          if (topBusinesses) {
+            for (const biz of topBusinesses) {
+              if (diverseBusinesses.length >= 6) break
+              const normalizedName = biz.name.toLowerCase().trim()
+              if (!seenNames.has(normalizedName)) {
+                seenNames.add(normalizedName)
+                diverseBusinesses.push(biz)
               }
             }
           }
@@ -137,11 +159,40 @@ export function HeroCarousel() {
     return CATEGORY_PLACEHOLDERS[business.category] || "/images/placeholders/services.svg"
   }
 
-  const cleanDescription = (desc: string, name: string, city: string) => {
-    if (!desc || desc.startsWith('{') || desc.startsWith('[')) {
-      return `${name} is a top-rated business in ${city}, TX.`
+  const cleanDescription = (business: Business) => {
+    const desc = business.description
+    const name = business.name
+    const city = business.address_city
+
+    // If description is valid (not JSON, not too short), use it
+    if (desc && !desc.startsWith('{') && !desc.startsWith('[') && desc.trim().length > 20) {
+      return desc.length > 100 ? desc.slice(0, 100) + '...' : desc
     }
-    return desc.length > 100 ? desc.slice(0, 100) + '...' : desc
+
+    // Generate a better description
+    const categoryNames: Record<string, string> = {
+      restaurants: "restaurant",
+      health: "health & wellness provider",
+      beauty: "beauty salon",
+      fitness: "fitness center",
+      automotive: "automotive service",
+      shopping: "retail store",
+      services: "professional service provider",
+      pets: "pet services",
+      home: "home services provider",
+      entertainment: "entertainment venue",
+    }
+    const categoryName = categoryNames[business.category] || "business"
+    const rating = Number(business.rating) || 0
+
+    let fallback = `${name} is a top-rated ${categoryName} in ${city}, TX`
+    if (rating > 0) {
+      fallback += ` with a ${rating.toFixed(1)}-star rating.`
+    } else {
+      fallback += "."
+    }
+
+    return fallback
   }
 
   // Normalize state abbreviation (some data has "Te" instead of "TX")
@@ -214,7 +265,7 @@ export function HeroCarousel() {
                   </h2>
                 </Link>
                 <p className="text-primary-foreground/80 text-lg mb-3 max-w-md">
-                  {cleanDescription(currentBusiness.description, currentBusiness.name, currentBusiness.address_city)}
+                  {cleanDescription(currentBusiness)}
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-1">

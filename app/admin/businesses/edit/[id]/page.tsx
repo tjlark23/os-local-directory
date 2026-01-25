@@ -9,12 +9,13 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AdminLayout } from "@/components/admin-layout"
-import { ArrowLeft, Save, Trash2, Plus, X, ExternalLink } from "lucide-react"
-import { getBusinessById } from "@/lib/data"
-import { Business, ListingTier, CATEGORIES } from "@/lib/types"
+import { ArrowLeft, Save, Plus, X, ExternalLink, Loader2, Clock } from "lucide-react"
+import { CATEGORIES } from "@/lib/db"
+import type { Business, ListingTier } from "@/lib/types"
+
+const DAYS_OF_WEEK = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
 export default function EditBusinessPage() {
   const params = useParams()
@@ -26,29 +27,60 @@ export default function EditBusinessPage() {
   const [newPhoto, setNewPhoto] = useState("")
   const [newVideo, setNewVideo] = useState("")
   const [isSaving, setIsSaving] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [saveMessage, setSaveMessage] = useState("")
+  const [saveError, setSaveError] = useState("")
 
   useEffect(() => {
-    const found = getBusinessById(businessId)
-    if (found) {
-      setBusiness(found)
-      setFormData(found)
+    async function fetchBusiness() {
+      try {
+        const response = await fetch(`/api/admin/businesses/${businessId}`)
+        if (response.ok) {
+          const data = await response.json()
+          setBusiness(data)
+          setFormData(data)
+        } else {
+          console.error('Business not found')
+        }
+      } catch (error) {
+        console.error('Error fetching business:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    if (businessId) {
+      fetchBusiness()
     }
   }, [businessId])
 
   const handleSave = async () => {
     setIsSaving(true)
-    // In production, this would save to a database
-    // For now, we'll just show a success message
-    console.log("Saving business:", formData)
+    setSaveMessage("")
+    setSaveError("")
 
-    // Simulate save delay
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    try {
+      const response = await fetch(`/api/admin/businesses/${businessId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-    setSaveMessage("Changes saved! Note: In production, this would persist to a database.")
-    setIsSaving(false)
-
-    setTimeout(() => setSaveMessage(""), 5000)
+      if (response.ok) {
+        setSaveMessage("Changes saved successfully!")
+        setTimeout(() => setSaveMessage(""), 5000)
+      } else {
+        const data = await response.json()
+        setSaveError(data.error || "Failed to save changes")
+      }
+    } catch (error) {
+      console.error('Error saving business:', error)
+      setSaveError("Failed to save changes. Please try again.")
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   const addPhoto = () => {
@@ -83,6 +115,30 @@ export default function EditBusinessPage() {
     setFormData({ ...formData, videos })
   }
 
+  const updateHours = (day: string, field: 'open' | 'close' | 'isOpen', value: string | boolean) => {
+    const currentHours = formData.hours || {}
+    setFormData({
+      ...formData,
+      hours: {
+        ...currentHours,
+        [day]: {
+          ...((currentHours as Record<string, { open: string; close: string; isOpen: boolean }>)[day] || { open: '9:00 AM', close: '5:00 PM', isOpen: true }),
+          [field]: value
+        }
+      }
+    })
+  }
+
+  if (isLoading) {
+    return (
+      <AdminLayout>
+        <div className="flex items-center justify-center h-64">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        </div>
+      </AdminLayout>
+    )
+  }
+
   if (!business) {
     return (
       <AdminLayout>
@@ -115,7 +171,11 @@ export default function EditBusinessPage() {
               </a>
             </Button>
             <Button onClick={handleSave} disabled={isSaving}>
-              <Save className="w-4 h-4 mr-2" />
+              {isSaving ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <Save className="w-4 h-4 mr-2" />
+              )}
               {isSaving ? "Saving..." : "Save Changes"}
             </Button>
           </div>
@@ -127,9 +187,16 @@ export default function EditBusinessPage() {
           </div>
         )}
 
+        {saveError && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            {saveError}
+          </div>
+        )}
+
         <Tabs defaultValue="basic" className="space-y-6">
           <TabsList>
             <TabsTrigger value="basic">Basic Info</TabsTrigger>
+            <TabsTrigger value="hours">Hours</TabsTrigger>
             <TabsTrigger value="media">Photos & Videos</TabsTrigger>
             <TabsTrigger value="premium">Premium Settings</TabsTrigger>
             <TabsTrigger value="seo">SEO & Description</TabsTrigger>
@@ -153,8 +220,8 @@ export default function EditBusinessPage() {
                   <div className="space-y-2">
                     <Label>Category</Label>
                     <Select
-                      value={formData.filterCategory}
-                      onValueChange={(value) => setFormData({ ...formData, filterCategory: value as any })}
+                      value={formData.category}
+                      onValueChange={(value) => setFormData({ ...formData, category: value })}
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -162,7 +229,7 @@ export default function EditBusinessPage() {
                       <SelectContent>
                         {CATEGORIES.map((cat) => (
                           <SelectItem key={cat.id} value={cat.id}>
-                            {cat.icon} {cat.name}
+                            {cat.name}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -178,8 +245,8 @@ export default function EditBusinessPage() {
                   <div className="space-y-2">
                     <Label>Price Range</Label>
                     <Select
-                      value={formData.priceRange}
-                      onValueChange={(value) => setFormData({ ...formData, priceRange: value as any })}
+                      value={formData.priceRange || "$"}
+                      onValueChange={(value) => setFormData({ ...formData, priceRange: value })}
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -222,18 +289,102 @@ export default function EditBusinessPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Full Address</Label>
+                    <Label>Street Address</Label>
                     <Input
-                      value={formData.address?.full || ""}
+                      value={formData.address?.street || ""}
                       onChange={(e) => setFormData({
                         ...formData,
-                        address: { ...formData.address!, full: e.target.value }
+                        address: { ...formData.address!, street: e.target.value }
                       })}
                     />
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="space-y-2">
+                      <Label>City</Label>
+                      <Input
+                        value={formData.address?.city || ""}
+                        onChange={(e) => setFormData({
+                          ...formData,
+                          address: { ...formData.address!, city: e.target.value }
+                        })}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>State</Label>
+                      <Input
+                        value={formData.address?.state || ""}
+                        onChange={(e) => setFormData({
+                          ...formData,
+                          address: { ...formData.address!, state: e.target.value }
+                        })}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>ZIP</Label>
+                      <Input
+                        value={formData.address?.zip || ""}
+                        onChange={(e) => setFormData({
+                          ...formData,
+                          address: { ...formData.address!, zip: e.target.value }
+                        })}
+                      />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          {/* Hours Tab */}
+          <TabsContent value="hours">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Clock className="w-5 h-5" />
+                  Business Hours
+                </CardTitle>
+                <CardDescription>
+                  Set the opening and closing times for each day
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {DAYS_OF_WEEK.map((day) => {
+                    const hours = (formData.hours as Record<string, { open: string; close: string; isOpen: boolean }>) || {}
+                    const dayHours = hours[day] || { open: '9:00 AM', close: '5:00 PM', isOpen: true }
+                    return (
+                      <div key={day} className="flex items-center gap-4 p-3 border rounded-lg">
+                        <div className="w-28 font-medium capitalize">{day}</div>
+                        <Switch
+                          checked={dayHours.isOpen}
+                          onCheckedChange={(checked) => updateHours(day, 'isOpen', checked)}
+                        />
+                        <span className="text-sm text-muted-foreground w-12">
+                          {dayHours.isOpen ? 'Open' : 'Closed'}
+                        </span>
+                        {dayHours.isOpen && (
+                          <>
+                            <Input
+                              className="w-32"
+                              value={dayHours.open}
+                              onChange={(e) => updateHours(day, 'open', e.target.value)}
+                              placeholder="9:00 AM"
+                            />
+                            <span>to</span>
+                            <Input
+                              className="w-32"
+                              value={dayHours.close}
+                              onChange={(e) => updateHours(day, 'close', e.target.value)}
+                              placeholder="5:00 PM"
+                            />
+                          </>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Media Tab */}
@@ -352,8 +503,8 @@ export default function EditBusinessPage() {
                     </p>
                   </div>
                   <Switch
-                    checked={formData.featured || false}
-                    onCheckedChange={(checked) => setFormData({ ...formData, featured: checked })}
+                    checked={formData.isFeatured || false}
+                    onCheckedChange={(checked) => setFormData({ ...formData, isFeatured: checked })}
                   />
                 </div>
 
@@ -370,16 +521,15 @@ export default function EditBusinessPage() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div>
-                    <Label>Verified/Claimed</Label>
-                    <p className="text-sm text-muted-foreground">
-                      Show verified badge on listing
-                    </p>
-                  </div>
-                  <Switch
-                    checked={formData.claimed || false}
-                    onCheckedChange={(checked) => setFormData({ ...formData, claimed: checked })}
+                <div className="space-y-2 pt-4 border-t">
+                  <Label>Deals Banner (Premium Feature)</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Promotional banner shown at the top of the business page - great for special offers
+                  </p>
+                  <Input
+                    value={(formData as any).dealsBanner || ""}
+                    onChange={(e) => setFormData({ ...formData, dealsBanner: e.target.value } as any)}
+                    placeholder="e.g., 20% off all services this month! Use code LEANDER20"
                   />
                 </div>
 
@@ -398,10 +548,10 @@ export default function EditBusinessPage() {
                     <div className="space-y-2">
                       <Label>Facebook</Label>
                       <Input
-                        value={formData.socialLinks?.facebook || ""}
+                        value={(formData.socialLinks as Record<string, string>)?.facebook || ""}
                         onChange={(e) => setFormData({
                           ...formData,
-                          socialLinks: { ...formData.socialLinks, facebook: e.target.value }
+                          socialLinks: { ...(formData.socialLinks as Record<string, string>), facebook: e.target.value }
                         })}
                         placeholder="https://facebook.com/..."
                       />
@@ -409,10 +559,10 @@ export default function EditBusinessPage() {
                     <div className="space-y-2">
                       <Label>Instagram</Label>
                       <Input
-                        value={formData.socialLinks?.instagram || ""}
+                        value={(formData.socialLinks as Record<string, string>)?.instagram || ""}
                         onChange={(e) => setFormData({
                           ...formData,
-                          socialLinks: { ...formData.socialLinks, instagram: e.target.value }
+                          socialLinks: { ...(formData.socialLinks as Record<string, string>), instagram: e.target.value }
                         })}
                         placeholder="https://instagram.com/..."
                       />
@@ -420,10 +570,10 @@ export default function EditBusinessPage() {
                     <div className="space-y-2">
                       <Label>YouTube</Label>
                       <Input
-                        value={formData.socialLinks?.youtube || ""}
+                        value={(formData.socialLinks as Record<string, string>)?.youtube || ""}
                         onChange={(e) => setFormData({
                           ...formData,
-                          socialLinks: { ...formData.socialLinks, youtube: e.target.value }
+                          socialLinks: { ...(formData.socialLinks as Record<string, string>), youtube: e.target.value }
                         })}
                         placeholder="https://youtube.com/..."
                       />
@@ -431,10 +581,10 @@ export default function EditBusinessPage() {
                     <div className="space-y-2">
                       <Label>TikTok</Label>
                       <Input
-                        value={formData.socialLinks?.tiktok || ""}
+                        value={(formData.socialLinks as Record<string, string>)?.tiktok || ""}
                         onChange={(e) => setFormData({
                           ...formData,
-                          socialLinks: { ...formData.socialLinks, tiktok: e.target.value }
+                          socialLinks: { ...(formData.socialLinks as Record<string, string>), tiktok: e.target.value }
                         })}
                         placeholder="https://tiktok.com/..."
                       />
@@ -456,22 +606,6 @@ export default function EditBusinessPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label>Short Description</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Used in search results and cards (max 150 characters)
-                  </p>
-                  <Textarea
-                    value={formData.shortDescription || ""}
-                    onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
-                    rows={2}
-                    maxLength={150}
-                  />
-                  <p className="text-xs text-muted-foreground text-right">
-                    {(formData.shortDescription || "").length}/150
-                  </p>
-                </div>
-
-                <div className="space-y-2">
                   <Label>Full Description</Label>
                   <p className="text-sm text-muted-foreground">
                     Detailed description shown on the business page
@@ -484,7 +618,7 @@ export default function EditBusinessPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Custom AI-Optimized Description</Label>
+                  <Label>Custom AI-Optimized Description (Premium)</Label>
                   <p className="text-sm text-muted-foreground">
                     Override for premium listings - write a rich, keyword-optimized description
                   </p>

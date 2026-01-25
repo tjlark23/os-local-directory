@@ -86,11 +86,13 @@ export function FeaturedBusinessesWithFilter() {
 
         // When "all" is selected, get diverse businesses from different categories
         if (activeCategory === "all") {
-          const categoriesToFeature = ['restaurants', 'health', 'automotive', 'home', 'shopping', 'services', 'entertainment', 'pets']
+          const categoriesToFeature = ['restaurants', 'health', 'automotive', 'home', 'shopping', 'services', 'entertainment', 'pets', 'beauty', 'financial', 'education', 'fitness']
           const diverseBusinesses: Business[] = []
           const seenNames = new Set<string>()
 
           for (const category of categoriesToFeature) {
+            if (diverseBusinesses.length >= 8) break
+
             const { data: categoryBusinesses } = await supabase
               .from('businesses')
               .select('*')
@@ -108,6 +110,29 @@ export function FeaturedBusinessesWithFilter() {
                   seenNames.add(normalizedName)
                   diverseBusinesses.push(biz)
                   break
+                }
+              }
+            }
+          }
+
+          // If we don't have enough diverse businesses, fetch top-rated businesses overall
+          if (diverseBusinesses.length < 8) {
+            const { data: topBusinesses } = await supabase
+              .from('businesses')
+              .select('*')
+              .eq('location_id', location.id)
+              .order('is_featured', { ascending: false })
+              .order('rating', { ascending: false })
+              .order('review_count', { ascending: false })
+              .limit(30)
+
+            if (topBusinesses) {
+              for (const biz of topBusinesses) {
+                if (diverseBusinesses.length >= 8) break
+                const normalizedName = biz.name.toLowerCase().trim()
+                if (!seenNames.has(normalizedName)) {
+                  seenNames.add(normalizedName)
+                  diverseBusinesses.push(biz)
                 }
               }
             }
@@ -184,12 +209,41 @@ export function FeaturedBusinessesWithFilter() {
     return getPlaceholderImage(business.category)
   }
 
-  // Clean description - remove JSON if present
-  const cleanDescription = (desc: string, name: string, city: string) => {
-    if (!desc || desc.startsWith('{') || desc.startsWith('[')) {
-      return `${name} is a local business in ${city}, TX.`
+  // Clean description - remove JSON if present and generate a better fallback
+  const cleanDescription = (business: Business) => {
+    const desc = business.description
+    const name = business.name
+    const city = business.address_city
+
+    // If description is valid (not JSON, not too short), use it
+    if (desc && !desc.startsWith('{') && !desc.startsWith('[') && desc.trim().length > 20) {
+      return desc.length > 120 ? desc.slice(0, 120) + '...' : desc
     }
-    return desc
+
+    // Generate a better description
+    const categoryNames: Record<string, string> = {
+      restaurants: "restaurant",
+      health: "health & wellness provider",
+      beauty: "beauty salon",
+      fitness: "fitness center",
+      automotive: "automotive service",
+      shopping: "retail store",
+      services: "professional service provider",
+      pets: "pet services",
+      home: "home services provider",
+      entertainment: "entertainment venue",
+    }
+    const categoryName = categoryNames[business.category] || "business"
+    const rating = Number(business.rating) || 0
+
+    let fallback = `${name} is a top-rated ${categoryName} in ${city}, TX`
+    if (rating > 0) {
+      fallback += ` with a ${rating.toFixed(1)}-star rating.`
+    } else {
+      fallback += "."
+    }
+
+    return fallback
   }
 
   // Normalize state abbreviation (some data has "Te" instead of "TX")
@@ -322,7 +376,7 @@ export function FeaturedBusinessesWithFilter() {
                   </div>
 
                   <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                    {cleanDescription(business.description, business.name, business.address_city)}
+                    {cleanDescription(business)}
                   </p>
 
                   <div className="flex items-start text-muted-foreground text-sm mb-4">

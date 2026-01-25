@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, Heart, Share2, MessageSquare, MapPin, Phone, Globe, Clock, CheckCircle2 } from "lucide-react"
+import { Star, Heart, Share2, MessageSquare, MapPin, Phone, Globe, Clock, CheckCircle2, Tag } from "lucide-react"
 import Image from "next/image"
 
 interface BusinessPageHeaderProps {
@@ -22,6 +22,8 @@ interface BusinessPageHeaderProps {
       full: string
     }
     photos?: string[]
+    listingTier?: 'free' | 'premium' | 'featured'
+    dealsBanner?: string
   }
 }
 
@@ -36,8 +38,24 @@ export function BusinessPageHeader({ business }: BusinessPageHeaderProps) {
     "/chef-cooking-kitchen.jpg",
   ]
 
+  // Only show deals banner for premium/featured listings
+  const showDealsBanner = business.dealsBanner &&
+    (business.listingTier === 'premium' || business.listingTier === 'featured')
+
   return (
     <div className="bg-background">
+      {/* Deals Banner - Premium Feature */}
+      {showDealsBanner && (
+        <div className="bg-gradient-to-r from-primary via-primary/90 to-primary text-primary-foreground py-3">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-center gap-2 text-center">
+              <Tag className="w-5 h-5 animate-pulse" />
+              <span className="font-semibold text-lg">{business.dealsBanner}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="container mx-auto px-4 pt-6">
         <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[400px] rounded-2xl overflow-hidden">
           {/* Main large image */}

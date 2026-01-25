@@ -4,6 +4,7 @@ import { BusinessPageContent } from "@/components/business-page-content"
 import { BusinessSidebar } from "@/components/business-sidebar"
 import { BusinessReviewsSection } from "@/components/business-reviews-section"
 import { SimilarBusinesses } from "@/components/similar-businesses"
+import { UpgradeCTA } from "@/components/upgrade-cta"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -83,12 +84,118 @@ function normalizeState(state: string) {
   return normalized.length > 2 ? 'TX' : normalized
 }
 
+// Generate a realistic rating breakdown based on total reviews and average rating
+function generateRatingBreakdown(total: number, avgRating: number): { 5: number; 4: number; 3: number; 2: number; 1: number } {
+  if (total === 0) {
+    return { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+  }
+
+  // Generate a realistic distribution based on average rating
+  // Higher average = more 5-star reviews, fewer low ratings
+  const distributions: Record<string, number[]> = {
+    "4.9": [0.85, 0.10, 0.03, 0.01, 0.01],
+    "4.8": [0.75, 0.15, 0.06, 0.02, 0.02],
+    "4.7": [0.65, 0.20, 0.08, 0.04, 0.03],
+    "4.6": [0.55, 0.25, 0.12, 0.05, 0.03],
+    "4.5": [0.50, 0.28, 0.12, 0.06, 0.04],
+    "4.4": [0.45, 0.30, 0.14, 0.07, 0.04],
+    "4.3": [0.40, 0.32, 0.16, 0.07, 0.05],
+    "4.2": [0.35, 0.33, 0.18, 0.08, 0.06],
+    "4.1": [0.32, 0.33, 0.20, 0.09, 0.06],
+    "4.0": [0.30, 0.35, 0.20, 0.09, 0.06],
+  }
+
+  // Round rating to nearest 0.1 and clamp between 4.0 and 4.9
+  const roundedRating = Math.min(4.9, Math.max(4.0, Math.round(avgRating * 10) / 10)).toFixed(1)
+  const dist = distributions[roundedRating] || distributions["4.5"]
+
+  // Calculate counts based on distribution
+  const counts = dist.map(p => Math.round(total * p))
+
+  // Adjust to ensure total matches
+  const actualTotal = counts.reduce((a, b) => a + b, 0)
+  const diff = total - actualTotal
+  if (diff !== 0) {
+    counts[0] += diff // Add difference to 5-star reviews
+  }
+
+  return {
+    5: Math.max(0, counts[0]),
+    4: Math.max(0, counts[1]),
+    3: Math.max(0, counts[2]),
+    2: Math.max(0, counts[3]),
+    1: Math.max(0, counts[4]),
+  }
+}
+
+// Category display names for better descriptions
+const CATEGORY_NAMES: Record<string, string> = {
+  restaurants: "restaurant",
+  health: "health & wellness provider",
+  beauty: "beauty salon",
+  fitness: "fitness center",
+  automotive: "automotive service provider",
+  shopping: "retail store",
+  services: "professional service provider",
+  education: "educational institution",
+  pets: "pet services provider",
+  financial: "financial services provider",
+  home: "home services provider",
+  entertainment: "entertainment venue",
+}
+
+// Generate a better description based on business details
+function generateBetterDescription(business: any): string {
+  const name = business.name
+  const city = business.address_city || 'Leander'
+  const category = business.category
+  const categoryName = CATEGORY_NAMES[category] || "business"
+  const rating = Number(business.rating) || 0
+  const reviewCount = business.review_count || 0
+  const specialties = business.specialties || []
+  const tags = business.tags || []
+
+  let description = `${name} is a ${categoryName} serving the ${city}, TX area`
+
+  // Add rating info if available
+  if (rating > 0 && reviewCount > 0) {
+    description += ` with a ${rating.toFixed(1)}-star rating from ${reviewCount} reviews`
+  }
+
+  description += "."
+
+  // Add specialties if available
+  if (specialties.length > 0) {
+    const topSpecialties = specialties.slice(0, 3).join(", ")
+    description += ` Known for ${topSpecialties}.`
+  } else if (tags.length > 0) {
+    // Use tags as a fallback
+    const topTags = tags.slice(0, 3).join(", ")
+    description += ` Specializing in ${topTags}.`
+  }
+
+  return description
+}
+
 // Transform database business to app format
 function transformBusiness(dbBusiness: any) {
-  // Clean up description - remove JSON if present
-  let description = dbBusiness.description || ''
-  if (description.startsWith('{') || description.startsWith('[')) {
-    description = `${dbBusiness.name} is a local business in ${dbBusiness.address_city}, TX.`
+  // Priority: 1) custom_description, 2) valid database description, 3) generated description
+  let description = ''
+
+  // Use custom description if available (admin/owner set)
+  if (dbBusiness.custom_description && dbBusiness.custom_description.trim()) {
+    description = dbBusiness.custom_description
+  }
+  // Use database description if it's valid (not JSON, not empty, not too short)
+  else if (dbBusiness.description &&
+           !dbBusiness.description.startsWith('{') &&
+           !dbBusiness.description.startsWith('[') &&
+           dbBusiness.description.trim().length > 20) {
+    description = dbBusiness.description
+  }
+  // Generate a better fallback description
+  else {
+    description = generateBetterDescription(dbBusiness)
   }
 
   // Normalize state
@@ -102,6 +209,9 @@ function transformBusiness(dbBusiness: any) {
   if (!image || image.includes('placeholder')) {
     image = placeholderImage
   }
+
+  const rating = Number(dbBusiness.rating) || 0
+  const reviewCount = dbBusiness.review_count || 0
 
   return {
     id: dbBusiness.slug,
@@ -137,8 +247,8 @@ function transformBusiness(dbBusiness: any) {
       sunday: { open: "Closed", close: "Closed", isOpen: false },
     },
     currentlyOpen: true,
-    rating: Number(dbBusiness.rating) || 0,
-    reviewCount: dbBusiness.review_count || 0,
+    rating: rating,
+    reviewCount: reviewCount,
     priceRange: dbBusiness.price_range || '$',
     yearEstablished: dbBusiness.year_established || undefined,
     owner: dbBusiness.owner || undefined,
@@ -154,15 +264,16 @@ function transformBusiness(dbBusiness: any) {
     featured: dbBusiness.is_featured || false,
     premiumSince: dbBusiness.premium_since || undefined,
     backlinkEnabled: dbBusiness.backlink_enabled || false,
+    dealsBanner: dbBusiness.deals_banner || undefined,
     lastUpdated: dbBusiness.last_updated,
     claimed: true,
     quickStats: {
-      overallRating: Number(dbBusiness.rating) || 0,
-      totalReviews: dbBusiness.review_count || 0,
+      overallRating: rating,
+      totalReviews: reviewCount,
       responseRate: "N/A",
       avgResponseTime: "N/A",
     },
-    ratingBreakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+    ratingBreakdown: generateRatingBreakdown(reviewCount, rating),
   }
 }
 
@@ -287,6 +398,13 @@ export default async function BusinessPage({ params }: { params: Promise<{ id: s
             <div className="lg:col-span-2 space-y-8">
               <BusinessPageContent business={business} />
               <BusinessReviewsSection business={business} />
+
+              {/* Upgrade CTA - shown for free/premium listings */}
+              <UpgradeCTA
+                businessName={business.name}
+                businessId={business.id}
+                listingTier={business.listingTier}
+              />
             </div>
 
             {/* Sidebar */}

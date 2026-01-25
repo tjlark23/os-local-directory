@@ -177,6 +177,9 @@ export function BusinessSidebar({ business }: BusinessSidebarProps) {
           <div className="space-y-1">
             {days.map((day, index) => {
               const isToday = day === today
+              const dayHours = business.hours?.[day]
+              const hasValidHours = dayHours && dayHours.open && dayHours.close && dayHours.open !== 'undefined' && dayHours.close !== 'undefined'
+              const isOpen = dayHours?.isOpen !== false
               return (
                 <div
                   key={day}
@@ -186,9 +189,11 @@ export function BusinessSidebar({ business }: BusinessSidebarProps) {
                 >
                   <span className={isToday ? "text-primary" : "text-foreground"}>{dayNames[index]}</span>
                   <span className={isToday ? "text-primary" : "text-muted-foreground"}>
-                    {business.hours[day].isOpen
-                      ? `${business.hours[day].open} - ${business.hours[day].close}`
-                      : "Closed"}
+                    {!hasValidHours
+                      ? "Hours not available"
+                      : isOpen
+                        ? `${dayHours.open} - ${dayHours.close}`
+                        : "Closed"}
                   </span>
                 </div>
               )

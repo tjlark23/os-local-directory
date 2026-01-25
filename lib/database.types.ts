@@ -91,6 +91,7 @@ export interface Database {
           is_featured: boolean
           premium_since: string | null
           backlink_enabled: boolean
+          deals_banner: string | null
           last_updated: string
           created_at: string
         }
@@ -129,6 +130,7 @@ export interface Database {
           is_featured?: boolean
           premium_since?: string | null
           backlink_enabled?: boolean
+          deals_banner?: string | null
           last_updated?: string
           created_at?: string
         }
@@ -167,6 +169,7 @@ export interface Database {
           is_featured?: boolean
           premium_since?: string | null
           backlink_enabled?: boolean
+          deals_banner?: string | null
           last_updated?: string
           created_at?: string
         }

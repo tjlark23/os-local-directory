@@ -44,6 +44,7 @@ function transformBusiness(dbBusiness: Business): AppBusiness {
     isFeatured: dbBusiness.is_featured,
     premiumSince: dbBusiness.premium_since || undefined,
     backlinkEnabled: dbBusiness.backlink_enabled,
+    dealsBanner: (dbBusiness as any).deals_banner || undefined,
     lastUpdated: dbBusiness.last_updated,
   }
 }
@@ -234,4 +235,97 @@ export async function getCategoriesWithCounts(locationId: string): Promise<typeo
     ...cat,
     count: counts[cat.id] || 0,
   }))
+}
+
+// Admin functions - Get all businesses for admin panel
+export async function getAllBusinessesForAdmin(): Promise<AppBusiness[]> {
+  // Get leander location first
+  const { data: location } = await supabase
+    .from('locations')
+    .select('id')
+    .eq('slug', 'leander')
+    .single()
+
+  if (!location) return []
+
+  const { data, error } = await supabase
+    .from('businesses')
+    .select('*')
+    .eq('location_id', location.id)
+    .order('name')
+
+  if (error || !data) return []
+  return data.map(transformBusiness)
+}
+
+// Get a single business by slug for admin editing
+export async function getBusinessBySlugForAdmin(slug: string): Promise<AppBusiness | null> {
+  const { data: location } = await supabase
+    .from('locations')
+    .select('id')
+    .eq('slug', 'leander')
+    .single()
+
+  if (!location) return null
+
+  const { data, error } = await supabase
+    .from('businesses')
+    .select('*')
+    .eq('location_id', location.id)
+    .eq('slug', slug)
+    .single()
+
+  if (error || !data) return null
+  return transformBusiness(data)
+}
+
+// Update business in database
+export async function updateBusiness(slug: string, updates: {
+  name?: string
+  description?: string
+  custom_description?: string
+  category?: string
+  subcategory?: string
+  phone?: string
+  email?: string
+  website?: string
+  address_street?: string
+  address_city?: string
+  address_state?: string
+  address_zip?: string
+  hours?: Record<string, { open: string; close: string; isOpen: boolean }>
+  photos?: string[]
+  videos?: string[]
+  listing_tier?: 'free' | 'premium' | 'featured'
+  is_featured?: boolean
+  backlink_enabled?: boolean
+  premium_since?: string
+  social_links?: Record<string, string>
+  specialties?: string[]
+  price_range?: string
+  deals_banner?: string
+}): Promise<{ success: boolean; error?: string }> {
+  const { data: location } = await supabase
+    .from('locations')
+    .select('id')
+    .eq('slug', 'leander')
+    .single()
+
+  if (!location) return { success: false, error: 'Location not found' }
+
+  const { error } = await supabase
+    .from('businesses')
+    .update({
+      ...updates,
+      last_updated: new Date().toISOString()
+    })
+    .eq('location_id', location.id)
+    .eq('slug', slug)
+
+  if (error) {
+    console.error('Error updating business:', error)
+    return { success: false, error: error.message }
+  }
+
+  return { success: true }
 }

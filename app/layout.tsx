@@ -2,9 +2,6 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { Navbar } from "@/components/navbar"
-import { AuthProvider } from "@/components/auth-provider"
-import { Footer } from "@/components/footer"
 import { getCurrentLocation } from "@/lib/get-location"
 import { LocationProvider } from "@/lib/location-context"
 
@@ -98,14 +95,6 @@ export default async function RootLayout({
     console.log('Location fetch failed, using defaults:', error)
   }
 
-  const content = (
-    <AuthProvider>
-      <Navbar />
-      <main className="pt-28">{children}</main>
-      <Footer />
-    </AuthProvider>
-  )
-
   return (
     <html lang="en">
       <head>
@@ -117,10 +106,10 @@ export default async function RootLayout({
       <body className={inter.className}>
         {location ? (
           <LocationProvider location={location}>
-            {content}
+            {children}
           </LocationProvider>
         ) : (
-          content
+          children
         )}
       </body>
     </html>

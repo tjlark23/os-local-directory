@@ -111,6 +111,8 @@ export interface Business {
   }
   // Backlink for premium (SEO value)
   backlinkEnabled?: boolean
+  // Deals banner for premium listings
+  dealsBanner?: string
 }
 
 // Filter categories for the homepage tabs

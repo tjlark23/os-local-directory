@@ -1,30 +1,51 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Search, MoreHorizontal, Edit, Eye, CheckCircle, Filter, Star, Crown } from "lucide-react"
+import { Search, MoreHorizontal, Edit, Eye, CheckCircle, Filter, Star, Crown, Loader2 } from "lucide-react"
 import { AdminLayout } from "@/components/admin-layout"
 import Image from "next/image"
-import { getAllBusinesses, CATEGORIES } from "@/lib/data"
+import { CATEGORIES } from "@/lib/db"
+import type { Business } from "@/lib/types"
 
 export default function AdminBusinesses() {
   const [searchQuery, setSearchQuery] = useState("")
   const [categoryFilter, setCategoryFilter] = useState("all")
   const [tierFilter, setTierFilter] = useState("all")
+  const [businesses, setBusinesses] = useState<Business[]>([])
+  const [stats, setStats] = useState({ total: 0, free: 0, premium: 0, featured: 0 })
+  const [isLoading, setIsLoading] = useState(true)
 
-  const allBusinesses = getAllBusinesses()
+  useEffect(() => {
+    async function fetchBusinesses() {
+      try {
+        const response = await fetch('/api/admin/businesses')
+        if (response.ok) {
+          const data = await response.json()
+          setBusinesses(data.businesses || [])
+          setStats(data.stats || { total: 0, free: 0, premium: 0, featured: 0 })
+        }
+      } catch (error) {
+        console.error('Error fetching businesses:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
 
-  const filteredBusinesses = allBusinesses.filter((business) => {
+    fetchBusinesses()
+  }, [])
+
+  const filteredBusinesses = businesses.filter((business) => {
     const matchesSearch =
       business.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       business.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      business.address.city.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = categoryFilter === "all" || business.filterCategory === categoryFilter
+      business.address?.city?.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesCategory = categoryFilter === "all" || business.category === categoryFilter
     const matchesTier = tierFilter === "all" || business.listingTier === tierFilter
     return matchesSearch && matchesCategory && matchesTier
   })
@@ -49,6 +70,16 @@ export default function AdminBusinesses() {
     }
   }
 
+  if (isLoading) {
+    return (
+      <AdminLayout>
+        <div className="flex items-center justify-center h-64">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        </div>
+      </AdminLayout>
+    )
+  }
+
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -56,7 +87,7 @@ export default function AdminBusinesses() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Businesses</h1>
-            <p className="text-gray-600">Manage all {allBusinesses.length} businesses in your directory</p>
+            <p className="text-gray-600">Manage all {stats.total} businesses in your directory</p>
           </div>
         </div>
 
@@ -64,31 +95,25 @@ export default function AdminBusinesses() {
         <div className="grid grid-cols-4 gap-4">
           <Card>
             <CardContent className="p-4">
-              <div className="text-2xl font-bold">{allBusinesses.length}</div>
+              <div className="text-2xl font-bold">{stats.total}</div>
               <p className="text-sm text-muted-foreground">Total Businesses</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4">
-              <div className="text-2xl font-bold text-yellow-600">
-                {allBusinesses.filter(b => b.listingTier === "featured").length}
-              </div>
+              <div className="text-2xl font-bold text-yellow-600">{stats.featured}</div>
               <p className="text-sm text-muted-foreground">Featured</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4">
-              <div className="text-2xl font-bold text-blue-600">
-                {allBusinesses.filter(b => b.listingTier === "premium").length}
-              </div>
+              <div className="text-2xl font-bold text-blue-600">{stats.premium}</div>
               <p className="text-sm text-muted-foreground">Premium</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4">
-              <div className="text-2xl font-bold text-gray-600">
-                {allBusinesses.filter(b => b.listingTier === "free").length}
-              </div>
+              <div className="text-2xl font-bold text-gray-600">{stats.free}</div>
               <p className="text-sm text-muted-foreground">Free</p>
             </CardContent>
           </Card>
@@ -119,7 +144,7 @@ export default function AdminBusinesses() {
                   <DropdownMenuItem onClick={() => setCategoryFilter("all")}>All Categories</DropdownMenuItem>
                   {CATEGORIES.map((cat) => (
                     <DropdownMenuItem key={cat.id} onClick={() => setCategoryFilter(cat.id)}>
-                      {cat.icon} {cat.name}
+                      {cat.name}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -167,7 +192,7 @@ export default function AdminBusinesses() {
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-1">
                         <h3 className="font-semibold text-lg">{business.name}</h3>
-                        {business.claimed && <CheckCircle className="w-4 h-4 text-green-600" />}
+                        <CheckCircle className="w-4 h-4 text-green-600" />
                         {getTierBadge(business.listingTier)}
                       </div>
 
@@ -176,7 +201,7 @@ export default function AdminBusinesses() {
                         <span>•</span>
                         <span>⭐ {business.rating} ({business.reviewCount} reviews)</span>
                         <span>•</span>
-                        <span>{business.address.city}</span>
+                        <span>{business.address?.city}</span>
                       </div>
 
                       <p className="text-sm text-gray-500 mt-1">{business.phone}</p>
@@ -208,6 +233,12 @@ export default function AdminBusinesses() {
                   </div>
                 </div>
               ))}
+
+              {sortedBusinesses.length === 0 && (
+                <div className="text-center py-8 text-gray-500">
+                  No businesses found matching your filters.
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
