@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { updateBusiness, getBusinessBySlugForAdmin } from '@/lib/db'
 
+type RouteContext = {
+  params: Promise<{ slug: string }>
+}
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
+  context: RouteContext
 ) {
-  const { slug } = await params
+  const { slug } = await context.params
 
   try {
     const business = await getBusinessBySlugForAdmin(slug)
@@ -23,9 +27,9 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
+  context: RouteContext
 ) {
-  const { slug } = await params
+  const { slug } = await context.params
 
   try {
     const body = await request.json()
