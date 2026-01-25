@@ -50,11 +50,11 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               {[
                 { name: "Home", href: "/" },
-                { name: "Leander Businesses", href: "/search?location=leander" },
-                { name: "Cedar Park Businesses", href: "/search?location=cedar-park" },
-                { name: "Liberty Hill Businesses", href: "/search?location=liberty-hill" },
+                { name: "Leander Businesses", href: "/search?city=Leander" },
+                { name: "Cedar Park Businesses", href: "/search?city=Cedar Park" },
+                { name: "Liberty Hill Businesses", href: "/search?city=Liberty Hill" },
                 { name: "All Categories", href: "/search" },
-                { name: "Featured Businesses", href: "/featured" },
+                { name: "Featured Businesses", href: "/search" },
               ].map((link) => (
                 <li key={link.name}>
                   <Link
@@ -112,7 +112,7 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-primary" />
-                <span>(512) 555-0123</span>
+                <span>(512) 487-7302</span>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-primary" />

@@ -178,7 +178,7 @@ function UpgradePageContent() {
                     <Crown className="w-6 h-6 text-primary" />
                     Featured Listing
                   </CardTitle>
-                  <Badge className="bg-primary text-lg px-3 py-1">Best Value</Badge>
+                  <Badge className="bg-green-600 text-lg px-3 py-1">$49/mo</Badge>
                 </div>
                 <CardDescription className="text-base">
                   Maximum visibility for your business

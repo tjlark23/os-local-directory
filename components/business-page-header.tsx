@@ -30,13 +30,9 @@ interface BusinessPageHeaderProps {
 export function BusinessPageHeader({ business }: BusinessPageHeaderProps) {
   const [isSaved, setIsSaved] = useState(false)
 
-  const heroImage = business.photos?.[0] || "/business-storefront-modern-professional.jpg"
-  const galleryImages = business.photos?.slice(1, 5) || [
-    "/restaurant-interior-dining.jpg",
-    "/food-plate-delicious.jpg",
-    "/happy-customers-restaurant.jpg",
-    "/chef-cooking-kitchen.jpg",
-  ]
+  const heroImage = business.photos?.[0] || "/images/placeholders/business-default.jpg"
+  const hasMultiplePhotos = business.photos && business.photos.length > 1
+  const galleryImages = hasMultiplePhotos ? business.photos.slice(1, 5) : []
 
   // Only show deals banner for premium/featured listings
   const showDealsBanner = business.dealsBanner &&
@@ -57,37 +53,51 @@ export function BusinessPageHeader({ business }: BusinessPageHeaderProps) {
       )}
 
       <div className="container mx-auto px-4 pt-6">
-        <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[400px] rounded-2xl overflow-hidden">
-          {/* Main large image */}
-          <div className="col-span-2 row-span-2 relative group cursor-pointer">
+        {/* Photo grid - adapts based on number of photos */}
+        {hasMultiplePhotos && galleryImages.length >= 4 ? (
+          <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[400px] rounded-2xl overflow-hidden">
+            {/* Main large image */}
+            <div className="col-span-2 row-span-2 relative group cursor-pointer">
+              <Image
+                src={heroImage}
+                alt={business.name}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+            {/* Gallery images */}
+            {galleryImages.map((img, index) => (
+              <div key={index} className="relative group cursor-pointer overflow-hidden">
+                <Image
+                  src={img}
+                  alt={`${business.name} photo ${index + 2}`}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors" />
+                {index === 3 && business.photos && business.photos.length > 5 && (
+                  <div className="absolute inset-0 bg-foreground/60 flex items-center justify-center">
+                    <span className="text-primary-foreground font-semibold text-lg">
+                      +{business.photos.length - 5} more
+                    </span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* Single image layout when not enough photos */
+          <div className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden">
             <Image
-              src={heroImage || "/placeholder.svg"}
+              src={heroImage}
               alt={business.name}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent" />
           </div>
-          {/* Gallery images */}
-          {galleryImages.map((img, index) => (
-            <div key={index} className="relative group cursor-pointer overflow-hidden">
-              <Image
-                src={img || "/placeholder.svg"}
-                alt={`${business.name} photo ${index + 2}`}
-                fill
-                className="object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors" />
-              {index === 3 && business.photos && business.photos.length > 5 && (
-                <div className="absolute inset-0 bg-foreground/60 flex items-center justify-center">
-                  <span className="text-primary-foreground font-semibold text-lg">
-                    +{business.photos.length - 5} more
-                  </span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        )}
       </div>
 
       <div className="container mx-auto px-4 py-8">

@@ -1,52 +1,96 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Building2, Users, MessageSquare, TrendingUp, Eye, Star } from "lucide-react"
 import { AdminLayout } from "@/components/admin-layout"
+import { supabase } from "@/lib/supabase"
 
-// Mock data - in production, this would come from your database
-const stats = {
-  totalBusinesses: 156,
-  totalUsers: 2847,
-  totalReviews: 1293,
-  monthlyViews: 45672,
-  averageRating: 4.3,
-  pendingReviews: 23,
+interface Stats {
+  totalBusinesses: number
+  featuredBusinesses: number
+  totalReviews: number
+  monthlyViews: number
+  averageRating: number
+  pendingReviews: number
 }
 
-const recentActivity = [
-  {
-    id: 1,
-    type: "business_added",
-    message: "New business 'Hill Country Dental' was added",
-    time: "2 hours ago",
-    status: "pending",
-  },
-  {
-    id: 2,
-    type: "review_reported",
-    message: "Review for 'Joe's Pizza' was reported",
-    time: "4 hours ago",
-    status: "needs_review",
-  },
-  {
-    id: 3,
-    type: "user_registered",
-    message: "New user 'sarah.johnson@email.com' registered",
-    time: "6 hours ago",
-    status: "completed",
-  },
-  {
-    id: 4,
-    type: "business_claimed",
-    message: "'Artisan Coffee Roasters' was claimed by owner",
-    time: "1 day ago",
-    status: "completed",
-  },
-]
-
 export default function AdminDashboard() {
+  const [stats, setStats] = useState<Stats>({
+    totalBusinesses: 0,
+    featuredBusinesses: 0,
+    totalReviews: 0,
+    monthlyViews: 0,
+    averageRating: 0,
+    pendingReviews: 0,
+  })
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        // Get location ID
+        const { data: location } = await supabase
+          .from('locations')
+          .select('id')
+          .eq('slug', 'leander')
+          .single()
+
+        if (!location) return
+
+        // Get total businesses count
+        const { count: totalBusinesses } = await supabase
+          .from('businesses')
+          .select('*', { count: 'exact', head: true })
+          .eq('location_id', location.id)
+
+        // Get featured businesses count
+        const { count: featuredBusinesses } = await supabase
+          .from('businesses')
+          .select('*', { count: 'exact', head: true })
+          .eq('location_id', location.id)
+          .eq('is_featured', true)
+
+        // Get average rating and total reviews
+        const { data: businessData } = await supabase
+          .from('businesses')
+          .select('rating, review_count')
+          .eq('location_id', location.id)
+
+        let totalReviews = 0
+        let totalRating = 0
+        let ratedCount = 0
+
+        if (businessData) {
+          businessData.forEach(b => {
+            totalReviews += b.review_count || 0
+            if (b.rating) {
+              totalRating += Number(b.rating)
+              ratedCount++
+            }
+          })
+        }
+
+        const averageRating = ratedCount > 0 ? totalRating / ratedCount : 0
+
+        setStats({
+          totalBusinesses: totalBusinesses || 0,
+          featuredBusinesses: featuredBusinesses || 0,
+          totalReviews,
+          monthlyViews: 0, // Would need analytics tracking
+          averageRating: Math.round(averageRating * 10) / 10,
+          pendingReviews: 0, // Would need review moderation system
+        })
+      } catch (error) {
+        console.error('Error fetching stats:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchStats()
+  }, [])
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -59,18 +103,18 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.totalBusinesses}</div>
-              <p className="text-xs text-muted-foreground">+12 from last month</p>
+              <p className="text-xs text-muted-foreground">In directory</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">Featured</CardTitle>
+              <Star className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalUsers.toLocaleString()}</div>
-              <p className="text-xs text-muted-foreground">+180 from last month</p>
+              <div className="text-2xl font-bold text-primary">{stats.featuredBusinesses}</div>
+              <p className="text-xs text-muted-foreground">Premium listings</p>
             </CardContent>
           </Card>
 
@@ -81,18 +125,18 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.totalReviews.toLocaleString()}</div>
-              <p className="text-xs text-muted-foreground">+89 from last month</p>
+              <p className="text-xs text-muted-foreground">Total collected</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Monthly Views</CardTitle>
-              <Eye className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">Free Listings</CardTitle>
+              <Building2 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.monthlyViews.toLocaleString()}</div>
-              <p className="text-xs text-muted-foreground">+15% from last month</p>
+              <div className="text-2xl font-bold">{stats.totalBusinesses - stats.featuredBusinesses}</div>
+              <p className="text-xs text-muted-foreground">Standard listings</p>
             </CardContent>
           </Card>
 
@@ -103,48 +147,40 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.averageRating}</div>
-              <p className="text-xs text-muted-foreground">+0.2 from last month</p>
+              <p className="text-xs text-muted-foreground">Across all businesses</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Reviews</CardTitle>
+              <CardTitle className="text-sm font-medium">Categories</CardTitle>
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.pendingReviews}</div>
-              <p className="text-xs text-muted-foreground">Needs attention</p>
+              <div className="text-2xl font-bold">12</div>
+              <p className="text-xs text-muted-foreground">Business types</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Recent Activity */}
+        {/* Quick Summary */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle>Directory Overview</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">{activity.message}</p>
-                    <p className="text-xs text-gray-500">{activity.time}</p>
-                  </div>
-                  <Badge
-                    variant={
-                      activity.status === "completed"
-                        ? "default"
-                        : activity.status === "pending"
-                          ? "secondary"
-                          : "destructive"
-                    }
-                  >
-                    {activity.status.replace("_", " ")}
-                  </Badge>
-                </div>
-              ))}
+            <div className="text-muted-foreground">
+              <p className="mb-2">
+                Your directory currently has <span className="font-semibold text-foreground">{stats.totalBusinesses}</span> businesses
+                with a total of <span className="font-semibold text-foreground">{stats.totalReviews.toLocaleString()}</span> reviews.
+              </p>
+              <p>
+                {stats.featuredBusinesses > 0 ? (
+                  <>You have <span className="font-semibold text-primary">{stats.featuredBusinesses}</span> featured listings generating premium revenue.</>
+                ) : (
+                  <>No featured listings yet. Promote the upgrade option to business owners!</>
+                )}
+              </p>
             </div>
           </CardContent>
         </Card>

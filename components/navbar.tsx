@@ -99,19 +99,19 @@ export function Navbar() {
             </Link>
 
             {/* Desktop Search */}
-            <div className="hidden md:flex items-center gap-3 flex-1 max-w-xl">
-              <div className="relative flex-1">
+            <div className="hidden md:flex items-center gap-3 flex-1 max-w-2xl">
+              <div className="relative flex-1 min-w-[200px]">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                 <Input
                   placeholder="Search businesses..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 h-10 bg-muted/50 border-border rounded-lg focus:bg-card focus:ring-2 focus:ring-primary/30 transition-all"
+                  className="pl-10 h-10 bg-muted/50 border-border rounded-lg focus:bg-card focus:ring-2 focus:ring-primary/30 transition-all w-full"
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 />
               </div>
               <Select value={selectedCity} onValueChange={setSelectedCity}>
-                <SelectTrigger className="h-10 w-[160px] border-border bg-muted/50 rounded-lg">
+                <SelectTrigger className="h-10 w-[140px] border-border bg-muted/50 rounded-lg flex-shrink-0">
                   <MapPin className="w-4 h-4 mr-2 text-primary" />
                   <SelectValue placeholder="All Cities" />
                 </SelectTrigger>
@@ -125,7 +125,7 @@ export function Navbar() {
               <Button
                 onClick={handleSearch}
                 size="sm"
-                className="h-10 px-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg"
+                className="h-10 px-5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg flex-shrink-0"
               >
                 Search
               </Button>
@@ -134,7 +134,7 @@ export function Navbar() {
             {/* Desktop Nav Items */}
             <div className="hidden md:flex items-center gap-2 flex-shrink-0">
               <Link href="/business-inquiry">
-                <Button variant="default" size="sm" className="bg-primary hover:bg-primary/90">
+                <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                   For Businesses
                 </Button>
               </Link>
@@ -232,7 +232,7 @@ export function Navbar() {
       {/* Category Bar - Desktop Only */}
       <div className="hidden md:block bg-muted/60 border-b border-border">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center gap-1 py-2 overflow-x-auto scrollbar-hide">
+          <div className="flex items-center justify-center gap-1 py-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {categories.map((item) => {
               const Icon = item.icon
               return (
