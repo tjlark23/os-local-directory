@@ -76,8 +76,14 @@ export const metadata: Metadata = {
     canonical: siteConfig.url,
   },
   verification: {
-    // Add these after setting up Google Search Console
-    // google: "your-google-verification-code",
+    // Google Search Console verification
+    // Instructions:
+    // 1. Go to https://search.google.com/search-console
+    // 2. Add property: https://directory.leanderscoop.com
+    // 3. Choose "HTML tag" verification method
+    // 4. Copy ONLY the content value from the meta tag (e.g., "abc123xyz")
+    // 5. Uncomment the line below and paste the code
+    // google: "PASTE_YOUR_CODE_HERE",
   },
 }
 
