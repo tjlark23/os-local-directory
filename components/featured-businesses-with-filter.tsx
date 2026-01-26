@@ -304,11 +304,11 @@ export function FeaturedBusinessesWithFilter() {
                   <Image
                     src={getImageSrc(business)}
                     alt={business.name}
-                    width={600}
-                    height={400}
+                    width={800}
+                    height={500}
                     className="w-full h-48 sm:h-52 object-cover group-hover:scale-110 transition-transform duration-700"
-                    quality={95}
-                    unoptimized={getImageSrc(business).startsWith('http')}
+                    quality={100}
+                    unoptimized
                   />
                   {/* Overlay on hover */}
                   <div

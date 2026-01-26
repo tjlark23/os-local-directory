@@ -241,10 +241,10 @@ export function HeroCarousel() {
                 alt={currentBusiness.name}
                 fill
                 className="object-cover"
-                quality={95}
+                quality={100}
                 sizes="(max-width: 1024px) 100vw, 60vw"
                 priority
-                unoptimized={getImageSrc(currentBusiness).startsWith('http')}
+                unoptimized
               />
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
@@ -332,19 +332,19 @@ export function HeroCarousel() {
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <CardContent className="p-0 h-full">
-                    <div className="flex h-full">
-                      <div className="relative w-44 flex-shrink-0">
+                    <div className="flex flex-row h-full">
+                      <div className="relative w-[140px] min-w-[140px] flex-shrink-0 h-full">
                         <Image
                           src={getImageSrc(business)}
                           alt={business.name}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
-                          quality={95}
-                          sizes="176px"
-                          unoptimized={getImageSrc(business).startsWith('http')}
+                          quality={100}
+                          sizes="140px"
+                          unoptimized
                         />
                       </div>
-                      <div className="flex-1 p-4 flex flex-col justify-between min-w-0">
+                      <div className="flex-1 p-4 flex flex-col justify-between min-w-0 overflow-hidden">
                         <div>
                           <div className="flex items-start justify-between gap-2 mb-1">
                             <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1 text-sm">
