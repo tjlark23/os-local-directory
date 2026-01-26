@@ -307,6 +307,8 @@ export function FeaturedBusinessesWithFilter() {
                     width={600}
                     height={400}
                     className="w-full h-48 sm:h-52 object-cover group-hover:scale-110 transition-transform duration-700"
+                    quality={95}
+                    unoptimized={getImageSrc(business).startsWith('http')}
                   />
                   {/* Overlay on hover */}
                   <div
