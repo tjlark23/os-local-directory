@@ -241,10 +241,21 @@ export function HeroCarousel() {
                 alt={currentBusiness.name}
                 fill
                 className="object-cover"
+                quality={85}
+                sizes="(max-width: 1024px) 100vw, 60vw"
                 priority
               />
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+            </div>
+
+            {/* City Badge - Top Right */}
+            <div className="absolute top-5 right-5 z-20">
+              <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg">
+                <span className="text-sm font-medium text-gray-800">
+                  📍 {currentBusiness.address_city}, {normalizeState(currentBusiness.address_state)}
+                </span>
+              </div>
             </div>
 
             {/* Business Info - Embedded in bottom left */}
@@ -327,6 +338,8 @@ export function HeroCarousel() {
                           alt={business.name}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          quality={85}
+                          sizes="144px"
                         />
                       </div>
                       <div className="flex-1 p-3 flex flex-col justify-between min-w-0">

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, ArrowRight } from "lucide-react"
+import { Facebook, Instagram, Twitter, Mail, MapPin, ArrowRight } from "lucide-react"
 import Image from "next/image"
 
 export function Footer() {
@@ -109,10 +109,6 @@ export function Footer() {
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-primary" />
                 <span>hello@leanderscoop.com</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-primary" />
-                <span>(512) 487-7302</span>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-primary" />

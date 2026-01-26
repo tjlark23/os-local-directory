@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
-import { UtensilsCrossed, Wrench, ShoppingBag, Heart, Music, Car, ArrowRight } from "lucide-react"
+import { UtensilsCrossed, Wrench, Heart, Music, Car, PawPrint, ArrowRight } from "lucide-react"
 
 const categories = [
   {
@@ -22,15 +22,6 @@ const categories = [
     icon: Wrench,
     gradient: "from-blue-500 to-cyan-400",
     href: "/search?category=services",
-  },
-  {
-    id: "shopping",
-    name: "Shopping",
-    description: "Local shops and boutiques",
-    count: "280+",
-    icon: ShoppingBag,
-    gradient: "from-emerald-500 to-teal-400",
-    href: "/search?category=shopping",
   },
   {
     id: "health",
@@ -58,6 +49,15 @@ const categories = [
     icon: Car,
     gradient: "from-amber-500 to-yellow-400",
     href: "/search?category=automotive",
+  },
+  {
+    id: "pets",
+    name: "Pets",
+    description: "Pet care and supplies",
+    count: "80+",
+    icon: PawPrint,
+    gradient: "from-emerald-500 to-teal-400",
+    href: "/search?category=pets",
   },
 ]
 

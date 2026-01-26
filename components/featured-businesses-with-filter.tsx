@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Star, MapPin, Heart, ArrowRight } from "lucide-react"
+import { Star, MapPin, ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { CategoryFilterTabs } from "@/components/category-filter-tabs"
@@ -62,7 +62,6 @@ interface Business {
 export function FeaturedBusinessesWithFilter() {
   const [activeCategory, setActiveCategory] = useState<FilterCategory>("all")
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
-  const [favorites, setFavorites] = useState<string[]>([])
   const [businesses, setBusinesses] = useState<Business[]>([])
   const [loading, setLoading] = useState(true)
   const [totalCount, setTotalCount] = useState(0)
@@ -190,14 +189,6 @@ export function FeaturedBusinessesWithFilter() {
     fetchBusinesses()
   }, [activeCategory])
 
-  const toggleFavorite = (id: string, e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((fid) => fid !== id) : [...prev, id]
-    )
-  }
-
   const getPlaceholderImage = (category: string) => {
     return CATEGORY_PLACEHOLDERS[category] || "/images/placeholders/services.svg"
   }
@@ -322,20 +313,6 @@ export function FeaturedBusinessesWithFilter() {
                     className={`absolute inset-0 bg-foreground/20 transition-opacity duration-300 ${hoveredCard === business.id ? "opacity-100" : "opacity-0"}`}
                   />
 
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => toggleFavorite(business.id, e)}
-                    className="absolute top-3 right-3 bg-card/90 hover:bg-card shadow-md hover:scale-110 transition-all duration-300"
-                  >
-                    <Heart
-                      className={`w-4 h-4 transition-colors ${
-                        favorites.includes(business.id)
-                          ? "fill-red-500 text-red-500"
-                          : "text-muted-foreground hover:text-primary"
-                      }`}
-                    />
-                  </Button>
                   {business.is_featured && (
                     <Badge className="absolute top-3 left-3 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md">
                       Featured

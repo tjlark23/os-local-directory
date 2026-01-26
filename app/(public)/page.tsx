@@ -2,7 +2,6 @@ import { HeroTagline } from "@/components/hero-tagline"
 import { HeroCarousel } from "@/components/hero-carousel"
 import { FeaturedBusinessesWithFilter } from "@/components/featured-businesses-with-filter"
 import { BrowseCategoriesSection } from "@/components/browse-categories-section"
-import { TestimonialsSection } from "@/components/testimonials-section"
 import { BusinessCTASection, DiscoverCTASection } from "@/components/business-cta-section"
 
 export default function HomePage() {
@@ -18,9 +17,6 @@ export default function HomePage() {
 
       {/* Browse by Category */}
       <BrowseCategoriesSection />
-
-      {/* Testimonials */}
-      <TestimonialsSection />
 
       {/* Business Owner CTA */}
       <BusinessCTASection />

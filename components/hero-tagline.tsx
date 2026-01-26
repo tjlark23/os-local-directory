@@ -3,17 +3,16 @@ import { MapPin } from "lucide-react"
 export function HeroTagline() {
   return (
     <div className="bg-card border-b border-border">
-      <div className="container mx-auto px-4 py-10 text-center">
-        <div className="flex items-center justify-center gap-2 text-primary mb-3">
-          <MapPin className="w-5 h-5" />
-          <span className="text-sm font-medium uppercase tracking-wider">Leander, TX & Surrounding Areas</span>
+      <div className="container mx-auto px-4 py-6 text-center">
+        <div className="flex items-center justify-center gap-2 text-primary mb-2">
+          <MapPin className="w-4 h-4" />
+          <span className="text-sm font-medium uppercase tracking-wider">Leander, Cedar Park, Liberty Hill, Texas</span>
         </div>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 text-balance">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 text-balance">
           Discover the Best Local Businesses
         </h1>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-          Find trusted restaurants, services, and shops in your neighborhood. Read reviews, compare options, and support
-          local.
+        <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
+          Find trusted restaurants, services, and shops in your neighborhood. Read reviews, compare options, and support local.
         </p>
       </div>
     </div>

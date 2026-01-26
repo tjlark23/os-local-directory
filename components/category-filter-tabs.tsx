@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button"
 import {
   UtensilsCrossed,
-  ShoppingBag,
   Sparkles,
   Music,
   Car,
@@ -19,7 +18,6 @@ const categories = [
   { id: "food" as const, name: "Food & Dining", icon: UtensilsCrossed },
   { id: "health-beauty" as const, name: "Health & Beauty", icon: Sparkles },
   { id: "auto-services" as const, name: "Auto", icon: Car },
-  { id: "shopping" as const, name: "Shopping", icon: ShoppingBag },
   { id: "entertainment" as const, name: "Entertainment", icon: Music },
   { id: "pets" as const, name: "Pets", icon: PawPrint },
   { id: "real-estate" as const, name: "Real Estate", icon: Building2 },
