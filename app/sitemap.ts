@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 
+// Base URL for all sitemap entries
 const baseUrl = 'https://directory.leanderscoop.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
