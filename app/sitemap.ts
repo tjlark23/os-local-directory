@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next"
 import { CATEGORIES } from "@/lib/types"
 
+// Sitemap generates dynamically at runtime to fetch business data from Supabase
 // Force dynamic generation at runtime (not during build)
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600 // Revalidate every hour
