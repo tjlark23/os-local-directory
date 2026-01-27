@@ -1,140 +1,164 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Facebook, Instagram, Twitter, Mail, MapPin, ArrowRight } from "lucide-react"
+import { Facebook, Instagram, Twitter } from "lucide-react"
 import Image from "next/image"
 
 export function Footer() {
   return (
-    <footer className="bg-foreground text-background">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand Section */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <Image src="/leander-scoop-logo.png" alt="Leander Scoop" width={48} height={48} className="w-12 h-12" />
-              <div>
-                <div className="font-bold text-xl">Leander Scoop</div>
-                <div className="text-sm text-background/60">Local Directory</div>
-              </div>
-            </div>
-            <p className="text-background/70 text-sm mb-6 leading-relaxed">
-              Your trusted source for discovering the best local businesses in Leander, Cedar Park, and Liberty Hill.
-              Connecting communities since 2024.
+    <footer className="bg-gray-800 text-gray-300 py-12">
+      <div className="container mx-auto px-4">
+        {/* 4-column grid - About takes 2 columns on desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-10">
+
+          {/* Column 1: About (wider - 2 columns) */}
+          <div className="lg:col-span-2">
+            {/* Logo Image */}
+            <Image
+              src="/images/leander-20scoop-20text-20logo.png"
+              alt="Leander Scoop"
+              width={200}
+              height={60}
+              className="mb-4"
+              unoptimized
+            />
+            <p className="text-sm mb-4 leading-relaxed">
+              Discover the best local businesses in Leander, Cedar Park, and Liberty Hill. Your trusted community directory.
             </p>
-
-            <div className="flex gap-2">
-              {[
-                { icon: Facebook, href: "#" },
-                { icon: Instagram, href: "#" },
-                { icon: Twitter, href: "#" },
-              ].map((social, index) => (
-                <Button
-                  key={index}
-                  variant="ghost"
-                  size="icon"
-                  className="text-background/60 hover:text-background hover:bg-background/10 rounded-full transition-all"
-                  asChild
-                >
-                  <Link href={social.href}>
-                    <social.icon className="w-5 h-5" />
-                  </Link>
-                </Button>
-              ))}
+            {/* Social media icons */}
+            <div className="flex gap-3">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"
+              >
+                <Twitter className="w-5 h-5" />
+              </a>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Column 2: Categories */}
           <div>
-            <h3 className="font-semibold mb-6 text-lg">Explore</h3>
+            <h3 className="text-white font-bold mb-4 text-lg">Categories</h3>
             <ul className="space-y-3 text-sm">
-              {[
-                { name: "Home", href: "/" },
-                { name: "Leander Businesses", href: "/search?city=Leander" },
-                { name: "Cedar Park Businesses", href: "/search?city=Cedar Park" },
-                { name: "Liberty Hill Businesses", href: "/search?city=Liberty Hill" },
-                { name: "All Categories", href: "/search" },
-                { name: "Featured Businesses", href: "/search" },
-              ].map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-background/60 hover:text-primary transition-colors inline-flex items-center group"
-                  >
-                    {link.name}
-                    <ArrowRight className="w-3 h-3 ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/search?category=food" className="hover:text-white transition-colors">
+                  Restaurants
+                </Link>
+              </li>
+              <li>
+                <Link href="/search?category=auto-services" className="hover:text-white transition-colors">
+                  Auto Services
+                </Link>
+              </li>
+              <li>
+                <Link href="/search?category=health-beauty" className="hover:text-white transition-colors">
+                  Health & Beauty
+                </Link>
+              </li>
+              <li>
+                <Link href="/search?category=home-services" className="hover:text-white transition-colors">
+                  Home Services
+                </Link>
+              </li>
+              <li>
+                <Link href="/search?category=entertainment" className="hover:text-white transition-colors">
+                  Entertainment
+                </Link>
+              </li>
+              <li>
+                <Link href="/search?category=pets" className="hover:text-white transition-colors">
+                  Pets
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* About & Contact */}
+          {/* Column 3: For Businesses */}
           <div>
-            <h3 className="font-semibold mb-6 text-lg">About</h3>
+            <h3 className="text-white font-bold mb-4 text-lg">For Businesses</h3>
             <ul className="space-y-3 text-sm">
-              {[
-                { name: "Contact Us", href: "/contact" },
-                { name: "Privacy Policy", href: "/privacy" },
-                { name: "Terms of Service", href: "/terms" },
-              ].map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-background/60 hover:text-primary transition-colors inline-flex items-center group"
-                  >
-                    {link.name}
-                    <ArrowRight className="w-3 h-3 ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/business-inquiry" className="hover:text-white transition-colors">
+                  Add Your Business
+                </Link>
+              </li>
+              <li>
+                <Link href="/upgrade" className="hover:text-white transition-colors">
+                  Upgrade Listing
+                </Link>
+              </li>
+              <li>
+                <Link href="/business-inquiry" className="hover:text-white transition-colors">
+                  Advertise With Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition-colors">
+                  Business Support
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Newsletter */}
+          {/* Column 4: Company */}
           <div>
-            <h3 className="font-semibold mb-6 text-lg">Stay Connected</h3>
-            <p className="text-background/70 text-sm mb-4">Get updates on new businesses and local events.</p>
-            <div className="flex gap-2 mb-6">
-              <Input
-                placeholder="Enter your email"
-                className="bg-background/10 border-background/20 text-background placeholder:text-background/40 focus:bg-background/20"
-              />
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-4">
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
-
-            <div className="space-y-3 text-sm text-background/60">
-              <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-primary" />
-                <span>hello@leanderscoop.com</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <MapPin className="w-4 h-4 text-primary" />
-                <span>Leander, TX</span>
-              </div>
-            </div>
+            <h3 className="text-white font-bold mb-4 text-lg">Company</h3>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link href="/about" className="hover:text-white transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition-colors">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="border-t border-background/10 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-sm text-background/50">© 2025 Leander Scoop Directory. All rights reserved.</div>
-
-            <div className="flex flex-wrap justify-center gap-6 text-xs text-background/40">
-              {[
-                { name: "Privacy Policy", href: "/privacy" },
-                { name: "Terms of Service", href: "/terms" },
-                { name: "Cookie Policy", href: "/cookies" },
-                { name: "Contact Us", href: "/contact" },
-              ].map((link) => (
-                <Link key={link.name} href={link.href} className="hover:text-background transition-colors">
-                  {link.name}
-                </Link>
-              ))}
-            </div>
+        {/* Footer Bottom */}
+        <div className="pt-6 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-gray-400">
+            © 2026 Leander Scoop. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-sm">
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Privacy
+            </Link>
+            <Link href="/terms" className="hover:text-white transition-colors">
+              Terms
+            </Link>
+            <Link href="/sitemap.xml" className="hover:text-white transition-colors">
+              Sitemap
+            </Link>
           </div>
         </div>
       </div>
