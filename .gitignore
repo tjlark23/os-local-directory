@@ -30,8 +30,8 @@ next-env.d.ts
 tmpclaude-*
 nul
 
-# claude
-.claude/
+# claude (keep .claude/skills/ tracked, ignore settings)
+.claude/settings*.json
 .env*.local
 
 # lock files (use npm)
