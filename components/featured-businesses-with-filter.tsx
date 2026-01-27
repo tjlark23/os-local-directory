@@ -4,11 +4,10 @@ import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Star, MapPin, Heart, ArrowRight } from "lucide-react"
+import { Star, MapPin, ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { CategoryFilterTabs } from "@/components/category-filter-tabs"
-import { supabase } from "@/lib/supabase"
 
 // Category placeholder images
 const CATEGORY_PLACEHOLDERS: Record<string, string> = {
@@ -24,20 +23,6 @@ const CATEGORY_PLACEHOLDERS: Record<string, string> = {
   financial: "/images/placeholders/financial.svg",
   home: "/images/placeholders/home.svg",
   entertainment: "/images/placeholders/entertainment.svg",
-}
-
-// Map frontend categories to database categories
-const CATEGORY_MAP: Record<string, string[]> = {
-  "all": [],
-  "food": ["restaurants"],
-  "health-beauty": ["health", "beauty", "fitness"],
-  "auto-services": ["automotive"],
-  "shopping": ["shopping"],
-  "entertainment": ["entertainment"],
-  "pets": ["pets"],
-  "real-estate": ["services"],
-  "home-services": ["home"],
-  "services": ["services", "financial", "education"],
 }
 
 type FilterCategory = "all" | "food" | "health-beauty" | "auto-services" | "shopping" | "entertainment" | "pets" | "real-estate" | "services" | "home-services"
@@ -59,144 +44,168 @@ interface Business {
   tags: string[]
 }
 
+// Mock businesses data
+const MOCK_BUSINESSES: Business[] = [
+  {
+    id: "1",
+    slug: "bluebonnet-bbq",
+    name: "Bluebonnet BBQ",
+    description: "Authentic Texas barbecue with slow-smoked brisket, ribs, and all the classic sides. Family-owned since 2010.",
+    category: "restaurants",
+    image: "/texas-bbq-restaurant-smoky-brisket-rustic-interior.jpg",
+    rating: 4.7,
+    review_count: 127,
+    price_range: "$$",
+    address_street: "123 Main St",
+    address_city: "Leander",
+    address_state: "TX",
+    is_featured: true,
+    tags: ["BBQ", "Family Friendly", "Catering"],
+  },
+  {
+    id: "2",
+    slug: "hill-country-cafe",
+    name: "Hill Country Cafe",
+    description: "Farm-to-table dining featuring locally sourced ingredients and fresh breakfast favorites every morning.",
+    category: "restaurants",
+    image: "/cozy-american-cafe-interior-breakfast-brunch.jpg",
+    rating: 4.6,
+    review_count: 89,
+    price_range: "$$",
+    address_street: "789 Bell Blvd",
+    address_city: "Cedar Park",
+    address_state: "TX",
+    is_featured: true,
+    tags: ["Breakfast", "Brunch", "Local Favorite"],
+  },
+  {
+    id: "3",
+    slug: "serenity-wellness-spa",
+    name: "Serenity Wellness Spa",
+    description: "Full-service spa offering massage therapy, facials, and holistic wellness treatments in a peaceful setting.",
+    category: "health",
+    image: "/modern-wellness-spa-massage-therapy-center.jpg",
+    rating: 4.9,
+    review_count: 63,
+    price_range: "$$$",
+    address_street: "654 Wellness Way",
+    address_city: "Leander",
+    address_state: "TX",
+    is_featured: true,
+    tags: ["Massage", "Facials", "Relaxation"],
+  },
+  {
+    id: "4",
+    slug: "joes-pizza",
+    name: "Joe's Pizza",
+    description: "New York-style pizza made with authentic ingredients and traditional recipes. Delivery available.",
+    category: "restaurants",
+    image: "/new-york-pizza-slice-italian-restaurant-brick-oven.jpg",
+    rating: 4.6,
+    review_count: 94,
+    price_range: "$",
+    address_street: "890 Pizza Lane",
+    address_city: "Leander",
+    address_state: "TX",
+    is_featured: false,
+    tags: ["Pizza", "Italian", "Delivery"],
+  },
+  {
+    id: "5",
+    slug: "leander-pet-clinic",
+    name: "Leander Pet Clinic",
+    description: "Full-service veterinary clinic providing comprehensive care for dogs, cats, and exotic pets.",
+    category: "pets",
+    image: "/veterinary-clinic-happy-dog-cat-modern-clean-pet-c.jpg",
+    rating: 4.9,
+    review_count: 89,
+    price_range: "$$",
+    address_street: "456 Pet Care Lane",
+    address_city: "Leander",
+    address_state: "TX",
+    is_featured: true,
+    tags: ["Emergency Care", "Boarding", "Grooming"],
+  },
+  {
+    id: "6",
+    slug: "hill-country-realty",
+    name: "Hill Country Realty",
+    description: "Premier real estate agency specializing in residential properties throughout the greater Austin area.",
+    category: "services",
+    image: "/texas-hill-country-home-real-estate-beautiful-hous.jpg",
+    rating: 4.8,
+    review_count: 156,
+    price_range: null,
+    address_street: "789 Realty Row",
+    address_city: "Cedar Park",
+    address_state: "TX",
+    is_featured: true,
+    tags: ["Buying", "Selling", "Rentals"],
+  },
+  {
+    id: "7",
+    slug: "artisan-coffee-roasters",
+    name: "Artisan Coffee Roasters",
+    description: "Locally roasted specialty coffee with a cozy atmosphere. WiFi available and outdoor seating.",
+    category: "restaurants",
+    image: "/artisan-coffee-shop-latte-art-cozy-cafe-interior.jpg",
+    rating: 4.8,
+    review_count: 156,
+    price_range: "$",
+    address_street: "321 Coffee Blvd",
+    address_city: "Leander",
+    address_state: "TX",
+    is_featured: false,
+    tags: ["Coffee", "WiFi", "Outdoor Seating"],
+  },
+  {
+    id: "8",
+    slug: "precision-auto-care",
+    name: "Precision Auto Care",
+    description: "Full-service auto repair and maintenance. ASE certified technicians and honest pricing.",
+    category: "automotive",
+    image: "/professional-auto-repair-shop-mechanic-car-service.jpg",
+    rating: 4.7,
+    review_count: 112,
+    price_range: "$$",
+    address_street: "555 Auto Drive",
+    address_city: "Leander",
+    address_state: "TX",
+    is_featured: false,
+    tags: ["Oil Change", "Brakes", "AC Repair"],
+  },
+]
+
 export function FeaturedBusinessesWithFilter() {
   const [activeCategory, setActiveCategory] = useState<FilterCategory>("all")
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
-  const [favorites, setFavorites] = useState<string[]>([])
-  const [businesses, setBusinesses] = useState<Business[]>([])
-  const [loading, setLoading] = useState(true)
-  const [totalCount, setTotalCount] = useState(0)
+  const [businesses, setBusinesses] = useState<Business[]>(MOCK_BUSINESSES)
+  const [loading, setLoading] = useState(false)
+  const [totalCount, setTotalCount] = useState(MOCK_BUSINESSES.length)
 
+  // Filter businesses based on selected category
   useEffect(() => {
-    async function fetchBusinesses() {
-      setLoading(true)
-
-      try {
-        // First get the location ID for Leander
-        const { data: location } = await supabase
-          .from('locations')
-          .select('id')
-          .eq('slug', 'leander')
-          .single()
-
-        if (!location) {
-          setLoading(false)
-          return
-        }
-
-        // When "all" is selected, get diverse businesses from different categories
-        if (activeCategory === "all") {
-          const categoriesToFeature = ['restaurants', 'health', 'automotive', 'home', 'shopping', 'services', 'entertainment', 'pets', 'beauty', 'financial', 'education', 'fitness']
-          const diverseBusinesses: Business[] = []
-          const seenNames = new Set<string>()
-
-          for (const category of categoriesToFeature) {
-            if (diverseBusinesses.length >= 8) break
-
-            const { data: categoryBusinesses } = await supabase
-              .from('businesses')
-              .select('*')
-              .eq('location_id', location.id)
-              .eq('category', category)
-              .order('rating', { ascending: false })
-              .order('review_count', { ascending: false })
-              .limit(5)
-
-            if (categoryBusinesses) {
-              // Find first unique business in this category
-              for (const biz of categoryBusinesses) {
-                const normalizedName = biz.name.toLowerCase().trim()
-                if (!seenNames.has(normalizedName)) {
-                  seenNames.add(normalizedName)
-                  diverseBusinesses.push(biz)
-                  break
-                }
-              }
-            }
-          }
-
-          // If we don't have enough diverse businesses, fetch top-rated businesses overall
-          if (diverseBusinesses.length < 8) {
-            const { data: topBusinesses } = await supabase
-              .from('businesses')
-              .select('*')
-              .eq('location_id', location.id)
-              .order('is_featured', { ascending: false })
-              .order('rating', { ascending: false })
-              .order('review_count', { ascending: false })
-              .limit(30)
-
-            if (topBusinesses) {
-              for (const biz of topBusinesses) {
-                if (diverseBusinesses.length >= 8) break
-                const normalizedName = biz.name.toLowerCase().trim()
-                if (!seenNames.has(normalizedName)) {
-                  seenNames.add(normalizedName)
-                  diverseBusinesses.push(biz)
-                }
-              }
-            }
-          }
-
-          setBusinesses(diverseBusinesses)
-          setTotalCount(diverseBusinesses.length)
-        } else {
-          // For specific category, get businesses from that category
-          const dbCategories = CATEGORY_MAP[activeCategory] || []
-
-          let query = supabase
-            .from('businesses')
-            .select('*', { count: 'exact' })
-            .eq('location_id', location.id)
-
-          if (dbCategories.length > 0) {
-            query = query.in('category', dbCategories)
-          }
-
-          query = query
-            .order('rating', { ascending: false })
-            .order('review_count', { ascending: false })
-            .limit(50)
-
-          const { data, count, error } = await query
-
-          if (error) {
-            console.error('Error fetching businesses:', error)
-            return
-          }
-
-          // Dedupe by name
-          const uniqueBusinesses: Business[] = []
-          const seenNames = new Set<string>()
-
-          for (const biz of (data || [])) {
-            const normalizedName = biz.name.toLowerCase().trim()
-            if (!seenNames.has(normalizedName) && uniqueBusinesses.length < 8) {
-              seenNames.add(normalizedName)
-              uniqueBusinesses.push(biz)
-            }
-          }
-
-          setBusinesses(uniqueBusinesses)
-          setTotalCount(count || 0)
-        }
-      } catch (error) {
-        console.error('Error:', error)
-      } finally {
-        setLoading(false)
+    if (activeCategory === "all") {
+      setBusinesses(MOCK_BUSINESSES)
+      setTotalCount(MOCK_BUSINESSES.length)
+    } else {
+      const categoryMap: Record<string, string[]> = {
+        "food": ["restaurants"],
+        "health-beauty": ["health", "beauty", "fitness"],
+        "auto-services": ["automotive"],
+        "shopping": ["shopping"],
+        "entertainment": ["entertainment"],
+        "pets": ["pets"],
+        "real-estate": ["services"],
+        "home-services": ["home"],
+        "services": ["services", "financial", "education"],
       }
+      const dbCategories = categoryMap[activeCategory] || []
+      const filtered = MOCK_BUSINESSES.filter(b => dbCategories.includes(b.category))
+      setBusinesses(filtered)
+      setTotalCount(filtered.length)
     }
-
-    fetchBusinesses()
   }, [activeCategory])
-
-  const toggleFavorite = (id: string, e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((fid) => fid !== id) : [...prev, id]
-    )
-  }
 
   const getPlaceholderImage = (category: string) => {
     return CATEGORY_PLACEHOLDERS[category] || "/images/placeholders/services.svg"
@@ -313,29 +322,17 @@ export function FeaturedBusinessesWithFilter() {
                   <Image
                     src={getImageSrc(business)}
                     alt={business.name}
-                    width={600}
-                    height={400}
+                    width={800}
+                    height={500}
                     className="w-full h-48 sm:h-52 object-cover group-hover:scale-110 transition-transform duration-700"
+                    quality={100}
+                    unoptimized
                   />
                   {/* Overlay on hover */}
                   <div
                     className={`absolute inset-0 bg-foreground/20 transition-opacity duration-300 ${hoveredCard === business.id ? "opacity-100" : "opacity-0"}`}
                   />
 
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => toggleFavorite(business.id, e)}
-                    className="absolute top-3 right-3 bg-card/90 hover:bg-card shadow-md hover:scale-110 transition-all duration-300"
-                  >
-                    <Heart
-                      className={`w-4 h-4 transition-colors ${
-                        favorites.includes(business.id)
-                          ? "fill-red-500 text-red-500"
-                          : "text-muted-foreground hover:text-primary"
-                      }`}
-                    />
-                  </Button>
                   {business.is_featured && (
                     <Badge className="absolute top-3 left-3 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md">
                       Featured

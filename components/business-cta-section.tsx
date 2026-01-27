@@ -78,7 +78,7 @@ export function DiscoverCTASection() {
             Join thousands of locals who trust Leander Scoop to find the best businesses in their area
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex items-center justify-center">
             <Link href="/search">
               <Button
                 size="lg"
@@ -86,15 +86,6 @@ export function DiscoverCTASection() {
               >
                 Start Exploring
                 <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
-            <Link href="/signup">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-border text-foreground hover:bg-secondary px-8 h-14 text-lg font-semibold bg-transparent"
-              >
-                Create Free Account
               </Button>
             </Link>
           </div>

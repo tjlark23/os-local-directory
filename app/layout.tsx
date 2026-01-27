@@ -85,6 +85,7 @@ export const metadata: Metadata = {
     // 5. Uncomment the line below and paste the code
     // google: "PASTE_YOUR_CODE_HERE",
   },
+    generator: 'v0.app'
 }
 
 export default async function RootLayout({

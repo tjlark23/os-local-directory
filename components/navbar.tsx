@@ -15,7 +15,6 @@ import {
   Car,
   Sparkles,
   PartyPopper,
-  ShoppingBag,
   PawPrint,
   Briefcase,
   Mail,
@@ -25,12 +24,11 @@ import { useRouter } from "next/navigation"
 import { useLocationOptional } from "@/lib/location-context"
 
 const categories = [
-  { name: "Restaurants", href: "/search?category=restaurants", icon: Utensils },
-  { name: "Home Services", href: "/search?category=home", icon: Home },
-  { name: "Auto Services", href: "/search?category=automotive", icon: Car },
-  { name: "Health & Beauty", href: "/search?category=health", icon: Sparkles },
+  { name: "Restaurants", href: "/search?category=food", icon: Utensils },
+  { name: "Home Services", href: "/search?category=home-services", icon: Home },
+  { name: "Auto Services", href: "/search?category=auto-services", icon: Car },
+  { name: "Health & Beauty", href: "/search?category=health-beauty", icon: Sparkles },
   { name: "Entertainment", href: "/search?category=entertainment", icon: PartyPopper },
-  { name: "Shopping", href: "/search?category=shopping", icon: ShoppingBag },
   { name: "Pets", href: "/search?category=pets", icon: PawPrint },
   { name: "Services", href: "/search?category=services", icon: Briefcase },
 ]

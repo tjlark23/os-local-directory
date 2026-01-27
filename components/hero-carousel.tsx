@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge"
 import { ChevronLeft, ChevronRight, Sparkles, Star, MapPin } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { supabase } from "@/lib/supabase"
 
 // Category placeholder images
 const CATEGORY_PLACEHOLDERS: Record<string, string> = {
@@ -39,90 +38,104 @@ interface Business {
   is_featured: boolean
 }
 
+// Mock data for featured businesses (carousel)
+const MOCK_FEATURED_BUSINESSES: Business[] = [
+  {
+    id: "1",
+    slug: "hill-country-cafe",
+    name: "Hill Country Cafe",
+    description: "Farm-to-table dining with local ingredients",
+    category: "American Cafe",
+    image: "/cozy-american-cafe-interior-breakfast-brunch.jpg",
+    rating: 4.6,
+    review_count: 89,
+    address_city: "Cedar Park",
+    address_state: "TX",
+    tags: ["Breakfast", "Brunch", "Local Favorite"],
+    is_featured: true,
+  },
+  {
+    id: "2",
+    slug: "bluebonnet-bbq",
+    name: "Bluebonnet BBQ",
+    description: "Authentic Texas barbecue with slow-smoked brisket",
+    category: "BBQ",
+    image: "/texas-bbq-restaurant-smoky-brisket-rustic-interior.jpg",
+    rating: 4.7,
+    review_count: 127,
+    address_city: "Leander",
+    address_state: "TX",
+    tags: ["BBQ", "Family Friendly", "Catering"],
+    is_featured: true,
+  },
+  {
+    id: "3",
+    slug: "serenity-spa",
+    name: "Serenity Wellness Spa",
+    description: "Relaxation and rejuvenation in a peaceful setting",
+    category: "Health & Wellness",
+    image: "/modern-wellness-spa-massage-therapy-center.jpg",
+    rating: 4.9,
+    review_count: 63,
+    address_city: "Leander",
+    address_state: "TX",
+    tags: ["Massage", "Facials", "Relaxation"],
+    is_featured: true,
+  },
+]
+
+// Mock data for sponsored businesses (sidebar)
+const MOCK_SPONSORED_BUSINESSES: Business[] = [
+  {
+    id: "4",
+    slug: "artisan-coffee-roasters",
+    name: "Artisan Coffee Roasters",
+    description: "Locally roasted specialty coffee",
+    category: "Coffee Shop",
+    image: "/artisan-coffee-shop-latte-art-cozy-cafe-interior.jpg",
+    rating: 4.8,
+    review_count: 156,
+    address_city: "Leander",
+    address_state: "TX",
+    tags: ["WiFi", "Outdoor Seating"],
+    is_featured: false,
+  },
+  {
+    id: "5",
+    slug: "joes-pizza",
+    name: "Joe's Pizza",
+    description: "Authentic New York style pizza",
+    category: "Italian",
+    image: "/new-york-pizza-slice-italian-restaurant-brick-oven.jpg",
+    rating: 4.6,
+    review_count: 94,
+    address_city: "Cedar Park",
+    address_state: "TX",
+    tags: ["Delivery", "Family Friendly"],
+    is_featured: false,
+  },
+  {
+    id: "6",
+    slug: "leander-pet-clinic",
+    name: "Leander Pet Clinic",
+    description: "Compassionate care for your furry friends",
+    category: "Veterinary",
+    image: "/veterinary-clinic-happy-dog-cat-modern-clean-pet-c.jpg",
+    rating: 4.9,
+    review_count: 89,
+    address_city: "Leander",
+    address_state: "TX",
+    tags: ["Emergency Care", "Boarding"],
+    is_featured: false,
+  },
+]
+
 export function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const [featuredBusinesses, setFeaturedBusinesses] = useState<Business[]>([])
-  const [sponsoredBusinesses, setSponsoredBusinesses] = useState<Business[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function fetchBusinesses() {
-      try {
-        const { data: location } = await supabase
-          .from('locations')
-          .select('id')
-          .eq('slug', 'leander')
-          .single()
-
-        if (!location) return
-
-        // First try to get diverse businesses by category
-        const categoriesToFeature = ['restaurants', 'health', 'automotive', 'home', 'shopping', 'services', 'beauty', 'entertainment', 'pets', 'financial', 'education', 'fitness']
-        const diverseBusinesses: Business[] = []
-        const seenNames = new Set<string>()
-
-        for (const category of categoriesToFeature) {
-          if (diverseBusinesses.length >= 6) break
-
-          const { data: categoryBusinesses } = await supabase
-            .from('businesses')
-            .select('*')
-            .eq('location_id', location.id)
-            .eq('category', category)
-            .order('rating', { ascending: false })
-            .order('review_count', { ascending: false })
-            .limit(10)
-
-          if (categoryBusinesses) {
-            for (const biz of categoryBusinesses) {
-              const normalizedName = biz.name.toLowerCase().trim()
-              if (!seenNames.has(normalizedName)) {
-                seenNames.add(normalizedName)
-                diverseBusinesses.push(biz)
-                break
-              }
-            }
-          }
-        }
-
-        // If we don't have enough diverse businesses, fetch top-rated businesses overall
-        if (diverseBusinesses.length < 6) {
-          const { data: topBusinesses } = await supabase
-            .from('businesses')
-            .select('*')
-            .eq('location_id', location.id)
-            .order('is_featured', { ascending: false })
-            .order('rating', { ascending: false })
-            .order('review_count', { ascending: false })
-            .limit(30)
-
-          if (topBusinesses) {
-            for (const biz of topBusinesses) {
-              if (diverseBusinesses.length >= 6) break
-              const normalizedName = biz.name.toLowerCase().trim()
-              if (!seenNames.has(normalizedName)) {
-                seenNames.add(normalizedName)
-                diverseBusinesses.push(biz)
-              }
-            }
-          }
-        }
-
-        if (diverseBusinesses.length > 0) {
-          // First 3 for carousel, next 3 for sidebar
-          setFeaturedBusinesses(diverseBusinesses.slice(0, 3))
-          setSponsoredBusinesses(diverseBusinesses.slice(3, 6))
-        }
-      } catch (error) {
-        console.error('Error fetching businesses:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchBusinesses()
-  }, [])
+  const [featuredBusinesses, setFeaturedBusinesses] = useState<Business[]>(MOCK_FEATURED_BUSINESSES)
+  const [sponsoredBusinesses, setSponsoredBusinesses] = useState<Business[]>(MOCK_SPONSORED_BUSINESSES)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (featuredBusinesses.length === 0) return
@@ -241,10 +254,22 @@ export function HeroCarousel() {
                 alt={currentBusiness.name}
                 fill
                 className="object-cover"
+                quality={100}
+                sizes="(max-width: 1024px) 100vw, 60vw"
                 priority
+                unoptimized
               />
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+            </div>
+
+            {/* City Badge - Top Right */}
+            <div className="absolute top-5 right-5 z-20">
+              <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg">
+                <span className="text-sm font-medium text-gray-800">
+                  📍 {currentBusiness.address_city}, {normalizeState(currentBusiness.address_state)}
+                </span>
+              </div>
             </div>
 
             {/* Business Info - Embedded in bottom left */}
@@ -320,16 +345,19 @@ export function HeroCarousel() {
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <CardContent className="p-0 h-full">
-                    <div className="flex h-full">
-                      <div className="relative w-36 flex-shrink-0">
+                    <div className="flex flex-row h-full">
+                      <div className="relative w-[140px] min-w-[140px] flex-shrink-0 h-full">
                         <Image
                           src={getImageSrc(business)}
                           alt={business.name}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          quality={100}
+                          sizes="140px"
+                          unoptimized
                         />
                       </div>
-                      <div className="flex-1 p-3 flex flex-col justify-between min-w-0">
+                      <div className="flex-1 p-4 flex flex-col justify-between min-w-0 overflow-hidden">
                         <div>
                           <div className="flex items-start justify-between gap-2 mb-1">
                             <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1 text-sm">
