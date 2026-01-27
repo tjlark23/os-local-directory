@@ -3,7 +3,8 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, Heart, Share2, MessageSquare, MapPin, Phone, Globe, Clock, CheckCircle2, Tag } from "lucide-react"
+import { Star, Heart, Share2, MessageSquare, MapPin, Phone, Globe, Clock, CheckCircle2, Tag, ArrowLeft } from "lucide-react"
+import Link from "next/link"
 import Image from "next/image"
 
 interface BusinessPageHeaderProps {
@@ -53,51 +54,64 @@ export function BusinessPageHeader({ business }: BusinessPageHeaderProps) {
       )}
 
       <div className="container mx-auto px-4 pt-6">
-        {/* Photo grid - adapts based on number of photos */}
-        {hasMultiplePhotos && galleryImages.length >= 4 ? (
-          <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[400px] rounded-2xl overflow-hidden">
-            {/* Main large image */}
-            <div className="col-span-2 row-span-2 relative group cursor-pointer">
-              <Image
-                src={heroImage}
-                alt={business.name}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-            {/* Gallery images */}
-            {galleryImages.map((img, index) => (
-              <div key={index} className="relative group cursor-pointer overflow-hidden">
-                <Image
-                  src={img}
-                  alt={`${business.name} photo ${index + 2}`}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors" />
-                {index === 3 && business.photos && business.photos.length > 5 && (
-                  <div className="absolute inset-0 bg-foreground/60 flex items-center justify-center">
-                    <span className="text-primary-foreground font-semibold text-lg">
-                      +{business.photos.length - 5} more
-                    </span>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        ) : (
-          /* Single image layout when not enough photos */
-          <div className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden">
+        {/* Photo grid - 50/50 split: large image left, 2x2 grid right */}
+        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-2 h-[300px] md:h-[400px] rounded-2xl overflow-hidden">
+          {/* Back to Search button - positioned top-left over the image */}
+          <Link
+            href="/search"
+            className="absolute top-4 left-4 z-10 flex items-center gap-2 px-3 py-2 bg-white/90 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700 hover:bg-white hover:text-gray-900 transition-colors shadow-md"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Search
+          </Link>
+
+          {/* Left: Main large image (50%) */}
+          <div className="relative group cursor-pointer">
             <Image
               src={heroImage}
               alt={business.name}
               fill
-              className="object-cover"
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              unoptimized
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
-        )}
+
+          {/* Right: 2x2 grid of smaller images (50%) */}
+          <div className="hidden md:grid grid-cols-2 grid-rows-2 gap-2">
+            {[0, 1, 2, 3].map((index) => {
+              const photo = galleryImages[index]
+              const isLastWithMore = index === 3 && business.photos && business.photos.length > 5
+
+              return (
+                <div key={index} className="relative group cursor-pointer overflow-hidden bg-muted rounded-lg">
+                  {photo ? (
+                    <>
+                      <Image
+                        src={photo}
+                        alt={`${business.name} photo ${index + 2}`}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        unoptimized
+                      />
+                      <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors" />
+                      {isLastWithMore && (
+                        <div className="absolute inset-0 bg-foreground/60 flex items-center justify-center">
+                          <span className="text-primary-foreground font-semibold text-lg">
+                            +{business.photos!.length - 5} more
+                          </span>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    /* Empty placeholder - shows as neutral gray */
+                    <div className="absolute inset-0 bg-muted" />
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">

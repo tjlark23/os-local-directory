@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, MapPin, Phone, ExternalLink, Clock, MessageSquare, Navigation, CheckCircle } from "lucide-react"
-import Image from "next/image"
+import { Star, MapPin, Phone, ExternalLink, Clock, MessageSquare, Navigation } from "lucide-react"
 
 interface BusinessSidebarProps {
   business: {
@@ -21,7 +20,13 @@ interface BusinessSidebarProps {
     }
     address: {
       full: string
+      street: string
+      city: string
+      state: string
+      zip: string
     }
+    latitude?: number
+    longitude?: number
     phone: string
     website: string
     hours: Record<string, { open: string; close: string; isOpen: boolean }>
@@ -35,16 +40,26 @@ export function BusinessSidebar({ business }: BusinessSidebarProps) {
   const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" }).toLowerCase()
 
+  // Build Google Maps embed URL
+  const getMapEmbedUrl = () => {
+    // Use coordinates if available, otherwise use address
+    if (business.latitude && business.longitude) {
+      return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${business.longitude}!3d${business.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM!5e0!3m2!1sen!2sus!4v1234567890`
+    }
+    // Fallback to address-based search
+    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(business.address.full)}`
+  }
+
   return (
     <div className="space-y-4">
       <Card className="overflow-hidden border-border/50 shadow-sm">
-        <CardHeader className="bg-gradient-to-r from-primary/5 to-primary/10 pb-4">
+        <CardHeader className="pb-4">
           <CardTitle className="flex items-center text-lg">
             <MessageSquare className="w-5 h-5 mr-2 text-primary" />
-            Customer Reviews
+            Rating Summary
           </CardTitle>
         </CardHeader>
-        <CardContent className="pt-4 space-y-4">
+        <CardContent className="pt-0 space-y-4">
           {/* Big rating display */}
           <div className="flex items-center gap-4 p-4 bg-muted/50 rounded-xl">
             <div className="text-4xl font-bold text-foreground">{business.quickStats.overallRating}</div>
@@ -69,7 +84,9 @@ export function BusinessSidebar({ business }: BusinessSidebarProps) {
           <div className="space-y-2">
             {[5, 4, 3, 2, 1].map((rating) => {
               const count = business.ratingBreakdown[rating as keyof typeof business.ratingBreakdown]
-              const percentage = (count / business.quickStats.totalReviews) * 100
+              const percentage = business.quickStats.totalReviews > 0
+                ? (count / business.quickStats.totalReviews) * 100
+                : 0
               return (
                 <div key={rating} className="flex items-center gap-3 text-sm">
                   <span className="w-8 text-muted-foreground">{rating} ★</span>
@@ -84,19 +101,6 @@ export function BusinessSidebar({ business }: BusinessSidebarProps) {
               )
             })}
           </div>
-
-          {/* Quick stats grid */}
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <div className="p-3 bg-muted/50 rounded-lg text-center">
-              <p className="text-lg font-semibold text-foreground">{business.quickStats.responseRate}</p>
-              <p className="text-xs text-muted-foreground">Response Rate</p>
-            </div>
-            <div className="p-3 bg-muted/50 rounded-lg text-center">
-              <p className="text-lg font-semibold text-foreground">{business.quickStats.avgResponseTime}</p>
-              <p className="text-xs text-muted-foreground">Avg. Response</p>
-            </div>
-          </div>
-
         </CardContent>
       </Card>
 
@@ -202,39 +206,42 @@ export function BusinessSidebar({ business }: BusinessSidebarProps) {
         </CardContent>
       </Card>
 
-      <Card className="overflow-hidden border-border/50 shadow-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center text-lg">
-            <CheckCircle className="w-5 h-5 mr-2 text-primary" />
-            Amenities & Features
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-2">
-            {business.amenities.map((amenity) => (
-              <div key={amenity.name} className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg text-sm">
-                <span className="text-base">{amenity.icon}</span>
-                <span className="text-foreground">{amenity.name}</span>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* AMENITIES SECTION REMOVED - data quality issues */}
 
       <Card className="overflow-hidden border-border/50 shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg">Location</CardTitle>
         </CardHeader>
-        <CardContent className="p-0">
-          <div className="relative w-full h-48">
-            <Image src="/map-street-view-location-pin-texas.jpg" alt="Location map" fill className="object-cover" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Button variant="secondary" className="shadow-lg">
-                <Navigation className="w-4 h-4 mr-2" />
-                View on Map
-              </Button>
-            </div>
+        <CardContent className="space-y-4">
+          {/* Address text */}
+          <p className="text-sm text-muted-foreground">
+            {business.address.full}
+          </p>
+
+          {/* Interactive Google Maps embed */}
+          <div className="relative w-full h-48 rounded-lg overflow-hidden">
+            <iframe
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(business.address.full)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title={`Map showing ${business.address.full}`}
+            />
           </div>
+
+          <Button variant="outline" className="w-full bg-transparent" asChild>
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(business.address.full)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Navigation className="w-4 h-4 mr-2" />
+              Open in Google Maps
+            </a>
+          </Button>
         </CardContent>
       </Card>
     </div>

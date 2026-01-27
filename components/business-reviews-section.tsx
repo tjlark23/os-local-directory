@@ -1,18 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Star, ThumbsUp, Flag } from "lucide-react"
+import { Star, ThumbsUp } from "lucide-react"
 
 const mockReviews = [
   {
     id: "1",
     user: {
       name: "John S.",
-      avatar: "/placeholder.svg?height=40&width=40",
-      initial: "J",
     },
     rating: 5,
     date: "2023-12-26",
@@ -24,8 +21,6 @@ const mockReviews = [
     id: "2",
     user: {
       name: "Michael B.",
-      avatar: "/placeholder.svg?height=40&width=40",
-      initial: "M",
     },
     rating: 5,
     date: "2023-12-23",
@@ -37,8 +32,6 @@ const mockReviews = [
     id: "3",
     user: {
       name: "Michelle S.",
-      avatar: "/placeholder.svg?height=40&width=40",
-      initial: "M",
     },
     rating: 5,
     date: "2023-12-25",
@@ -50,8 +43,6 @@ const mockReviews = [
     id: "4",
     user: {
       name: "James P.",
-      avatar: "/placeholder.svg?height=40&width=40",
-      initial: "J",
     },
     rating: 4,
     date: "2023-12-20",
@@ -63,8 +54,6 @@ const mockReviews = [
     id: "5",
     user: {
       name: "Sarah M.",
-      avatar: "/placeholder.svg?height=40&width=40",
-      initial: "S",
     },
     rating: 4,
     date: "2023-12-18",
@@ -88,65 +77,53 @@ export function BusinessReviewsSection({ business }: BusinessReviewsSectionProps
   }
 
   return (
-    <Card className="mt-8">
-      <CardHeader>
-        <CardTitle>Customer Reviews</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          {mockReviews.slice(0, visibleReviews).map((review) => (
-            <div key={review.id} className="border-b border-gray-200 pb-6 last:border-b-0">
-              <div className="flex items-start space-x-4">
-                <Avatar>
-                  <AvatarImage src={review.user.avatar || "/placeholder.svg"} alt={review.user.name} />
-                  <AvatarFallback>{review.user.initial}</AvatarFallback>
-                </Avatar>
+    <div className="mt-8">
+      {/* Simple text heading - no red background */}
+      <h3 className="text-xl font-semibold text-foreground mb-6">Customer Reviews</h3>
 
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <div>
-                      <h4 className="font-medium">{review.user.name}</h4>
-                      <p className="text-sm text-gray-500">{review.date}</p>
-                    </div>
-                    <Button variant="ghost" size="sm">
-                      <Flag className="w-4 h-4" />
-                    </Button>
-                  </div>
-
-                  <div className="flex items-center mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-4 h-4 ${i < review.rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
-                      />
-                    ))}
-                  </div>
-
-                  <p className="text-gray-700 mb-3">{review.content}</p>
-
-                  <div className="flex items-center space-x-4">
-                    <Button variant="ghost" size="sm">
-                      <ThumbsUp className="w-4 h-4 mr-2" />
-                      Helpful ({review.helpful})
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      Report
-                    </Button>
-                  </div>
+      <Card className="border-border/50">
+        <CardContent className="p-6">
+          <div className="space-y-6">
+            {mockReviews.slice(0, visibleReviews).map((review) => (
+              <div key={review.id} className="border-b border-border/50 pb-6 last:border-b-0 last:pb-0">
+                {/* Name and date on same line */}
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="font-medium text-foreground">{review.user.name}</span>
+                  <span className="text-muted-foreground">·</span>
+                  <span className="text-sm text-muted-foreground">{review.date}</span>
                 </div>
-              </div>
-            </div>
-          ))}
 
-          {visibleReviews < mockReviews.length && (
-            <div className="text-center">
-              <Button onClick={loadMoreReviews} variant="outline">
-                Load More Reviews
-              </Button>
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+                {/* Star rating */}
+                <div className="flex items-center mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-4 h-4 ${i < review.rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30"}`}
+                    />
+                  ))}
+                </div>
+
+                {/* Review text */}
+                <p className="text-muted-foreground mb-3 leading-relaxed">{review.content}</p>
+
+                {/* Helpful button */}
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground -ml-2">
+                  <ThumbsUp className="w-4 h-4 mr-2" />
+                  Helpful ({review.helpful})
+                </Button>
+              </div>
+            ))}
+
+            {visibleReviews < mockReviews.length && (
+              <div className="text-center pt-2">
+                <Button onClick={loadMoreReviews} variant="outline" className="bg-transparent">
+                  Load More Reviews
+                </Button>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

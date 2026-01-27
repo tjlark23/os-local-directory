@@ -6,9 +6,6 @@ import { BusinessReviewsSection } from "@/components/business-reviews-section"
 import { SimilarBusinesses } from "@/components/similar-businesses"
 import { UpgradeCTA } from "@/components/upgrade-cta"
 import { notFound } from "next/navigation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-react"
 import Script from "next/script"
 import { supabase } from "@/lib/supabase"
 
@@ -380,16 +377,6 @@ export default async function BusinessPage({ params }: { params: Promise<{ id: s
       />
 
       <div className="min-h-screen bg-muted/30">
-        {/* Back Button */}
-        <div className="container mx-auto px-4 pt-4">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/search" className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Search
-            </Link>
-          </Button>
-        </div>
-
         <BusinessPageHeader business={business} />
 
         <div className="container mx-auto px-4 py-8">
