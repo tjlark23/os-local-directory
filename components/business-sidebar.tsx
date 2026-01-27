@@ -40,16 +40,6 @@ export function BusinessSidebar({ business }: BusinessSidebarProps) {
   const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" }).toLowerCase()
 
-  // Build Google Maps embed URL
-  const getMapEmbedUrl = () => {
-    // Use coordinates if available, otherwise use address
-    if (business.latitude && business.longitude) {
-      return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${business.longitude}!3d${business.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM!5e0!3m2!1sen!2sus!4v1234567890`
-    }
-    // Fallback to address-based search
-    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(business.address.full)}`
-  }
-
   return (
     <div className="space-y-4">
       <Card className="overflow-hidden border-border/50 shadow-sm">

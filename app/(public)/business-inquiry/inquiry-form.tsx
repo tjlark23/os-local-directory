@@ -23,8 +23,7 @@ export function BusinessInquiryForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In production, this would send to your email or a database
-    console.log("Form submitted:", formData)
+    // TODO: Send to email/database when form submission API is implemented
     setSubmitted(true)
   }
 

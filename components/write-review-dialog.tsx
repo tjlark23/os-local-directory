@@ -18,8 +18,7 @@ export function WriteReviewDialog({ open, onOpenChange, businessId }: WriteRevie
   const [hoveredRating, setHoveredRating] = useState(0)
 
   const handleSubmit = () => {
-    // In real app, this would submit to API
-    console.log("Submitting review:", { businessId, rating, review })
+    // TODO: Submit to API when review system is implemented
     onOpenChange(false)
     setRating(0)
     setReview("")
