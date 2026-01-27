@@ -104,8 +104,8 @@ export function BusinessPageHeader({ business }: BusinessPageHeaderProps) {
                       )}
                     </>
                   ) : (
-                    /* Empty placeholder - shows as neutral gray */
-                    <div className="absolute inset-0 bg-muted" />
+                    /* Empty placeholder - shows as white */
+                    <div className="absolute inset-0 bg-white" />
                   )}
                 </div>
               )
