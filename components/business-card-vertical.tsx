@@ -160,10 +160,10 @@ export function BusinessCardVertical({ business, isFavorite = false, onToggleFav
           <span className="truncate">{business.address_city}, {normalizeState(business.address_state)}</span>
         </div>
 
-        {/* View Details Button */}
-        <Button className="w-full mt-4" asChild>
+        {/* View Business Button */}
+        <Button className="w-full mt-4 bg-red-600 hover:bg-red-700" asChild>
           <Link href={`/business/${business.slug}`}>
-            View Details
+            View Business
           </Link>
         </Button>
       </CardContent>

@@ -4,21 +4,40 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { RotateCcw } from "lucide-react"
 
-// All database categories for the filter dropdown
-const DB_CATEGORIES = [
-  { id: "restaurants", name: "Restaurants & Dining" },
-  { id: "health", name: "Health & Wellness" },
-  { id: "beauty", name: "Beauty & Spa" },
-  { id: "fitness", name: "Fitness & Sports" },
-  { id: "automotive", name: "Automotive" },
-  { id: "shopping", name: "Shopping & Retail" },
-  { id: "services", name: "Professional Services" },
-  { id: "education", name: "Education" },
-  { id: "pets", name: "Pets & Animals" },
-  { id: "financial", name: "Financial Services" },
-  { id: "home", name: "Home Services" },
+// Categories that match both navbar and database
+// Navbar uses: food, health-beauty, auto-services, home-services, entertainment, pets, services
+// Database uses: restaurants, health, beauty, fitness, automotive, shopping, services, education, pets, financial, home, entertainment
+const FILTER_CATEGORIES = [
+  { id: "food", name: "Restaurants" },
+  { id: "health-beauty", name: "Health & Beauty" },
+  { id: "auto-services", name: "Auto Services" },
+  { id: "home-services", name: "Home Services" },
   { id: "entertainment", name: "Entertainment" },
+  { id: "pets", name: "Pets" },
+  { id: "services", name: "Services" },
+  { id: "shopping", name: "Shopping" },
 ]
+
+// Display names for all possible category values (from URL or database)
+const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
+  "all": "All Categories",
+  "food": "Restaurants",
+  "restaurants": "Restaurants",
+  "health-beauty": "Health & Beauty",
+  "health": "Health & Wellness",
+  "beauty": "Beauty & Spa",
+  "fitness": "Fitness",
+  "auto-services": "Auto Services",
+  "automotive": "Automotive",
+  "home-services": "Home Services",
+  "home": "Home Services",
+  "entertainment": "Entertainment",
+  "pets": "Pets",
+  "services": "Services",
+  "shopping": "Shopping",
+  "education": "Education",
+  "financial": "Financial",
+}
 
 const CITIES = ["Austin", "Cedar Park", "Georgetown", "Leander", "Liberty Hill", "Pflugerville", "Round Rock"]
 
@@ -55,6 +74,11 @@ export function SearchFiltersHorizontal({
 }: SearchFiltersHorizontalProps) {
   const hasActiveFilters = filters.category !== "all" || filters.city !== "all" || filters.rating > 0
 
+  // Get display name for current category value
+  const getCategoryDisplayName = (category: string) => {
+    return CATEGORY_DISPLAY_NAMES[category] || "All Categories"
+  }
+
   return (
     <div className="bg-background border border-border rounded-lg p-4 mb-6">
       <div className="flex flex-col lg:flex-row lg:items-center gap-4">
@@ -66,11 +90,13 @@ export function SearchFiltersHorizontal({
             onValueChange={(value) => onFilterChange("category", value)}
           >
             <SelectTrigger className="w-[180px] h-10">
-              <SelectValue placeholder="All Categories" />
+              <span className="truncate">
+                {getCategoryDisplayName(filters.category)}
+              </span>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Categories</SelectItem>
-              {DB_CATEGORIES.map((category) => (
+              {FILTER_CATEGORIES.map((category) => (
                 <SelectItem key={category.id} value={category.id}>
                   {category.name}
                 </SelectItem>
