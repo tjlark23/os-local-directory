@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, MapPin, Phone, ExternalLink, Clock, MessageSquare, Navigation } from "lucide-react"
-import { BusinessContactForm } from "@/components/business-contact-form"
+import { Star, MapPin, Phone, ExternalLink, Clock, Navigation } from "lucide-react"
 
 interface BusinessSidebarProps {
   business: {
@@ -36,10 +35,9 @@ interface BusinessSidebarProps {
     currentlyOpen: boolean
     amenities: Array<{ name: string; icon: string }>
   }
-  autoOpenContact?: boolean
 }
 
-export function BusinessSidebar({ business, autoOpenContact }: BusinessSidebarProps) {
+export function BusinessSidebar({ business }: BusinessSidebarProps) {
   const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
   const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" }).toLowerCase()
@@ -147,9 +145,6 @@ export function BusinessSidebar({ business, autoOpenContact }: BusinessSidebarPr
               </div>
             </a>
           )}
-
-          {/* Contact Form Button */}
-          <BusinessContactForm businessName={business.name} businessId={business.id} autoOpen={autoOpenContact} />
 
           <Button variant="outline" className="w-full bg-transparent" asChild>
             <a

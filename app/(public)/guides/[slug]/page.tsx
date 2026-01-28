@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Star, MapPin, ArrowRight, Trophy, Medal, Award, Crown } from 'lucide-react'
+import { Star, MapPin, ArrowRight } from 'lucide-react'
 
 // Define available guides
 const GUIDES = [
@@ -178,9 +178,6 @@ async function getBusinessesForGuide(guide: typeof GUIDES[0]) {
   return filteredBusinesses.slice(0, 10)
 }
 
-// Ranking icons
-const RANKING_ICONS = [Crown, Trophy, Medal, Award]
-
 export default async function GuidePage({
   params
 }: {
@@ -280,34 +277,17 @@ export default async function GuidePage({
         {/* Business List */}
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto space-y-6">
-            {businesses.map((business, index) => {
-              const RankIcon = RANKING_ICONS[Math.min(index, RANKING_ICONS.length - 1)]
-              const isTop3 = index < 3
-
-              return (
+            {businesses.map((business, index) => (
                 <Card
                   key={business.id}
-                  className={`overflow-hidden hover:shadow-lg transition-shadow ${
-                    isTop3 ? 'border-primary/30 bg-gradient-to-r from-primary/5 to-transparent' : ''
-                  }`}
+                  className="overflow-hidden hover:shadow-lg transition-shadow"
                 >
                   <CardContent className="p-0">
                     <div className="flex flex-col md:flex-row">
-                      {/* Rank Badge */}
-                      <div className={`flex md:flex-col items-center justify-center p-4 md:p-6 ${
-                        isTop3 ? 'bg-primary/10' : 'bg-muted/50'
-                      }`}>
-                        <div className={`flex items-center justify-center w-12 h-12 rounded-full ${
-                          index === 0 ? 'bg-yellow-400 text-yellow-900' :
-                          index === 1 ? 'bg-gray-300 text-gray-700' :
-                          index === 2 ? 'bg-amber-600 text-amber-100' :
-                          'bg-muted text-muted-foreground'
-                        }`}>
-                          {isTop3 ? (
-                            <RankIcon className="w-6 h-6" />
-                          ) : (
-                            <span className="text-lg font-bold">#{index + 1}</span>
-                          )}
+                      {/* Rank Number */}
+                      <div className="flex md:flex-col items-center justify-center p-4 md:p-6 bg-muted/50">
+                        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground">
+                          <span className="text-xl font-bold">{index + 1}</span>
                         </div>
                       </div>
 
@@ -368,8 +348,7 @@ export default async function GuidePage({
                     </div>
                   </CardContent>
                 </Card>
-              )
-            })}
+            ))}
           </div>
 
           {/* Empty State */}

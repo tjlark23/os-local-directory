@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { BusinessPageHeader } from "@/components/business-page-header"
 import { BusinessPageContent } from "@/components/business-page-content"
 import { BusinessSidebar } from "@/components/business-sidebar"
@@ -8,6 +8,8 @@ import { FeaturedBanner } from "@/components/featured-banner"
 import { UpgradeCTA } from "@/components/upgrade-cta"
 import { SimilarBusinessesSection } from "@/components/similar-businesses-section"
 import { PremiumContentSections } from "@/components/premium-content-sections"
+import { ReviewsPlaceholder } from "@/components/reviews-placeholder"
+import { ContactModal } from "@/components/contact-modal"
 
 interface BusinessPageClientProps {
   business: any
@@ -15,16 +17,13 @@ interface BusinessPageClientProps {
 }
 
 export function BusinessPageClient({ business, similarBusinesses }: BusinessPageClientProps) {
-  const [showContactForm, setShowContactForm] = useState(false)
-  const sidebarRef = useRef<HTMLDivElement>(null)
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
 
   const handleContactClick = () => {
-    // Scroll to sidebar where contact form is
-    if (sidebarRef.current) {
-      sidebarRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-    setShowContactForm(true)
+    setIsContactModalOpen(true)
   }
+
+  const isPremium = business.listingTier === 'premium' || business.listingTier === 'featured'
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -40,23 +39,40 @@ export function BusinessPageClient({ business, similarBusinesses }: BusinessPage
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
+            {/* Photos & About Section */}
             <BusinessPageContent business={business} />
 
-            {/* Premium Content Sections - only for paid businesses */}
-            <PremiumContentSections business={business} />
+            {/* Premium: Why Choose Us (featured only) */}
+            {isPremium && (
+              <PremiumContentSections business={business} section="why-choose-us" />
+            )}
 
-            {/* Upgrade CTA - shown for free/premium listings */}
-            <UpgradeCTA
-              businessName={business.name}
-              businessId={business.id}
-              listingTier={business.listingTier}
-            />
+            {/* Reviews Section - placeholder for all businesses */}
+            <ReviewsPlaceholder businessName={business.name} />
+
+            {/* Premium: Services & FAQ (featured only) */}
+            {isPremium && (
+              <>
+                <PremiumContentSections business={business} section="services" />
+                <PremiumContentSections business={business} section="faq" />
+                <PremiumContentSections business={business} section="local" />
+              </>
+            )}
+
+            {/* Upgrade CTA - shown for free listings only */}
+            {business.listingTier === 'free' && (
+              <UpgradeCTA
+                businessName={business.name}
+                businessId={business.id}
+                listingTier={business.listingTier}
+              />
+            )}
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1" ref={sidebarRef}>
+          <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
-              <BusinessSidebar business={business} autoOpenContact={showContactForm} />
+              <BusinessSidebar business={business} />
             </div>
           </div>
         </div>
@@ -69,6 +85,14 @@ export function BusinessPageClient({ business, similarBusinesses }: BusinessPage
           category={business.category}
         />
       )}
+
+      {/* Contact Modal */}
+      <ContactModal
+        businessName={business.name}
+        businessId={business.id}
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </div>
   )
 }

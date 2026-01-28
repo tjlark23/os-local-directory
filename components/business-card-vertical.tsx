@@ -88,13 +88,14 @@ export function BusinessCardVertical({ business, isFavorite = false, onToggleFav
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 group h-full flex flex-col">
-      {/* Image Container */}
-      <div className="relative h-[200px] overflow-hidden">
+      {/* Image Container - aspect ratio ensures consistent sizing without white space */}
+      <div className="relative aspect-[4/3] overflow-hidden flex-shrink-0">
         <Image
           src={imageUrl}
           alt={business.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           quality={75}
         />
 
