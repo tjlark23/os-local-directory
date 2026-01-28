@@ -3,14 +3,24 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Briefcase, Bell, ArrowRight, Building2, MapPin, Clock } from 'lucide-react'
+import {
+  Briefcase,
+  MapPin,
+  Clock,
+  DollarSign,
+  Building2,
+  ArrowRight,
+  Search,
+  Bell
+} from 'lucide-react'
 import { siteConfig } from '@/lib/site-config'
+import { SAMPLE_JOBS, JOB_CATEGORIES, type Job } from '@/lib/jobs-config'
 
 export const metadata: Metadata = {
-  title: `Local Jobs Coming Soon | ${siteConfig.name}`,
-  description: 'Find local job opportunities in Leander, Round Rock, and throughout Williamson County. Coming soon to WilCo Guide.',
+  title: `Local Jobs | Find Work in Williamson County | ${siteConfig.name}`,
+  description: 'Find local job opportunities at businesses in Leander, Round Rock, Cedar Park, and throughout Williamson County, Texas.',
   openGraph: {
-    title: `Local Jobs Coming Soon | ${siteConfig.name}`,
+    title: `Local Jobs | ${siteConfig.name}`,
     description: 'Find local job opportunities in Williamson County.',
     type: 'website',
     url: `${siteConfig.url}/jobs`,
@@ -20,103 +30,246 @@ export const metadata: Metadata = {
   },
 }
 
+function formatSalary(salary: Job['salary']) {
+  if (!salary) return null
+  const { min, max, period } = salary
+
+  if (period === 'hourly') {
+    if (min && max) return `$${min}-$${max}/hr`
+    if (min) return `$${min}+/hr`
+    if (max) return `Up to $${max}/hr`
+  } else {
+    if (min && max) return `$${(min/1000).toFixed(0)}k-$${(max/1000).toFixed(0)}k/yr`
+    if (min) return `$${(min/1000).toFixed(0)}k+/yr`
+    if (max) return `Up to $${(max/1000).toFixed(0)}k/yr`
+  }
+  return null
+}
+
+function JobCard({ job }: { job: Job }) {
+  const salaryDisplay = formatSalary(job.salary)
+
+  return (
+    <Card className={`overflow-hidden hover:shadow-lg transition-all ${job.featured ? 'border-primary/50 bg-primary/5' : ''}`}>
+      <CardContent className="p-6">
+        <div className="flex items-start justify-between gap-4 mb-4">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              {job.featured && (
+                <Badge className="bg-primary text-primary-foreground text-xs">Featured</Badge>
+              )}
+              <Badge variant="secondary" className="text-xs">
+                {job.type.charAt(0).toUpperCase() + job.type.slice(1).replace('-', ' ')}
+              </Badge>
+            </div>
+            <h3 className="text-xl font-bold text-foreground">{job.title}</h3>
+            <div className="flex items-center gap-2 text-muted-foreground mt-1">
+              <Building2 className="w-4 h-4" />
+              <span>{job.company}</span>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-muted-foreground mb-4 line-clamp-2">{job.description}</p>
+
+        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">
+          <div className="flex items-center gap-1">
+            <MapPin className="w-4 h-4" />
+            <span>{job.location}</span>
+          </div>
+          {salaryDisplay && (
+            <div className="flex items-center gap-1">
+              <DollarSign className="w-4 h-4" />
+              <span>{salaryDisplay}</span>
+            </div>
+          )}
+          <div className="flex items-center gap-1">
+            <Clock className="w-4 h-4" />
+            <span>Posted {new Date(job.postedDate).toLocaleDateString()}</span>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between pt-4 border-t border-border">
+          {job.businessId ? (
+            <Link
+              href={`/business/${job.businessId}`}
+              className="text-sm text-primary hover:underline"
+            >
+              View Business Profile
+            </Link>
+          ) : (
+            <span className="text-sm text-muted-foreground">Local Business</span>
+          )}
+          <Button size="sm" className="bg-primary hover:bg-primary/90">
+            Apply Now
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export default function JobsPage() {
+  const featuredJobs = SAMPLE_JOBS.filter(j => j.featured)
+  const allJobs = SAMPLE_JOBS
+
   return (
     <div className="min-h-screen bg-muted/30">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-primary/10 via-background to-primary/5 py-16 md:py-24">
+      <div className="bg-gradient-to-br from-primary/10 via-background to-primary/5 py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="p-4 bg-primary/10 rounded-2xl">
-                <Briefcase className="w-10 h-10 text-primary" />
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-3 bg-primary/10 rounded-xl">
+                <Briefcase className="w-8 h-8 text-primary" />
               </div>
+              <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                Beta
+              </Badge>
             </div>
-            <Badge className="mb-4 bg-amber-100 text-amber-800 border-amber-200">
-              Coming Soon
-            </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Local Jobs Coming Soon
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Local Jobs
             </h1>
-            <p className="text-xl text-muted-foreground mb-8">
-              Discover job opportunities at local businesses in Leander, Round Rock,
+            <p className="text-lg text-muted-foreground mb-6">
+              Find job opportunities at local businesses in Leander, Round Rock, Cedar Park,
               and throughout Williamson County. Work where you live.
+            </p>
+
+            {/* Search Bar Placeholder */}
+            <div className="flex flex-col sm:flex-row gap-3 max-w-xl">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search jobs..."
+                  className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  disabled
+                />
+              </div>
+              <Button className="px-6 py-3 bg-primary hover:bg-primary/90" disabled>
+                Search
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              Full search coming soon. Browse available jobs below.
             </p>
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        {/* Notify Section */}
-        <Card className="max-w-lg mx-auto mb-12">
-          <CardContent className="p-8 text-center">
-            <Bell className="w-12 h-12 mx-auto mb-4 text-primary" />
-            <h2 className="text-xl font-semibold mb-4">Get Notified When We Launch</h2>
-            <p className="text-muted-foreground mb-6">
-              Be the first to find local jobs on {siteConfig.name}.
-            </p>
-            <form className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30"
-              />
-              <Button className="px-6 py-3 bg-primary hover:bg-primary/90">
-                Notify Me
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-3 space-y-8">
+            {/* Featured Jobs */}
+            {featuredJobs.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold text-foreground mb-6">Featured Jobs</h2>
+                <div className="space-y-4">
+                  {featuredJobs.map((job) => (
+                    <JobCard key={job.id} job={job} />
+                  ))}
+                </div>
+              </section>
+            )}
 
-        {/* What to Expect */}
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-center mb-8">What to Expect</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { icon: Building2, title: 'Local Employers', desc: 'Jobs from businesses in your community' },
-              { icon: MapPin, title: 'Close to Home', desc: 'Find opportunities in Williamson County' },
-              { icon: Clock, title: 'All Types', desc: 'Full-time, part-time, and flexible positions' },
-            ].map((item) => (
-              <Card key={item.title}>
-                <CardContent className="p-6 text-center">
-                  <item.icon className="w-8 h-8 mx-auto mb-3 text-primary" />
-                  <h3 className="font-semibold mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </CardContent>
-              </Card>
-            ))}
+            {/* All Jobs */}
+            <section>
+              <h2 className="text-2xl font-bold text-foreground mb-6">
+                {featuredJobs.length > 0 ? 'More Jobs' : 'All Jobs'}
+              </h2>
+              <div className="space-y-4">
+                {allJobs.filter(j => !j.featured).map((job) => (
+                  <JobCard key={job.id} job={job} />
+                ))}
+              </div>
+
+              {allJobs.length === 0 && (
+                <Card>
+                  <CardContent className="p-12 text-center">
+                    <Briefcase className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+                    <h3 className="text-lg font-semibold mb-2">No jobs posted yet</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Check back soon for new job listings.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+            </section>
           </div>
-        </div>
 
-        {/* For Employers CTA */}
-        <div className="max-w-lg mx-auto mt-12">
-          <Card className="border-primary/20 bg-primary/5">
-            <CardContent className="p-6 text-center">
-              <h3 className="font-semibold mb-2">Are You Hiring?</h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                Local businesses will soon be able to post job listings for free.
-              </p>
-              <Button asChild variant="outline">
-                <Link href="/for-businesses">
-                  Learn About Business Listings
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Job Alerts */}
+            <Card>
+              <CardContent className="p-6">
+                <Bell className="w-8 h-8 text-primary mb-4" />
+                <h3 className="font-bold text-foreground mb-2">Get Job Alerts</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Be notified when new jobs are posted.
+                </p>
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  className="w-full px-3 py-2 border rounded-lg mb-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                />
+                <Button className="w-full bg-primary hover:bg-primary/90" size="sm">
+                  Subscribe
+                </Button>
+              </CardContent>
+            </Card>
 
-        {/* CTA to Directory */}
-        <div className="text-center mt-12">
-          <p className="text-muted-foreground mb-4">
-            In the meantime, explore local businesses in Williamson County
-          </p>
-          <Button asChild variant="outline">
-            <Link href="/">
-              Browse Directory
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+            {/* Categories */}
+            <Card>
+              <CardContent className="p-6">
+                <h3 className="font-bold text-foreground mb-4">Browse by Category</h3>
+                <div className="space-y-2">
+                  {JOB_CATEGORIES.map((category) => (
+                    <Button
+                      key={category.id}
+                      variant="ghost"
+                      className="w-full justify-start text-left text-sm h-auto py-2"
+                      disabled
+                    >
+                      {category.name}
+                    </Button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* For Employers */}
+            <Card className="border-primary/20 bg-primary/5">
+              <CardContent className="p-6">
+                <h3 className="font-bold text-foreground mb-2">Are You Hiring?</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Post your job listings to reach local candidates.
+                </p>
+                <Button variant="outline" className="w-full" asChild>
+                  <Link href="/for-businesses">
+                    Post a Job
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Browse Directory */}
+            <Card>
+              <CardContent className="p-6">
+                <h3 className="font-bold text-foreground mb-2">Local Businesses</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Discover businesses in your area that may be hiring.
+                </p>
+                <Button variant="outline" className="w-full" asChild>
+                  <Link href="/search">
+                    Browse Directory
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
