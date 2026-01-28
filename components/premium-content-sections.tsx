@@ -117,10 +117,14 @@ export function PremiumContentSections({ business, section = 'all' }: PremiumCon
 
   const content = CATEGORY_CONTENT[business.category] || CATEGORY_CONTENT.default
 
+  // Safely access arrays with fallbacks
+  const specialties = business.specialties || []
+  const tags = business.tags || []
+
   // Generate dynamic services based on specialties and tags
-  const dynamicServices = business.specialties.length > 0
-    ? business.specialties.slice(0, 4)
-    : business.tags.slice(0, 4)
+  const dynamicServices = specialties.length > 0
+    ? specialties.slice(0, 4)
+    : tags.slice(0, 4)
 
   const allServices = [...dynamicServices, ...content.services.slice(0, 6 - dynamicServices.length)]
 
