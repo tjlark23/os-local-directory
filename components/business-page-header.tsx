@@ -3,12 +3,29 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, Heart, Share2, MessageSquare, MapPin, Phone, Globe, Clock, CheckCircle2, Tag, ArrowLeft } from "lucide-react"
+import { Star, Share2, MessageSquare, MapPin, Globe, Clock, CheckCircle2, Tag, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
+// Category display names (singular)
+const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
+  restaurants: "Restaurant",
+  health: "Health & Wellness",
+  beauty: "Beauty & Spa",
+  fitness: "Fitness & Sports",
+  automotive: "Auto Service",
+  shopping: "Shopping & Retail",
+  services: "Professional Service",
+  education: "Education",
+  pets: "Pet Service",
+  financial: "Financial Service",
+  home: "Home Service",
+  entertainment: "Entertainment",
+}
+
 interface BusinessPageHeaderProps {
   business: {
+    id: string
     name: string
     category: string
     rating: number
@@ -26,10 +43,11 @@ interface BusinessPageHeaderProps {
     listingTier?: 'free' | 'premium' | 'featured'
     dealsBanner?: string
   }
+  onContactClick?: () => void
 }
 
-export function BusinessPageHeader({ business }: BusinessPageHeaderProps) {
-  const [isSaved, setIsSaved] = useState(false)
+export function BusinessPageHeader({ business, onContactClick }: BusinessPageHeaderProps) {
+  const [copied, setCopied] = useState(false)
 
   const heroImage = business.photos?.[0] || "/images/placeholders/business-default.jpg"
   const hasMultiplePhotos = business.photos && business.photos.length > 1
@@ -140,7 +158,7 @@ export function BusinessPageHeader({ business }: BusinessPageHeaderProps) {
                 <span className="text-muted-foreground">({business.reviewCount} reviews)</span>
               </div>
               <span className="text-muted-foreground">•</span>
-              <span className="text-foreground font-medium">{business.category}</span>
+              <span className="text-foreground font-medium">{CATEGORY_DISPLAY_NAMES[business.category] || business.category}</span>
               <span className="text-muted-foreground">•</span>
               <span className="text-foreground">{business.priceRange}</span>
             </div>
@@ -164,41 +182,37 @@ export function BusinessPageHeader({ business }: BusinessPageHeaderProps) {
           </div>
 
           <div className="flex flex-wrap gap-3">
+            {/* Primary CTA - Message Business */}
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
+              onClick={onContactClick}
+              className="bg-[#eb7b1c] hover:bg-[#d66a10] text-white shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
             >
               <MessageSquare className="w-4 h-4 mr-2" />
-              Get Quote
+              Message Business
             </Button>
 
-            {business.phone && (
-              <Button size="lg" variant="outline" className="hover:bg-muted bg-transparent">
-                <Phone className="w-4 h-4 mr-2" />
-                Call
-              </Button>
-            )}
-
             {business.website && (
-              <Button size="lg" variant="outline" className="hover:bg-muted bg-transparent">
-                <Globe className="w-4 h-4 mr-2" />
-                Website
+              <Button size="lg" variant="outline" className="hover:bg-muted bg-transparent" asChild>
+                <a href={business.website} target="_blank" rel="noopener noreferrer">
+                  <Globe className="w-4 h-4 mr-2" />
+                  Website
+                </a>
               </Button>
             )}
 
             <Button
               size="lg"
               variant="outline"
-              onClick={() => setIsSaved(!isSaved)}
-              className={isSaved ? "border-red-500 text-red-500 hover:bg-red-50" : "hover:bg-muted"}
+              className="hover:bg-muted bg-transparent"
+              onClick={() => {
+                navigator.clipboard.writeText(`https://directory.leanderscoop.com/business/${business.id}`)
+                setCopied(true)
+                setTimeout(() => setCopied(false), 2000)
+              }}
             >
-              <Heart className={`w-4 h-4 mr-2 ${isSaved ? "fill-red-500" : ""}`} />
-              {isSaved ? "Saved" : "Save"}
-            </Button>
-
-            <Button size="lg" variant="outline" className="hover:bg-muted bg-transparent">
               <Share2 className="w-4 h-4 mr-2" />
-              Share
+              {copied ? "Copied!" : "Share"}
             </Button>
           </div>
         </div>

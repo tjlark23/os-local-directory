@@ -1,10 +1,5 @@
 import { Metadata } from "next"
-import { BusinessPageHeader } from "@/components/business-page-header"
-import { BusinessPageContent } from "@/components/business-page-content"
-import { BusinessSidebar } from "@/components/business-sidebar"
-import { FeaturedBanner } from "@/components/featured-banner"
-import { SimilarBusinesses } from "@/components/similar-businesses"
-import { UpgradeCTA } from "@/components/upgrade-cta"
+import { BusinessPageClient } from "@/components/business-page-client"
 import { notFound } from "next/navigation"
 import Script from "next/script"
 import { supabase } from "@/lib/supabase"
@@ -50,7 +45,7 @@ async function getBusinessBySlug(slug: string) {
 }
 
 // Fetch similar businesses from Supabase
-async function getSimilarBusinesses(slug: string, category: string, limit = 4) {
+async function getSimilarBusinesses(slug: string, category: string, limit = 8) {
   const { data: location } = await supabase
     .from('locations')
     .select('id')
@@ -364,7 +359,7 @@ export default async function BusinessPage({ params }: { params: Promise<{ id: s
     notFound()
   }
 
-  const similarBusinesses = await getSimilarBusinesses(id, business.category, 4)
+  const similarBusinesses = await getSimilarBusinesses(id, business.category, 8)
   const jsonLd = generateJsonLd(business)
 
   return (
@@ -376,41 +371,7 @@ export default async function BusinessPage({ params }: { params: Promise<{ id: s
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="min-h-screen bg-muted/30">
-        <BusinessPageHeader business={business} />
-
-        {/* Featured Business Banner - only for featured tier */}
-        <FeaturedBanner
-          listingTier={business.listingTier}
-          dealsBanner={business.dealsBanner}
-        />
-
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content */}
-            <div className="lg:col-span-2 space-y-8">
-              <BusinessPageContent business={business} />
-
-              {/* Upgrade CTA - shown for free/premium listings */}
-              <UpgradeCTA
-                businessName={business.name}
-                businessId={business.id}
-                listingTier={business.listingTier}
-              />
-            </div>
-
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-24 space-y-6">
-                <BusinessSidebar business={business} />
-                {similarBusinesses.length > 0 && (
-                  <SimilarBusinesses businesses={similarBusinesses} />
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <BusinessPageClient business={business} similarBusinesses={similarBusinesses} />
     </>
   )
 }

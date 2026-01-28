@@ -6,13 +6,38 @@ import { BusinessCardVertical } from '@/components/business-card-vertical'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, MapPin } from 'lucide-react'
 
-// City/neighborhood data
+// City/neighborhood data - includes both cities and subdivisions
 const NEIGHBORHOODS = [
-  { slug: 'cedar-park-tx', city: 'Cedar Park', displayName: 'Cedar Park', state: 'TX' },
-  { slug: 'leander-tx', city: 'Leander', displayName: 'Leander', state: 'TX' },
-  { slug: 'liberty-hill-tx', city: 'Liberty Hill', displayName: 'Liberty Hill', state: 'TX' },
-  { slug: 'austin-tx', city: 'Austin', displayName: 'Austin', state: 'TX' },
-  { slug: 'georgetown-tx', city: 'Georgetown', displayName: 'Georgetown', state: 'TX' },
+  // Main Cities
+  { slug: 'cedar-park-tx', city: 'Cedar Park', displayName: 'Cedar Park', state: 'TX', type: 'city' },
+  { slug: 'leander-tx', city: 'Leander', displayName: 'Leander', state: 'TX', type: 'city' },
+  { slug: 'liberty-hill-tx', city: 'Liberty Hill', displayName: 'Liberty Hill', state: 'TX', type: 'city' },
+  { slug: 'austin-tx', city: 'Austin', displayName: 'Austin', state: 'TX', type: 'city' },
+  { slug: 'georgetown-tx', city: 'Georgetown', displayName: 'Georgetown', state: 'TX', type: 'city' },
+
+  // Leander Subdivisions
+  { slug: 'crystal-falls-leander-tx', city: 'Leander', displayName: 'Crystal Falls', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
+  { slug: 'travisso-leander-tx', city: 'Leander', displayName: 'Travisso', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
+  { slug: 'bryson-leander-tx', city: 'Leander', displayName: 'Bryson', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
+  { slug: 'vista-ridge-leander-tx', city: 'Leander', displayName: 'Vista Ridge', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
+  { slug: 'mason-hills-leander-tx', city: 'Leander', displayName: 'Mason Hills', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
+  { slug: 'summerlyn-leander-tx', city: 'Leander', displayName: 'Summerlyn', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
+  { slug: 'north-creek-leander-tx', city: 'Leander', displayName: 'North Creek', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
+  { slug: 'benbrook-ranch-leander-tx', city: 'Leander', displayName: 'Benbrook Ranch', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
+
+  // Cedar Park Subdivisions
+  { slug: 'buttercup-creek-cedar-park-tx', city: 'Cedar Park', displayName: 'Buttercup Creek', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
+  { slug: 'ranch-at-cypress-creek-cedar-park-tx', city: 'Cedar Park', displayName: 'Ranch at Cypress Creek', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
+  { slug: 'cypress-canyon-cedar-park-tx', city: 'Cedar Park', displayName: 'Cypress Canyon', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
+  { slug: 'whitestone-oaks-cedar-park-tx', city: 'Cedar Park', displayName: 'Whitestone Oaks', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
+  { slug: 'anderson-mill-west-cedar-park-tx', city: 'Cedar Park', displayName: 'Anderson Mill West', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
+  { slug: 'twin-creeks-cedar-park-tx', city: 'Cedar Park', displayName: 'Twin Creeks', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
+  { slug: 'carriage-hills-cedar-park-tx', city: 'Cedar Park', displayName: 'Carriage Hills', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
+
+  // Liberty Hill Subdivisions
+  { slug: 'santa-rita-ranch-liberty-hill-tx', city: 'Liberty Hill', displayName: 'Santa Rita Ranch', state: 'TX', type: 'subdivision', parentCity: 'Liberty Hill' },
+  { slug: 'clearwater-ranch-liberty-hill-tx', city: 'Liberty Hill', displayName: 'Clearwater Ranch', state: 'TX', type: 'subdivision', parentCity: 'Liberty Hill' },
+  { slug: 'gabriel-woods-liberty-hill-tx', city: 'Liberty Hill', displayName: 'Gabriel Woods', state: 'TX', type: 'subdivision', parentCity: 'Liberty Hill' },
 ]
 
 // Generate static params for all neighborhoods
@@ -44,20 +69,25 @@ export async function generateMetadata({
   }
 
   const year = new Date().getFullYear()
+  const isSubdivision = neighborhood.type === 'subdivision'
+  const locationContext = isSubdivision
+    ? `${neighborhood.displayName} in ${neighborhood.parentCity}`
+    : neighborhood.displayName
 
   return {
-    title: `${neighborhood.displayName} Businesses | Local Directory ${year} | Leander Scoop`,
-    description: `Discover local businesses in ${neighborhood.displayName}, ${neighborhood.state}. Find restaurants, services, and more with reviews, photos, and contact information.`,
+    title: `${locationContext} Businesses | Local Directory ${year} | Leander Scoop`,
+    description: `Discover local businesses near ${locationContext}, ${neighborhood.state}. Find restaurants, services, and more with reviews, photos, and contact information.`,
     keywords: [
       `${neighborhood.displayName.toLowerCase()} businesses`,
-      `${neighborhood.displayName.toLowerCase()} directory`,
-      `businesses in ${neighborhood.displayName.toLowerCase()}`,
+      `${neighborhood.displayName.toLowerCase()} ${neighborhood.city.toLowerCase()}`,
+      `businesses near ${neighborhood.displayName.toLowerCase()}`,
       `${neighborhood.displayName.toLowerCase()} texas`,
       `local businesses ${neighborhood.displayName.toLowerCase()}`,
+      ...(isSubdivision ? [`${neighborhood.parentCity?.toLowerCase()} neighborhoods`] : []),
     ],
     openGraph: {
-      title: `${neighborhood.displayName} Businesses | Leander Scoop Directory`,
-      description: `Find the best local businesses in ${neighborhood.displayName}, ${neighborhood.state}.`,
+      title: `${locationContext} Businesses | Leander Scoop Directory`,
+      description: `Find the best local businesses near ${locationContext}, ${neighborhood.state}.`,
       type: 'website',
       url: `https://directory.leanderscoop.com/neighborhoods/${slug}`,
     },
@@ -109,6 +139,10 @@ export default async function NeighborhoodPage({
 
   const businesses = await getBusinessesByCity(neighborhood.city)
   const year = new Date().getFullYear()
+  const isSubdivision = neighborhood.type === 'subdivision'
+  const locationContext = isSubdivision
+    ? `${neighborhood.displayName} in ${neighborhood.parentCity}`
+    : neighborhood.displayName
 
   // JSON-LD Schema for CollectionPage
   const jsonLd = {
@@ -172,13 +206,29 @@ export default async function NeighborhoodPage({
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <MapPin className="w-6 h-6 text-primary" />
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-                {neighborhood.displayName} Businesses
-              </h1>
+              <div>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
+                  {isSubdivision ? `${neighborhood.displayName}` : `${neighborhood.displayName} Businesses`}
+                </h1>
+                {isSubdivision && (
+                  <p className="text-lg text-primary font-medium mt-1">
+                    {neighborhood.parentCity}, Texas
+                  </p>
+                )}
+              </div>
             </div>
             <p className="text-lg text-muted-foreground max-w-3xl">
-              Discover {businesses.length} local businesses in {neighborhood.displayName}, {neighborhood.state}.
-              Find restaurants, services, and more with reviews, photos, and contact information.
+              {isSubdivision ? (
+                <>
+                  Looking for businesses near {neighborhood.displayName}? Browse {businesses.length} local businesses
+                  serving the {neighborhood.displayName} neighborhood in {neighborhood.parentCity}, TX.
+                </>
+              ) : (
+                <>
+                  Discover {businesses.length} local businesses in {neighborhood.displayName}, {neighborhood.state}.
+                  Find restaurants, services, and more with reviews, photos, and contact information.
+                </>
+              )}
             </p>
           </div>
 
@@ -248,10 +298,21 @@ export default async function NeighborhoodPage({
               About {neighborhood.displayName}
             </h2>
             <p className="text-muted-foreground">
-              {neighborhood.displayName} is a vibrant community in the greater Leander, Texas area.
-              Our directory features verified local businesses including restaurants, professional services,
-              health & wellness providers, and more. Whether you're a resident or visitor, Leander Scoop
-              makes it easy to find and support local businesses in {neighborhood.displayName}.
+              {isSubdivision ? (
+                <>
+                  {neighborhood.displayName} is a popular neighborhood in {neighborhood.parentCity}, Texas,
+                  part of the growing Leander/Cedar Park metro area. Residents of {neighborhood.displayName}
+                  enjoy easy access to local restaurants, shops, and services. Our directory makes it easy
+                  to discover businesses serving the {neighborhood.displayName} community.
+                </>
+              ) : (
+                <>
+                  {neighborhood.displayName} is a vibrant community in the greater Leander, Texas area.
+                  Our directory features verified local businesses including restaurants, professional services,
+                  health & wellness providers, and more. Whether you're a resident or visitor, Leander Scoop
+                  makes it easy to find and support local businesses in {neighborhood.displayName}.
+                </>
+              )}
             </p>
           </div>
         </div>

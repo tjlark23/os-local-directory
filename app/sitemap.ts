@@ -66,38 +66,77 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
 
   // Neighborhood/city landing pages
-  const neighborhoodPages: MetadataRoute.Sitemap = [
+  const cityPages: MetadataRoute.Sitemap = [
+    { slug: 'cedar-park-tx', priority: 0.8 },
+    { slug: 'leander-tx', priority: 0.8 },
+    { slug: 'liberty-hill-tx', priority: 0.8 },
+    { slug: 'austin-tx', priority: 0.7 },
+    { slug: 'georgetown-tx', priority: 0.7 },
+  ].map(city => ({
+    url: `${baseUrl}/neighborhoods/${city.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: city.priority,
+  }))
+
+  // Subdivision pages (neighborhoods within cities)
+  const subdivisionPages: MetadataRoute.Sitemap = [
+    // Leander Subdivisions
+    'crystal-falls-leander-tx',
+    'travisso-leander-tx',
+    'bryson-leander-tx',
+    'vista-ridge-leander-tx',
+    'mason-hills-leander-tx',
+    'summerlyn-leander-tx',
+    'north-creek-leander-tx',
+    'benbrook-ranch-leander-tx',
+    // Cedar Park Subdivisions
+    'buttercup-creek-cedar-park-tx',
+    'ranch-at-cypress-creek-cedar-park-tx',
+    'cypress-canyon-cedar-park-tx',
+    'whitestone-oaks-cedar-park-tx',
+    'anderson-mill-west-cedar-park-tx',
+    'twin-creeks-cedar-park-tx',
+    'carriage-hills-cedar-park-tx',
+    // Liberty Hill Subdivisions
+    'santa-rita-ranch-liberty-hill-tx',
+    'clearwater-ranch-liberty-hill-tx',
+    'gabriel-woods-liberty-hill-tx',
+  ].map(slug => ({
+    url: `${baseUrl}/neighborhoods/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  const neighborhoodPages = [...cityPages, ...subdivisionPages]
+
+  // Guide pages (Best Of listicles)
+  const guidePages: MetadataRoute.Sitemap = [
+    'best-restaurants-leander-tx',
+    'best-restaurants-cedar-park-tx',
+    'best-restaurants-liberty-hill-tx',
+    'best-bbq-leander-cedar-park-tx',
+    'best-mexican-food-leander-tx',
+    'best-pizza-leander-cedar-park-tx',
+    'best-coffee-shops-leander-tx',
+    'best-family-restaurants-leander-tx',
+  ].map((slug) => ({
+    url: `${baseUrl}/guides/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.85,
+  }))
+
+  // Guides index page
+  const guidesIndex: MetadataRoute.Sitemap = [
     {
-      url: `${baseUrl}/neighborhoods/cedar-park-tx`,
+      url: `${baseUrl}/guides`,
       lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/neighborhoods/leander-tx`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/neighborhoods/liberty-hill-tx`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/neighborhoods/austin-tx`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/neighborhoods/georgetown-tx`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.7,
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
   ]
 
-  return [...staticPages, ...categoryPages, ...neighborhoodPages]
+  return [...staticPages, ...categoryPages, ...neighborhoodPages, ...guidesIndex, ...guidePages]
 }

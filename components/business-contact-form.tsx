@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -11,10 +11,18 @@ import { MessageSquare, Send, CheckCircle, Loader2, X } from "lucide-react"
 interface BusinessContactFormProps {
   businessName: string
   businessId: string
+  autoOpen?: boolean
 }
 
-export function BusinessContactForm({ businessName, businessId }: BusinessContactFormProps) {
-  const [isOpen, setIsOpen] = useState(false)
+export function BusinessContactForm({ businessName, businessId, autoOpen }: BusinessContactFormProps) {
+  const [isOpen, setIsOpen] = useState(autoOpen || false)
+
+  // Handle autoOpen prop changes
+  useEffect(() => {
+    if (autoOpen) {
+      setIsOpen(true)
+    }
+  }, [autoOpen])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [formData, setFormData] = useState({

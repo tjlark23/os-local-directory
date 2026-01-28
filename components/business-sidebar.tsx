@@ -36,9 +36,10 @@ interface BusinessSidebarProps {
     currentlyOpen: boolean
     amenities: Array<{ name: string; icon: string }>
   }
+  autoOpenContact?: boolean
 }
 
-export function BusinessSidebar({ business }: BusinessSidebarProps) {
+export function BusinessSidebar({ business, autoOpenContact }: BusinessSidebarProps) {
   const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
   const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" }).toLowerCase()
@@ -148,7 +149,7 @@ export function BusinessSidebar({ business }: BusinessSidebarProps) {
           )}
 
           {/* Contact Form Button */}
-          <BusinessContactForm businessName={business.name} businessId={business.id} />
+          <BusinessContactForm businessName={business.name} businessId={business.id} autoOpen={autoOpenContact} />
 
           <Button variant="outline" className="w-full bg-transparent" asChild>
             <a
