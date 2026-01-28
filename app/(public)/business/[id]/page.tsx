@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { BusinessPageHeader } from "@/components/business-page-header"
 import { BusinessPageContent } from "@/components/business-page-content"
 import { BusinessSidebar } from "@/components/business-sidebar"
-import { BusinessReviewsSection } from "@/components/business-reviews-section"
+import { FeaturedBanner } from "@/components/featured-banner"
 import { SimilarBusinesses } from "@/components/similar-businesses"
 import { UpgradeCTA } from "@/components/upgrade-cta"
 import { notFound } from "next/navigation"
@@ -379,12 +379,17 @@ export default async function BusinessPage({ params }: { params: Promise<{ id: s
       <div className="min-h-screen bg-muted/30">
         <BusinessPageHeader business={business} />
 
+        {/* Featured Business Banner - only for featured tier */}
+        <FeaturedBanner
+          listingTier={business.listingTier}
+          dealsBanner={business.dealsBanner}
+        />
+
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
               <BusinessPageContent business={business} />
-              <BusinessReviewsSection business={business} />
 
               {/* Upgrade CTA - shown for free/premium listings */}
               <UpgradeCTA

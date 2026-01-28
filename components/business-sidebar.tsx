@@ -2,9 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Star, MapPin, Phone, ExternalLink, Clock, MessageSquare, Navigation } from "lucide-react"
+import { BusinessContactForm } from "@/components/business-contact-form"
 
 interface BusinessSidebarProps {
   business: {
+    id: string
+    name: string
     quickStats: {
       overallRating: number
       totalReviews: number
@@ -28,7 +31,7 @@ interface BusinessSidebarProps {
     latitude?: number
     longitude?: number
     phone: string
-    website: string
+    website?: string
     hours: Record<string, { open: string; close: string; isOpen: boolean }>
     currentlyOpen: boolean
     amenities: Array<{ name: string; icon: string }>
@@ -127,20 +130,25 @@ export function BusinessSidebar({ business }: BusinessSidebarProps) {
             </div>
           </a>
 
-          <a
-            href={business.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group"
-          >
-            <div className="w-10 h-10 bg-blue-500/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/20 transition-colors">
-              <ExternalLink className="w-5 h-5 text-blue-600" />
-            </div>
-            <div>
-              <p className="font-medium text-foreground">Website</p>
-              <p className="text-sm text-primary hover:underline">Visit Website</p>
-            </div>
-          </a>
+          {business.website && (
+            <a
+              href={business.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group"
+            >
+              <div className="w-10 h-10 bg-blue-500/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/20 transition-colors">
+                <ExternalLink className="w-5 h-5 text-blue-600" />
+              </div>
+              <div>
+                <p className="font-medium text-foreground">Website</p>
+                <p className="text-sm text-primary hover:underline">Visit Website</p>
+              </div>
+            </a>
+          )}
+
+          {/* Contact Form Button */}
+          <BusinessContactForm businessName={business.name} businessId={business.id} />
 
           <Button variant="outline" className="w-full bg-transparent" asChild>
             <a

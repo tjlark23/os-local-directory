@@ -57,32 +57,32 @@ export function Footer() {
             <h3 className="text-white font-bold mb-4 text-lg">Categories</h3>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/search?category=food" className="hover:text-white transition-colors">
+                <Link href="/categories/restaurants-leander-tx" className="hover:text-white transition-colors">
                   Restaurants
                 </Link>
               </li>
               <li>
-                <Link href="/search?category=auto-services" className="hover:text-white transition-colors">
+                <Link href="/categories/automotive-leander-tx" className="hover:text-white transition-colors">
                   Auto Services
                 </Link>
               </li>
               <li>
-                <Link href="/search?category=health-beauty" className="hover:text-white transition-colors">
+                <Link href="/categories/health-leander-tx" className="hover:text-white transition-colors">
                   Health & Beauty
                 </Link>
               </li>
               <li>
-                <Link href="/search?category=home-services" className="hover:text-white transition-colors">
+                <Link href="/categories/home-leander-tx" className="hover:text-white transition-colors">
                   Home Services
                 </Link>
               </li>
               <li>
-                <Link href="/search?category=entertainment" className="hover:text-white transition-colors">
+                <Link href="/categories/entertainment-leander-tx" className="hover:text-white transition-colors">
                   Entertainment
                 </Link>
               </li>
               <li>
-                <Link href="/search?category=pets" className="hover:text-white transition-colors">
+                <Link href="/categories/pets-leander-tx" className="hover:text-white transition-colors">
                   Pets
                 </Link>
               </li>

@@ -24,13 +24,13 @@ import { useRouter } from "next/navigation"
 import { useLocationOptional } from "@/lib/location-context"
 
 const categories = [
-  { name: "Restaurants", href: "/search?category=food", icon: Utensils },
-  { name: "Home Services", href: "/search?category=home-services", icon: Home },
-  { name: "Auto Services", href: "/search?category=auto-services", icon: Car },
-  { name: "Health & Beauty", href: "/search?category=health-beauty", icon: Sparkles },
-  { name: "Entertainment", href: "/search?category=entertainment", icon: PartyPopper },
-  { name: "Pets", href: "/search?category=pets", icon: PawPrint },
-  { name: "Services", href: "/search?category=services", icon: Briefcase },
+  { name: "Restaurants", href: "/categories/restaurants-leander-tx", icon: Utensils },
+  { name: "Home Services", href: "/categories/home-leander-tx", icon: Home },
+  { name: "Auto Services", href: "/categories/automotive-leander-tx", icon: Car },
+  { name: "Health & Beauty", href: "/categories/health-leander-tx", icon: Sparkles },
+  { name: "Entertainment", href: "/categories/entertainment-leander-tx", icon: PartyPopper },
+  { name: "Pets", href: "/categories/pets-leander-tx", icon: PawPrint },
+  { name: "Services", href: "/categories/services-leander-tx", icon: Briefcase },
 ]
 
 export function Navbar() {
