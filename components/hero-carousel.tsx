@@ -124,10 +124,9 @@ export default function HeroCarousel({ businesses }: HeroCarouselProps) {
                 alt={currentBusiness.name}
                 fill
                 className="object-cover"
-                quality={100}
+                quality={75}
                 sizes="(max-width: 1024px) 100vw, 60vw"
                 priority
-                unoptimized
               />
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -224,9 +223,8 @@ export default function HeroCarousel({ businesses }: HeroCarouselProps) {
                       alt={business.name}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
-                      quality={100}
+                      quality={75}
                       sizes="(max-width: 1024px) 100vw, 40vw"
-                      unoptimized
                     />
                     {/* Gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 group-hover:from-black/85 transition-all duration-500" />

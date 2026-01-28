@@ -18,7 +18,7 @@ export function Footer() {
               width={200}
               height={60}
               className="mb-4"
-              unoptimized
+              quality={75}
             />
             <p className="text-sm mb-4 leading-relaxed">
               Discover the best local businesses in Leander, Cedar Park, and Liberty Hill. Your trusted community directory.

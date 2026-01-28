@@ -95,7 +95,7 @@ export function BusinessCardVertical({ business, isFavorite = false, onToggleFav
           alt={business.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"
-          unoptimized
+          quality={75}
         />
 
         {/* Category Badge - Top Left */}
