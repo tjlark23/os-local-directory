@@ -65,27 +65,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }))
 
-  // City-filtered search pages
-  const cityPages: MetadataRoute.Sitemap = [
+  // Neighborhood/city landing pages
+  const neighborhoodPages: MetadataRoute.Sitemap = [
     {
-      url: `${baseUrl}/search?city=Leander`,
+      url: `${baseUrl}/neighborhoods/cedar-park-tx`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/neighborhoods/leander-tx`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/neighborhoods/liberty-hill-tx`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/neighborhoods/austin-tx`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/search?city=Cedar%20Park`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/search?city=Liberty%20Hill`,
+      url: `${baseUrl}/neighborhoods/georgetown-tx`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.7,
     },
   ]
 
-  return [...staticPages, ...categoryPages, ...cityPages]
+  return [...staticPages, ...categoryPages, ...neighborhoodPages]
 }
