@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Facebook, Instagram, Twitter } from "lucide-react"
-import Image from "next/image"
+import { siteConfig } from "@/lib/site-config"
 
 export function Footer() {
   return (
@@ -11,17 +11,13 @@ export function Footer() {
 
           {/* Column 1: About (wider - 2 columns) */}
           <div className="lg:col-span-2">
-            {/* Logo Image */}
-            <Image
-              src="/images/leander-20scoop-20text-20logo.png"
-              alt="Leander Scoop"
-              width={200}
-              height={60}
-              className="mb-4"
-              quality={75}
-            />
+            {/* Brand Name */}
+            <h2 className="text-white text-2xl font-bold mb-2">
+              {siteConfig.name}
+            </h2>
+            <p className="text-primary text-sm mb-4">{siteConfig.tagline}</p>
             <p className="text-sm mb-4 leading-relaxed">
-              Discover the best local businesses in Leander, Cedar Park, and Liberty Hill. Your trusted community directory.
+              Discover the best local businesses across Williamson County - from Leander and Cedar Park to Round Rock, Georgetown, and beyond.
             </p>
             {/* Social media icons */}
             <div className="flex gap-3">
@@ -29,7 +25,7 @@ export function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"
+                className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-primary transition-colors"
               >
                 <Facebook className="w-5 h-5" />
               </a>
@@ -37,7 +33,7 @@ export function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"
+                className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-primary transition-colors"
               >
                 <Instagram className="w-5 h-5" />
               </a>
@@ -45,7 +41,7 @@ export function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"
+                className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-primary transition-colors"
               >
                 <Twitter className="w-5 h-5" />
               </a>
@@ -144,10 +140,30 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Attribution Banner */}
+        <div className="py-4 mb-6 border-y border-gray-700">
+          <p className="text-center text-sm">
+            Powered by{" "}
+            {siteConfig.poweredBy.map((source, index) => (
+              <span key={source.name}>
+                <a
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-white transition-colors font-medium"
+                >
+                  {source.name}
+                </a>
+                {index < siteConfig.poweredBy.length - 1 && " & "}
+              </span>
+            ))}
+          </p>
+        </div>
+
         {/* Footer Bottom */}
-        <div className="pt-6 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-400">
-            © 2026 Leander Scoop. All rights reserved.
+            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm">
             <Link href="/privacy" className="hover:text-white transition-colors">

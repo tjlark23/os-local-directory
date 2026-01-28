@@ -29,7 +29,7 @@ export async function generateMetadata({
 
   if (!guide) {
     return {
-      title: 'Guide Not Found | Leander Scoop',
+      title: 'Guide Not Found | WilCo Guide',
       description: 'The guide you are looking for does not exist.',
     }
   }
@@ -38,7 +38,7 @@ export async function generateMetadata({
   const cityName = guide.city?.name || 'the area'
 
   return {
-    title: `${guide.title} ${year} | Leander Scoop`,
+    title: `${guide.title} ${year} | WilCo Guide`,
     description: guide.description,
     keywords: [
       guide.title.toLowerCase(),
@@ -51,10 +51,10 @@ export async function generateMetadata({
       title: `${guide.title} ${year}`,
       description: guide.description,
       type: 'article',
-      url: `https://directory.leanderscoop.com/guides/${slug}`,
+      url: `https://wilcoguide.com/guides/${slug}`,
     },
     alternates: {
-      canonical: `https://directory.leanderscoop.com/guides/${slug}`,
+      canonical: `https://wilcoguide.com/guides/${slug}`,
     },
   }
 }
@@ -147,12 +147,12 @@ export default async function GuidePage({
     description: guide.description,
     author: {
       '@type': 'Organization',
-      name: 'Leander Scoop',
+      name: 'WilCo Guide',
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Leander Scoop',
-      url: 'https://directory.leanderscoop.com',
+      name: 'WilCo Guide',
+      url: 'https://wilcoguide.com',
     },
     datePublished: new Date().toISOString(),
     dateModified: new Date().toISOString(),

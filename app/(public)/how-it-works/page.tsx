@@ -14,24 +14,25 @@ import {
   CheckCircle2,
   Sparkles,
 } from 'lucide-react'
+import { siteConfig } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'How It Works | Find Local Businesses | Leander Scoop Directory',
-  description: 'Learn how to use Leander Scoop Directory to find the best local businesses in Leander, Cedar Park, and Liberty Hill, Texas.',
+  title: `How It Works | Find Local Businesses | ${siteConfig.name}`,
+  description: `Learn how to use ${siteConfig.name} to find the best local businesses across Williamson County, Texas.`,
   keywords: [
     'how to find local businesses',
-    'leander business search',
+    'williamson county business search',
     'local business guide',
     'find businesses near me',
   ],
   openGraph: {
-    title: 'How It Works | Leander Scoop Directory',
-    description: 'Learn how to find the best local businesses in the Leander area.',
+    title: `How It Works | ${siteConfig.name}`,
+    description: 'Learn how to find the best local businesses in Williamson County.',
     type: 'website',
-    url: 'https://directory.leanderscoop.com/how-it-works',
+    url: `${siteConfig.url}/how-it-works`,
   },
   alternates: {
-    canonical: 'https://directory.leanderscoop.com/how-it-works',
+    canonical: `${siteConfig.url}/how-it-works`,
   },
 }
 
@@ -118,7 +119,7 @@ export default function HowItWorksPage() {
               Getting Started
             </Badge>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              How Leander Scoop Directory Works
+              How {siteConfig.name} Works
             </h1>
             <p className="text-lg text-muted-foreground">
               Whether you're looking for local businesses or want to get your business listed,
@@ -227,7 +228,7 @@ export default function HowItWorksPage() {
         <section className="mb-20">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Why Use Leander Scoop Directory?
+              Why Use {siteConfig.name}?
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Features designed to help users find great businesses and help businesses get found.
@@ -257,7 +258,7 @@ export default function HowItWorksPage() {
           <h2 className="text-3xl font-bold text-foreground mb-4">Ready to Get Started?</h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             Whether you're looking for local services or want to grow your business,
-            Leander Scoop Directory is here to help.
+            {siteConfig.name} is here to help.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild size="lg">

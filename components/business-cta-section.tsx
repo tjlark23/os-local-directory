@@ -17,7 +17,7 @@ export function BusinessCTASection() {
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-6 text-balance">
-            Grow Your Business with Leander Scoop
+            Grow Your Business with WilCo Guide
           </h2>
           <p className="text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-10">
             Join hundreds of local businesses reaching thousands of customers in the Leander area every day
@@ -75,7 +75,7 @@ export function DiscoverCTASection() {
             Ready to Discover Your Next Favorite Place?
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-            Join thousands of locals who trust Leander Scoop to find the best businesses in their area
+            Join thousands of locals who trust WilCo Guide to find the best businesses in their area
           </p>
 
           <div className="flex items-center justify-center">

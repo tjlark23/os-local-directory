@@ -48,7 +48,7 @@ export async function generateMetadata({
 
   if (!parsed) {
     return {
-      title: 'Category Not Found | Leander Scoop',
+      title: 'Category Not Found | WilCo Guide',
       description: 'The category you are looking for does not exist.',
     }
   }
@@ -58,7 +58,7 @@ export async function generateMetadata({
   const year = new Date().getFullYear()
 
   return {
-    title: `Best ${displayName} in ${city.name}, TX ${year} | Leander Scoop Directory`,
+    title: `Best ${displayName} in ${city.name}, TX ${year} | WilCo Guide Directory`,
     description: `Discover the top ${displayName.toLowerCase()} in ${city.name}, Texas. Verified reviews, photos, hours, and contact information for local businesses.`,
     keywords: [
       `${displayName.toLowerCase()} ${city.name.toLowerCase()} tx`,
@@ -71,10 +71,10 @@ export async function generateMetadata({
       title: `Best ${displayName} in ${city.name}, TX ${year}`,
       description: `Find top-rated ${displayName.toLowerCase()} in ${city.name}, Texas with reviews and ratings.`,
       type: 'website',
-      url: `https://directory.leanderscoop.com/categories/${slug}`,
+      url: `https://wilcoguide.com/categories/${slug}`,
     },
     alternates: {
-      canonical: `https://directory.leanderscoop.com/categories/${slug}`,
+      canonical: `https://wilcoguide.com/categories/${slug}`,
     },
   }
 }
@@ -151,7 +151,7 @@ export default async function CategoryPage({
     '@type': 'CollectionPage',
     name: `Best ${displayName} in ${city.name}, TX ${year}`,
     description: `Top-rated ${displayName.toLowerCase()} in ${city.name}, Texas.`,
-    url: `https://directory.leanderscoop.com/categories/${slug}`,
+    url: `https://wilcoguide.com/categories/${slug}`,
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: businesses.slice(0, 10).map((biz, index) => ({
@@ -347,7 +347,7 @@ export default async function CategoryPage({
               Find the Best {displayName} in {city.name}
             </h2>
             <p className="text-muted-foreground">
-              Looking for {displayName.toLowerCase()} in {city.name}, Texas? Leander Scoop Directory is your trusted source
+              Looking for {displayName.toLowerCase()} in {city.name}, Texas? WilCo Guide Directory is your trusted source
               for finding top-rated local businesses. Our directory features verified reviews, photos, business hours,
               and contact information to help you make the best choice. Whether you're a longtime resident or new to
               the {city.region} area, we make it easy to discover great {displayName.toLowerCase()} in {city.name} and

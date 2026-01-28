@@ -2,7 +2,7 @@ import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "Terms of Service for Leander Scoop Directory - rules and guidelines for using our local business directory.",
+  description: "Terms of Service for WilCo Guide - rules and guidelines for using our local business directory.",
 }
 
 export default function TermsPage() {
@@ -19,7 +19,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-foreground">Agreement to Terms</h2>
             <p className="text-muted-foreground">
-              By accessing or using the Leander Scoop Directory website at directory.leanderscoop.com
+              By accessing or using the WilCo Guide website at wilcoguide.com
               ("Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree
               with any part of these terms, you may not access the Service.
             </p>
@@ -28,7 +28,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-foreground">Description of Service</h2>
             <p className="text-muted-foreground">
-              Leander Scoop Directory is a local business directory serving the Leander, Cedar Park,
+              WilCo Guide is a local business directory serving the Leander, Cedar Park,
               and Liberty Hill, Texas communities. We provide business listings, reviews, and
               information to help residents discover local businesses.
             </p>
@@ -91,7 +91,7 @@ export default function TermsPage() {
             <h2 className="text-2xl font-semibold text-foreground">Intellectual Property</h2>
             <p className="text-muted-foreground">
               The Service and its original content (excluding user-submitted content) are and will
-              remain the exclusive property of Leander Scoop. Our trademarks, logos, and service
+              remain the exclusive property of WilCo Guide. Our trademarks, logos, and service
               marks may not be used without prior written permission.
             </p>
           </section>
@@ -117,7 +117,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-foreground">Indemnification</h2>
             <p className="text-muted-foreground">
-              You agree to indemnify and hold harmless Leander Scoop and its affiliates from any
+              You agree to indemnify and hold harmless WilCo Guide and its affiliates from any
               claims, damages, or expenses arising from your use of the Service or violation of
               these Terms.
             </p>
@@ -146,7 +146,7 @@ export default function TermsPage() {
               If you have questions about these Terms of Service, please contact us at:
             </p>
             <p className="text-muted-foreground">
-              <strong>Leander Scoop</strong><br />
+              <strong>WilCo Guide</strong><br />
               Email: legal@leanderscoop.com<br />
               Website: leanderscoop.com
             </p>

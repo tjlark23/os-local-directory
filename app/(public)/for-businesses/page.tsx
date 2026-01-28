@@ -27,21 +27,21 @@ import {
 } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "For Businesses | Partner With Leander Scoop Directory",
-  description: "Join Leander Scoop Directory and get discovered by local customers. Free listing available. Premium partnerships include AI-optimized content, priority placement, and dedicated support.",
+  title: "For Businesses | Partner With WilCo Guide",
+  description: "Join WilCo Guide and get discovered by local customers across Williamson County. Free listing available. Premium partnerships include AI-optimized content, priority placement, and dedicated support.",
   keywords: [
-    "Leander business directory",
-    "Cedar Park business listing",
-    "Liberty Hill local business",
+    "Williamson County business directory",
+    "Leander business listing",
+    "Round Rock local business",
     "Texas business advertising",
     "local business marketing",
     "business directory partnership",
   ],
   openGraph: {
-    title: "For Businesses | Partner With Leander Scoop Directory",
+    title: "For Businesses | Partner With WilCo Guide",
     description: "Get discovered by local customers. Free listing or premium partnership options available.",
     type: "website",
-    url: "https://directory.leanderscoop.com/for-businesses",
+    url: "https://wilcoguide.com/for-businesses",
   },
 }
 
@@ -149,7 +149,7 @@ const faqs = [
   },
   {
     question: "What areas do you cover?",
-    answer: "We focus on Leander, Cedar Park, and Liberty Hill, Texas. If your business serves customers in these areas, you're a perfect fit for our directory.",
+    answer: "We cover all of Williamson County, Texas including Leander, Round Rock, Georgetown, Cedar Park, Liberty Hill, Hutto, Pflugerville, and Taylor. If your business serves customers in these areas, you're a perfect fit for our directory.",
   },
 ]
 
@@ -170,7 +170,7 @@ export default function ForBusinessesPage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-red-600/20 border border-red-500/30 rounded-full px-4 py-2 mb-6">
               <MapPin className="w-4 h-4 text-red-400" />
-              <span className="text-sm text-red-300">Leander • Cedar Park • Liberty Hill</span>
+              <span className="text-sm text-red-300">Leander • Round Rock • Georgetown • All WilCo</span>
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -361,7 +361,7 @@ export default function ForBusinessesPage() {
                   <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
                     <Zap className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">The Leander Scoop Way</h3>
+                  <h3 className="text-xl font-bold text-white">The WilCo Guide Way</h3>
                 </div>
                 <ul className="space-y-4 text-gray-200">
                   <li className="flex items-start gap-3">

@@ -2,7 +2,7 @@ import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Privacy Policy for Leander Scoop Directory - how we collect, use, and protect your information.",
+  description: "Privacy Policy for WilCo Guide - how we collect, use, and protect your information.",
 }
 
 export default function PrivacyPage() {
@@ -19,9 +19,9 @@ export default function PrivacyPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-foreground">Introduction</h2>
             <p className="text-muted-foreground">
-              Leander Scoop Directory ("we," "our," or "us") is committed to protecting your privacy.
+              WilCo Guide ("we," "our," or "us") is committed to protecting your privacy.
               This Privacy Policy explains how we collect, use, disclose, and safeguard your information
-              when you visit our website directory.leanderscoop.com.
+              when you visit our website wilcoguide.com.
             </p>
           </section>
 
@@ -116,7 +116,7 @@ export default function PrivacyPage() {
               If you have questions about this Privacy Policy, please contact us at:
             </p>
             <p className="text-muted-foreground">
-              <strong>Leander Scoop</strong><br />
+              <strong>WilCo Guide</strong><br />
               Email: privacy@leanderscoop.com<br />
               Website: leanderscoop.com
             </p>

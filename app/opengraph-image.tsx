@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export const alt = 'Leander Scoop Directory - Find Local Businesses in Leander, Cedar Park & Liberty Hill, TX'
+export const alt = 'WilCo Guide - Your Complete Guide to Williamson County, TX'
 export const size = {
   width: 1200,
   height: 630,
@@ -78,7 +78,7 @@ export default async function Image() {
                 letterSpacing: '-2px',
               }}
             >
-              Leander Scoop
+              WilCo Guide
             </span>
           </div>
 
@@ -92,7 +92,7 @@ export default async function Image() {
               textAlign: 'center',
             }}
           >
-            Local Business Directory
+            Your Complete Guide to Williamson County
           </div>
 
           {/* Description */}
@@ -105,7 +105,7 @@ export default async function Image() {
               lineHeight: '1.4',
             }}
           >
-            Find trusted restaurants, services, and shops in
+            Local businesses, news, jobs & more in
           </div>
 
           {/* Cities */}
@@ -142,7 +142,7 @@ export default async function Image() {
                 border: '2px solid #f97316',
               }}
             >
-              Cedar Park
+              Round Rock
             </span>
             <span
               style={{
@@ -155,7 +155,7 @@ export default async function Image() {
                 border: '2px solid #f97316',
               }}
             >
-              Liberty Hill
+              Georgetown
             </span>
           </div>
 
@@ -170,7 +170,7 @@ export default async function Image() {
             }}
           >
             <span style={{ marginRight: '8px' }}>📍</span>
-            Texas Hill Country
+            Williamson County, Texas
           </div>
         </div>
 
@@ -186,7 +186,7 @@ export default async function Image() {
             color: '#64748b',
           }}
         >
-          directory.leanderscoop.com
+          wilcoguide.com
         </div>
       </div>
     ),

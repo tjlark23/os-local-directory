@@ -206,7 +206,7 @@ export function PremiumContentSections({ business, section = 'all' }: PremiumCon
         </div>
         <p className="text-muted-foreground mb-4">
           {business.name} is your trusted local {business.category === 'restaurants' ? 'restaurant' : 'business'} in {business.address.city}, Texas.
-          We're proud to be part of the Leander Scoop community and serve neighbors from Cedar Park, Liberty Hill, and beyond.
+          We're proud to be part of the WilCo Guide community and serve neighbors from Cedar Park, Liberty Hill, and beyond.
         </p>
         <div className="flex flex-wrap gap-2">
           <Badge variant="secondary" className="bg-primary/10 text-primary">

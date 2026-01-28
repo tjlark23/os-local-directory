@@ -332,12 +332,12 @@ export function getCityTitle(city: CityConfig, suffix?: string): string {
  * Get canonical URL for a city page
  */
 export function getCityCanonicalUrl(citySlug: string): string {
-  return `https://directory.leanderscoop.com/neighborhoods/${citySlug}`
+  return `https://wilcoguide.com/neighborhoods/${citySlug}`
 }
 
 /**
  * Get canonical URL for a category page in a city
  */
 export function getCategoryCanonicalUrl(category: string, citySlug: string): string {
-  return `https://directory.leanderscoop.com/categories/${category}-${citySlug}`
+  return `https://wilcoguide.com/categories/${category}-${citySlug}`
 }

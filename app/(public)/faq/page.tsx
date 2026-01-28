@@ -9,31 +9,32 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { HelpCircle, ArrowRight } from 'lucide-react'
+import { siteConfig } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'FAQ | Frequently Asked Questions | Leander Scoop Directory',
-  description: 'Find answers to common questions about Leander Scoop Directory, business listings, reviews, and how to use our local business guide.',
+  title: `FAQ | Frequently Asked Questions | ${siteConfig.name}`,
+  description: `Find answers to common questions about ${siteConfig.name}, business listings, reviews, and how to use our local business guide.`,
   keywords: [
-    'leander scoop faq',
+    'wilco guide faq',
     'local business directory help',
     'how to list business',
     'business directory questions',
   ],
   openGraph: {
-    title: 'FAQ | Leander Scoop Directory',
+    title: `FAQ | ${siteConfig.name}`,
     description: 'Find answers to common questions about our local business directory.',
     type: 'website',
-    url: 'https://directory.leanderscoop.com/faq',
+    url: `${siteConfig.url}/faq`,
   },
   alternates: {
-    canonical: 'https://directory.leanderscoop.com/faq',
+    canonical: `${siteConfig.url}/faq`,
   },
 }
 
 const GENERAL_FAQS = [
   {
-    question: 'What is Leander Scoop Directory?',
-    answer: 'Leander Scoop Directory is a comprehensive local business guide for Leander, Cedar Park, Liberty Hill, and surrounding Texas communities. We help residents and visitors discover, compare, and connect with local businesses across various categories including restaurants, health services, beauty salons, fitness centers, and more.',
+    question: 'What is WilCo Guide?',
+    answer: 'WilCo Guide is a comprehensive local business guide for Leander, Cedar Park, Liberty Hill, and surrounding Texas communities. We help residents and visitors discover, compare, and connect with local businesses across various categories including restaurants, health services, beauty salons, fitness centers, and more.',
   },
   {
     question: 'What areas do you cover?',
@@ -121,7 +122,7 @@ export default function FAQPage() {
               Frequently Asked Questions
             </h1>
             <p className="text-lg text-muted-foreground">
-              Find answers to common questions about Leander Scoop Directory, how to list your business,
+              Find answers to common questions about WilCo Guide, how to list your business,
               and how to get the most out of our local business guide.
             </p>
           </div>

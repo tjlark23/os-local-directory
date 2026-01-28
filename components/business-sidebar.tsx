@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Star, MapPin, Phone, ExternalLink, Clock, Navigation } from "lucide-react"
+import { Star, MapPin, Phone, ExternalLink, Clock, Navigation, MessageSquare } from "lucide-react"
 
 interface BusinessSidebarProps {
   business: {

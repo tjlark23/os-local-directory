@@ -2,9 +2,10 @@ import type { MetadataRoute } from 'next'
 import { DB_CATEGORIES } from '@/lib/slugify'
 import { CITIES, getAllNeighborhoods } from '@/lib/locations-config'
 import { getAllGuideSlugs } from '@/lib/guides-config'
+import { siteConfig } from '@/lib/site-config'
 
 // Base URL for all sitemap entries
-const baseUrl = 'https://directory.leanderscoop.com'
+const baseUrl = siteConfig.url
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Static pages

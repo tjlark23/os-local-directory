@@ -4,41 +4,37 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { getCurrentLocation } from "@/lib/get-location"
 import { LocationProvider } from "@/lib/location-context"
+import { siteConfig } from "@/lib/site-config"
 
 const inter = Inter({ subsets: ["latin"] })
-
-// Default site config - will be overridden per location when DB is set up
-const siteConfig = {
-  name: "Leander Scoop Directory",
-  description: "Find the best local businesses in Leander, Cedar Park, and Liberty Hill, Texas. Browse restaurants, services, shops, and more with reviews and ratings from your neighbors.",
-  url: "https://directory.leanderscoop.com",
-  ogImage: "/og-image.jpg",
-}
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Leander Scoop Directory | Local Businesses in Leander, Cedar Park & Liberty Hill TX",
-    template: "%s | Leander Scoop Directory",
+    default: `${siteConfig.name} | Local Businesses in Williamson County TX`,
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: [
+    "Williamson County Texas",
     "Leander Texas",
     "Cedar Park Texas",
     "Liberty Hill Texas",
+    "Round Rock Texas",
+    "Pflugerville Texas",
+    "Georgetown Texas",
     "local business directory",
     "Leander restaurants",
     "Cedar Park businesses",
-    "Liberty Hill shops",
+    "Round Rock shops",
     "Austin area businesses",
     "Williamson County directory",
-    "local services Leander",
-    "best restaurants Leander TX",
-    "Leander Scoop",
+    "local services",
+    "WilCo Guide",
   ],
-  authors: [{ name: "Leander Scoop" }],
-  creator: "Leander Scoop",
-  publisher: "Leander Scoop",
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -48,10 +44,10 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: siteConfig.ogImage,
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Leander Scoop Directory - Local Businesses in Leander, Cedar Park & Liberty Hill",
+        alt: `${siteConfig.name} - ${siteConfig.tagline}`,
       },
     ],
   },
@@ -59,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [siteConfig.ogImage],
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -77,12 +73,6 @@ export const metadata: Metadata = {
   },
   verification: {
     // Google Search Console verification
-    // Instructions:
-    // 1. Go to https://search.google.com/search-console
-    // 2. Add property: https://directory.leanderscoop.com
-    // 3. Choose "HTML tag" verification method
-    // 4. Copy ONLY the content value from the meta tag (e.g., "abc123xyz")
-    // 5. Uncomment the line below and paste the code
     // google: "PASTE_YOUR_CODE_HERE",
   },
 }

@@ -8,7 +8,7 @@ import { CITIES } from '@/lib/locations-config'
 import { CATEGORY_DISPLAY_NAMES } from '@/lib/slugify'
 
 export const metadata: Metadata = {
-  title: 'Local Guides | Best of Leander, Cedar Park & Liberty Hill | Leander Scoop',
+  title: 'Local Guides | Best of Leander, Cedar Park & Liberty Hill | WilCo Guide',
   description: 'Curated guides to the best restaurants, services, and local businesses in Leander, Cedar Park, and Liberty Hill, Texas.',
   keywords: [
     'best restaurants leander tx',
@@ -22,10 +22,10 @@ export const metadata: Metadata = {
     title: 'Local Guides | Best of Leander & Cedar Park',
     description: 'Curated guides to the best local businesses in the Leander area.',
     type: 'website',
-    url: 'https://directory.leanderscoop.com/guides',
+    url: 'https://wilcoguide.com/guides',
   },
   alternates: {
-    canonical: 'https://directory.leanderscoop.com/guides',
+    canonical: 'https://wilcoguide.com/guides',
   },
 }
 

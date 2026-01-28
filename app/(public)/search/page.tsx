@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import { Metadata } from "next"
 import { SearchPageContent } from "./search-content"
 import { CATEGORIES, CITIES } from "@/lib/types"
+import { siteConfig } from "@/lib/site-config"
 
 // Category display names for SEO
 const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
@@ -74,7 +75,7 @@ export async function generateMetadata({
   }
 
   // Build canonical URL
-  const baseUrl = "https://directory.leanderscoop.com"
+  const baseUrl = siteConfig.url
   let canonicalPath = "/search"
   const urlParams = new URLSearchParams()
   if (category) urlParams.set("category", category)
@@ -88,15 +89,15 @@ export async function generateMetadata({
     description,
     keywords,
     openGraph: {
-      title: `${title} | Leander Scoop Directory`,
+      title: `${title} | WilCo Guide`,
       description,
       type: "website",
       url: `${baseUrl}${canonicalPath}`,
-      siteName: "Leander Scoop Directory",
+      siteName: "WilCo Guide",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | Leander Scoop Directory`,
+      title: `${title} | WilCo Guide`,
       description,
     },
     alternates: {

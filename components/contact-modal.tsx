@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Send, CheckCircle, Loader2 } from "lucide-react"
+import { siteConfig } from "@/lib/site-config"
 
 interface ContactModalProps {
   businessName: string
@@ -36,9 +37,9 @@ export function ContactModal({ businessName, businessId, isOpen, onClose }: Cont
     setIsSubmitting(true)
 
     // Build the mailto link with pre-filled data
-    const subject = encodeURIComponent(`Lead from ${businessName} - Leander Scoop Directory`)
+    const subject = encodeURIComponent(`Lead from ${businessName} - ${siteConfig.name}`)
     const body = encodeURIComponent(
-      `New inquiry from Leander Scoop Directory\n\n` +
+      `New inquiry from ${siteConfig.name}\n\n` +
       `Business: ${businessName}\n` +
       `Business ID: ${businessId}\n\n` +
       `--- Contact Information ---\n` +
@@ -48,12 +49,12 @@ export function ContactModal({ businessName, businessId, isOpen, onClose }: Cont
       `--- Message ---\n` +
       `${formData.message}\n\n` +
       `---\n` +
-      `Sent via Leander Scoop Directory\n` +
-      `https://directory.leanderscoop.com/business/${businessId}`
+      `Sent via ${siteConfig.name}\n` +
+      `${siteConfig.url}/business/${businessId}`
     )
 
     // Open mail client
-    window.location.href = `mailto:hello@leanderscoop.com?subject=${subject}&body=${body}`
+    window.location.href = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`
 
     // Show success state
     setTimeout(() => {
@@ -157,7 +158,7 @@ export function ContactModal({ businessName, businessId, isOpen, onClose }: Cont
               </Button>
             </div>
             <p className="text-xs text-muted-foreground text-center">
-              Your message will be sent to Leander Scoop, who will forward it to the business.
+              Your message will be sent to {siteConfig.name}, who will forward it to the business.
             </p>
           </form>
         )}

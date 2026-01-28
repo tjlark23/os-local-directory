@@ -1,20 +1,20 @@
 import Link from "next/link"
 import { BusinessCardVertical } from "@/components/business-card-vertical"
 
-// Category display names
-const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
-  restaurants: "Restaurant",
-  health: "Health & Wellness",
-  beauty: "Beauty & Spa",
-  fitness: "Fitness & Sports",
-  automotive: "Auto Service",
-  shopping: "Shopping & Retail",
-  services: "Professional Service",
-  education: "Education",
-  pets: "Pet Service",
-  financial: "Financial Service",
-  home: "Home Service",
-  entertainment: "Entertainment",
+// Category display names (plural for section headings)
+const CATEGORY_DISPLAY_NAMES_PLURAL: Record<string, string> = {
+  restaurants: "Restaurants",
+  health: "Health & Wellness Providers",
+  beauty: "Beauty & Spa Businesses",
+  fitness: "Fitness Centers",
+  automotive: "Auto Services",
+  shopping: "Shops",
+  services: "Service Providers",
+  education: "Schools",
+  pets: "Pet Services",
+  financial: "Financial Services",
+  home: "Home Services",
+  entertainment: "Entertainment Venues",
 }
 
 interface SimilarBusinessesSectionProps {
@@ -38,7 +38,7 @@ interface SimilarBusinessesSectionProps {
 }
 
 export function SimilarBusinessesSection({ businesses, category }: SimilarBusinessesSectionProps) {
-  const displayCategory = CATEGORY_DISPLAY_NAMES[category] || category
+  const displayCategory = CATEGORY_DISPLAY_NAMES_PLURAL[category] || `${category} Businesses`
 
   // Take up to 8 businesses
   const displayBusinesses = businesses.slice(0, 8)
@@ -48,7 +48,7 @@ export function SimilarBusinessesSection({ businesses, category }: SimilarBusine
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-            Similar {displayCategory}s Nearby
+            Similar {displayCategory} Nearby
           </h2>
           <Link
             href={`/categories/${category}-leander-tx`}

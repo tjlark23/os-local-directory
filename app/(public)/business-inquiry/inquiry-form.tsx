@@ -57,7 +57,7 @@ export function BusinessInquiryForm() {
             Upgrade Your Business Listing
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Stand out from the competition with an enhanced listing on Leander Scoop Directory.
+            Stand out from the competition with an enhanced listing on WilCo Guide Directory.
             Get more visibility, more customers, and better SEO.
           </p>
         </div>
@@ -245,7 +245,7 @@ export function BusinessInquiryForm() {
         {/* Trust Section */}
         <div className="text-center mt-12 text-sm text-muted-foreground">
           <p>
-            Part of <strong>Leander Scoop</strong> - the trusted local newsletter serving
+            Part of <strong>WilCo Guide</strong> - the trusted local newsletter serving
             Leander, Cedar Park, and Liberty Hill communities.
           </p>
         </div>

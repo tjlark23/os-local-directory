@@ -40,7 +40,7 @@ export async function generateMetadata({
 
   if (!neighborhood) {
     return {
-      title: 'Neighborhood Not Found | Leander Scoop',
+      title: 'Neighborhood Not Found | WilCo Guide',
       description: 'The neighborhood you are looking for does not exist.',
     }
   }
@@ -52,7 +52,7 @@ export async function generateMetadata({
     : neighborhood.displayName
 
   return {
-    title: `${locationContext} Businesses | Local Directory ${year} | Leander Scoop`,
+    title: `${locationContext} Businesses | Local Directory ${year} | WilCo Guide`,
     description: `Discover local businesses near ${locationContext}, ${neighborhood.state}. Find restaurants, services, and more with reviews, photos, and contact information.`,
     keywords: [
       `${neighborhood.displayName.toLowerCase()} businesses`,
@@ -63,13 +63,13 @@ export async function generateMetadata({
       ...(isSubdivision ? [`${neighborhood.parentCity?.toLowerCase()} neighborhoods`] : []),
     ],
     openGraph: {
-      title: `${locationContext} Businesses | Leander Scoop Directory`,
+      title: `${locationContext} Businesses | WilCo Guide Directory`,
       description: `Find the best local businesses near ${locationContext}, ${neighborhood.state}.`,
       type: 'website',
-      url: `https://directory.leanderscoop.com/neighborhoods/${slug}`,
+      url: `https://wilcoguide.com/neighborhoods/${slug}`,
     },
     alternates: {
-      canonical: `https://directory.leanderscoop.com/neighborhoods/${slug}`,
+      canonical: `https://wilcoguide.com/neighborhoods/${slug}`,
     },
   }
 }
@@ -128,7 +128,7 @@ export default async function NeighborhoodPage({
     '@type': 'CollectionPage',
     name: `${neighborhood.displayName} Businesses`,
     description: `Local businesses in ${neighborhood.displayName}, ${neighborhood.state}.`,
-    url: `https://directory.leanderscoop.com/neighborhoods/${slug}`,
+    url: `https://wilcoguide.com/neighborhoods/${slug}`,
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: businesses.slice(0, 10).map((biz, index) => ({
@@ -350,7 +350,7 @@ export default async function NeighborhoodPage({
                 <>
                   {neighborhood.displayName} is a vibrant community in the greater Austin, Texas area.
                   Our directory features verified local businesses including restaurants, professional services,
-                  health & wellness providers, and more. Whether you're a resident or visitor, Leander Scoop
+                  health & wellness providers, and more. Whether you're a resident or visitor, WilCo Guide
                   makes it easy to find and support local businesses in {neighborhood.displayName}.
                 </>
               )}

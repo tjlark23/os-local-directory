@@ -10,7 +10,7 @@ export function BusinessOwnerCTA() {
         <div className="text-center text-white mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Own a Business?</h2>
           <p className="text-xl opacity-90 max-w-2xl mx-auto">
-            Get your business listed in the Leander Scoop Directory and connect with customers in your community
+            Get your business listed in the WilCo Guide and connect with customers in your community
           </p>
         </div>
 

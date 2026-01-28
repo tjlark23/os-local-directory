@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { MessageSquare, Send, CheckCircle, Loader2, X } from "lucide-react"
+import { siteConfig } from "@/lib/site-config"
 
 interface BusinessContactFormProps {
   businessName: string
@@ -37,9 +38,9 @@ export function BusinessContactForm({ businessName, businessId, autoOpen }: Busi
     setIsSubmitting(true)
 
     // Build the mailto link with pre-filled data
-    const subject = encodeURIComponent(`Lead from ${businessName} - Leander Scoop Directory`)
+    const subject = encodeURIComponent(`Lead from ${businessName} - ${siteConfig.name}`)
     const body = encodeURIComponent(
-      `New inquiry from Leander Scoop Directory\n\n` +
+      `New inquiry from ${siteConfig.name}\n\n` +
       `Business: ${businessName}\n` +
       `Business ID: ${businessId}\n\n` +
       `--- Contact Information ---\n` +
@@ -49,12 +50,12 @@ export function BusinessContactForm({ businessName, businessId, autoOpen }: Busi
       `--- Message ---\n` +
       `${formData.message}\n\n` +
       `---\n` +
-      `Sent via Leander Scoop Directory\n` +
-      `https://directory.leanderscoop.com/business/${businessId}`
+      `Sent via ${siteConfig.name}\n` +
+      `${siteConfig.url}/business/${businessId}`
     )
 
     // Open mail client
-    window.location.href = `mailto:hello@leanderscoop.com?subject=${subject}&body=${body}`
+    window.location.href = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`
 
     // Show success state
     setTimeout(() => {
@@ -171,7 +172,7 @@ export function BusinessContactForm({ businessName, businessId, autoOpen }: Busi
               )}
             </Button>
             <p className="text-xs text-muted-foreground text-center">
-              Message sent to Leander Scoop, who will forward to the business.
+              Message sent to {siteConfig.name}, who will forward to the business.
             </p>
           </form>
         )}

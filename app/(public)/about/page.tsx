@@ -4,25 +4,27 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { MapPin, Users, Star, Building2, Heart, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { siteConfig } from '@/lib/site-config'
 
 export const metadata: Metadata = {
-  title: 'About Leander Scoop Directory | Local Business Guide',
-  description: 'Learn about Leander Scoop Directory, your trusted source for finding local businesses in Leander, Cedar Park, Liberty Hill, and surrounding Texas communities.',
+  title: `About ${siteConfig.name} | ${siteConfig.tagline}`,
+  description: `Learn about ${siteConfig.name}, your complete guide to local businesses, news, and jobs in Williamson County, Texas.`,
   keywords: [
-    'about leander scoop',
-    'leander business directory',
-    'cedar park local guide',
-    'texas local business',
+    'about wilco guide',
     'williamson county directory',
+    'leander business directory',
+    'round rock local guide',
+    'texas local business',
+    'williamson county businesses',
   ],
   openGraph: {
-    title: 'About Leander Scoop Directory',
-    description: 'Your trusted source for finding local businesses in the Leander area.',
+    title: `About ${siteConfig.name}`,
+    description: siteConfig.tagline,
     type: 'website',
-    url: 'https://directory.leanderscoop.com/about',
+    url: `${siteConfig.url}/about`,
   },
   alternates: {
-    canonical: 'https://directory.leanderscoop.com/about',
+    canonical: `${siteConfig.url}/about`,
   },
 }
 
@@ -36,7 +38,7 @@ const STATS = [
 const VALUES = [
   {
     title: 'Local First',
-    description: 'We focus exclusively on local businesses in the Leander area, helping you discover hidden gems and support your neighbors.',
+    description: 'We focus exclusively on Williamson County businesses, helping you discover hidden gems and support your neighbors.',
   },
   {
     title: 'Verified Information',
@@ -56,11 +58,11 @@ const CITIES = [
   { name: 'Leander', slug: 'leander-tx', status: 'active' },
   { name: 'Cedar Park', slug: 'cedar-park-tx', status: 'active' },
   { name: 'Liberty Hill', slug: 'liberty-hill-tx', status: 'active' },
-  { name: 'Hutto', slug: 'hutto-tx', status: 'coming' },
-  { name: 'Pflugerville', slug: 'pflugerville-tx', status: 'coming' },
   { name: 'Round Rock', slug: 'round-rock-tx', status: 'coming' },
-  { name: 'Taylor', slug: 'taylor-tx', status: 'coming' },
   { name: 'Georgetown', slug: 'georgetown-tx', status: 'coming' },
+  { name: 'Pflugerville', slug: 'pflugerville-tx', status: 'coming' },
+  { name: 'Hutto', slug: 'hutto-tx', status: 'coming' },
+  { name: 'Taylor', slug: 'taylor-tx', status: 'coming' },
   { name: 'Austin', slug: 'austin-tx', status: 'coming' },
 ]
 
@@ -84,11 +86,11 @@ export default function AboutPage() {
               Est. {year - 1}
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              About Leander Scoop Directory
+              About {siteConfig.name}
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Your trusted guide to local businesses in Leander, Cedar Park, Liberty Hill, and the surrounding Texas communities.
-              We help you discover, compare, and connect with the best local businesses.
+              {siteConfig.tagline}. We help you discover local businesses, stay informed with community news,
+              and find job opportunities across Williamson County.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button asChild size="lg">
@@ -128,10 +130,31 @@ export default function AboutPage() {
         <section className="max-w-3xl mx-auto text-center mb-20">
           <h2 className="text-3xl font-bold text-foreground mb-6">Our Mission</h2>
           <p className="text-lg text-muted-foreground">
-            Leander Scoop Directory was created to help residents and visitors discover the amazing local businesses
-            that make our community special. We believe that strong local businesses are the backbone of thriving
-            neighborhoods, and we're committed to helping them connect with customers who need their services.
+            {siteConfig.name} was created to be your complete resource for everything local in Williamson County.
+            From discovering amazing local businesses to staying informed with community news and finding local jobs,
+            we're committed to helping residents and visitors connect with what makes our communities special.
           </p>
+        </section>
+
+        {/* Powered By Section */}
+        <section className="max-w-3xl mx-auto text-center mb-20 bg-primary/5 rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-foreground mb-4">Powered By</h2>
+          <p className="text-muted-foreground mb-6">
+            {siteConfig.name} is brought to you by the teams behind two of the area's most trusted local news sources:
+          </p>
+          <div className="flex flex-wrap justify-center gap-6">
+            {siteConfig.poweredBy.map((source) => (
+              <a
+                key={source.name}
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-background rounded-lg shadow-md hover:shadow-lg transition-shadow font-semibold text-foreground hover:text-primary"
+              >
+                {source.name}
+              </a>
+            ))}
+          </div>
         </section>
 
         {/* Values Section */}
@@ -160,7 +183,7 @@ export default function AboutPage() {
         <section className="mb-20">
           <h2 className="text-3xl font-bold text-foreground text-center mb-4">Our Coverage Area</h2>
           <p className="text-muted-foreground text-center mb-10 max-w-2xl mx-auto">
-            We're actively expanding to cover more communities in the greater Austin area.
+            We cover all of Williamson County and surrounding communities.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-4xl mx-auto">
             {CITIES.map((city) => (

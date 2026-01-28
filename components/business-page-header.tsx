@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Star, Share2, MessageSquare, MapPin, Globe, Clock, CheckCircle2, Tag, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { siteConfig } from "@/lib/site-config"
 
 // Category display names (singular)
 const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
@@ -206,7 +207,7 @@ export function BusinessPageHeader({ business, onContactClick }: BusinessPageHea
               variant="outline"
               className="hover:bg-muted bg-transparent"
               onClick={() => {
-                navigator.clipboard.writeText(`https://directory.leanderscoop.com/business/${business.id}`)
+                navigator.clipboard.writeText(`${siteConfig.url}/business/${business.id}`)
                 setCopied(true)
                 setTimeout(() => setCopied(false), 2000)
               }}

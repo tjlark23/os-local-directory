@@ -162,7 +162,7 @@ export function BusinessCardVertical({ business, isFavorite = false, onToggleFav
         </div>
 
         {/* View Business Button */}
-        <Button className="w-full mt-4 bg-red-600 hover:bg-red-700" asChild>
+        <Button className="w-full mt-4 bg-primary hover:bg-primary/90" asChild>
           <Link href={`/business/${business.slug}`}>
             View Business
           </Link>

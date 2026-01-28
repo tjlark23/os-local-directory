@@ -4,7 +4,7 @@ import { Mail, MapPin, Phone, Clock } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Get in touch with Leander Scoop Directory. Contact us about business listings, advertising, or general inquiries.",
+  description: "Get in touch with WilCo Guide. Contact us about business listings, advertising, or general inquiries.",
 }
 
 export default function ContactPage() {
@@ -14,7 +14,7 @@ export default function ContactPage() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-foreground mb-4">Contact Us</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Have questions about the Leander Scoop Directory? Want to get your business listed or upgrade your listing?
+            Have questions about the WilCo Guide? Want to get your business listed or upgrade your listing?
             We&apos;d love to hear from you.
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function ContactPage() {
                 </p>
               </div>
               <div>
-                <p className="font-medium text-foreground">Part of Leander Scoop</p>
+                <p className="font-medium text-foreground">Part of WilCo Guide</p>
                 <p className="text-muted-foreground">
                   The local newsletter for the Leander area community
                 </p>
@@ -91,7 +91,7 @@ export default function ContactPage() {
                   <strong className="text-foreground">Enhanced Listings:</strong> Upgrade your listing with photos, videos, and featured placement to stand out to potential customers.
                 </li>
                 <li>
-                  <strong className="text-foreground">Advertising:</strong> Reach thousands of local readers through the Leander Scoop newsletter and directory.
+                  <strong className="text-foreground">Advertising:</strong> Reach thousands of local readers through the WilCo Guide newsletter and directory.
                 </li>
               </ul>
               <p className="text-muted-foreground pt-4">

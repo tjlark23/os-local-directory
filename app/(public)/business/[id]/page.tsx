@@ -276,7 +276,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
   if (!business) {
     return {
-      title: "Business Not Found | Leander Scoop Directory",
+      title: "Business Not Found | WilCo Guide",
     }
   }
 
@@ -298,7 +298,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       title,
       description,
       type: "website",
-      url: `https://directory.leanderscoop.com/business/${business.id}`,
+      url: `https://wilcoguide.com/business/${business.id}`,
       images: business.image ? [{ url: business.image, alt: business.name }] : [],
     },
     twitter: {
@@ -307,7 +307,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       description,
     },
     alternates: {
-      canonical: `https://directory.leanderscoop.com/business/${business.id}`,
+      canonical: `https://wilcoguide.com/business/${business.id}`,
     },
   }
 }
@@ -319,7 +319,7 @@ function generateJsonLd(business: any) {
   const baseSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": `https://directory.leanderscoop.com/business/${business.id}`,
+    "@id": `https://wilcoguide.com/business/${business.id}`,
     name: business.name,
     description: business.customDescription || business.description,
     image: business.photos.length > 0 ? business.photos : business.image,

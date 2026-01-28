@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Badge } from "@/components/ui/badge"
 import {
   Search,
   Menu,
@@ -17,11 +18,16 @@ import {
   PartyPopper,
   PawPrint,
   Briefcase,
-  Mail,
+  Newspaper,
+  Building2,
+  FolderOpen,
+  BriefcaseBusiness,
+  BookOpen,
 } from "lucide-react"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { useLocationOptional } from "@/lib/location-context"
+import { siteConfig } from "@/lib/site-config"
 
 const categories = [
   { name: "Restaurants", href: "/categories/restaurants-leander-tx", icon: Utensils },
@@ -33,17 +39,26 @@ const categories = [
   { name: "Services", href: "/categories/services-leander-tx", icon: Briefcase },
 ]
 
+// Main navigation items
+const mainNav = [
+  { name: "News", href: "/news", icon: Newspaper, status: "coming-soon" as const },
+  { name: "Business", href: "/business-insights", icon: Building2, status: "coming-soon" as const },
+  { name: "Directory", href: "/", icon: FolderOpen, status: "active" as const },
+  { name: "Jobs", href: "/jobs", icon: BriefcaseBusiness, status: "coming-soon" as const },
+  { name: "Resources", href: "/guides", icon: BookOpen, status: "active" as const },
+]
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCity, setSelectedCity] = useState("all")
   const [isScrolled, setIsScrolled] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
 
   // Get location context if available (multi-tenant)
   const locationContext = useLocationOptional()
-  const cities = locationContext?.cities || ["Austin", "Cedar Park", "Georgetown", "Leander", "Liberty Hill", "Pflugerville", "Round Rock"]
-  const brandName = locationContext?.brandName || "Leander Scoop"
+  const cities = locationContext?.cities || ["Austin", "Cedar Park", "Georgetown", "Leander", "Liberty Hill", "Pflugerville", "Round Rock", "Hutto", "Taylor"]
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,87 +80,88 @@ export function Navbar() {
     setIsOpen(false)
   }
 
+  // Check if a nav item is active
+  const isNavActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/" || pathname.startsWith("/search") || pathname.startsWith("/categories") || pathname.startsWith("/neighborhoods") || pathname.startsWith("/business/")
+    }
+    return pathname.startsWith(href)
+  }
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled ? "bg-card/95 backdrop-blur-md shadow-lg" : "bg-card"
       }`}
     >
-      {/* Main Header */}
+      {/* Main Navigation Bar */}
       <div className="border-b border-border">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 gap-4">
-            {/* Logo - use location logo if available, otherwise default */}
-            <Link href="/" className="flex-shrink-0 group">
-              {locationContext?.location.logo_url ? (
-                <Image
-                  src={locationContext.location.logo_url}
-                  alt={brandName}
-                  width={160}
-                  height={36}
-                  className="h-8 w-auto group-hover:opacity-80 transition-opacity duration-300"
-                />
-              ) : (
-                <Image
-                  src="/images/leander-20scoop-20text-20logo.png"
-                  alt={brandName}
-                  width={160}
-                  height={36}
-                  className="h-8 w-auto group-hover:opacity-80 transition-opacity duration-300"
-                />
-              )}
+            {/* Logo */}
+            <Link href="/" className="flex-shrink-0 group flex items-center gap-2">
+              <span className="text-xl font-bold text-primary">{siteConfig.name}</span>
             </Link>
 
+            {/* Desktop Main Nav */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {mainNav.map((item) => {
+                const Icon = item.icon
+                const active = isNavActive(item.href)
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                      active
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {item.name}
+                    {item.status === "coming-soon" && (
+                      <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-amber-100 text-amber-700">
+                        Soon
+                      </Badge>
+                    )}
+                  </Link>
+                )
+              })}
+            </nav>
+
             {/* Desktop Search */}
-            <div className="hidden md:flex items-center gap-3 flex-1 max-w-2xl">
-              <div className="relative flex-1 min-w-[200px]">
+            <div className="hidden md:flex items-center gap-2 flex-1 max-w-md">
+              <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                 <Input
                   placeholder="Search businesses..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 h-10 bg-muted/50 border-border rounded-lg focus:bg-card focus:ring-2 focus:ring-primary/30 transition-all w-full"
+                  className="pl-10 h-9 bg-muted/50 border-border rounded-lg focus:bg-card focus:ring-2 focus:ring-primary/30 transition-all w-full"
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 />
               </div>
-              <Select value={selectedCity} onValueChange={setSelectedCity}>
-                <SelectTrigger className="h-10 w-[140px] border-border bg-muted/50 rounded-lg flex-shrink-0">
-                  <MapPin className="w-4 h-4 mr-2 text-primary" />
-                  <SelectValue placeholder="All Cities" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Cities</SelectItem>
-                  {cities.map((city) => (
-                    <SelectItem key={city} value={city}>{city}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
               <Button
                 onClick={handleSearch}
                 size="sm"
-                className="h-10 px-5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg flex-shrink-0"
+                className="h-9 px-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg"
               >
                 Search
               </Button>
             </div>
 
-            {/* Desktop Nav Items */}
+            {/* Desktop CTA */}
             <div className="hidden md:flex items-center gap-2 flex-shrink-0">
               <Link href="/business-inquiry">
                 <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                  For Businesses
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                  <Mail className="w-4 h-4 mr-2" />
-                  Contact
+                  List Your Business
                 </Button>
               </Link>
             </div>
 
-            {/* Mobile Search Button & Menu */}
-            <div className="flex md:hidden items-center gap-2">
+            {/* Mobile Menu */}
+            <div className="flex lg:hidden items-center gap-2">
               <Button
                 variant="ghost"
                 size="icon"
@@ -188,7 +204,34 @@ export function Navbar() {
                       </Button>
                     </div>
 
-                    {/* Mobile Nav Links */}
+                    {/* Mobile Main Nav */}
+                    <div className="border-t border-border pt-4 space-y-1">
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2 mb-2">
+                        Sections
+                      </p>
+                      {mainNav.map((item) => {
+                        const Icon = item.icon
+                        const active = isNavActive(item.href)
+                        return (
+                          <Link key={item.name} href={item.href} onClick={() => setIsOpen(false)}>
+                            <Button
+                              variant={active ? "secondary" : "ghost"}
+                              className="w-full justify-start"
+                            >
+                              <Icon className="mr-2 h-4 w-4" />
+                              {item.name}
+                              {item.status === "coming-soon" && (
+                                <Badge variant="secondary" className="ml-auto text-[10px] px-1.5 py-0 h-4 bg-amber-100 text-amber-700">
+                                  Soon
+                                </Badge>
+                              )}
+                            </Button>
+                          </Link>
+                        )
+                      })}
+                    </div>
+
+                    {/* Mobile Categories */}
                     <div className="border-t border-border pt-4 space-y-1">
                       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2 mb-2">
                         Categories
@@ -209,12 +252,11 @@ export function Navbar() {
                     <div className="border-t border-border pt-4 space-y-2">
                       <Link href="/business-inquiry" onClick={() => setIsOpen(false)}>
                         <Button variant="default" className="w-full bg-primary hover:bg-primary/90">
-                          For Businesses
+                          List Your Business
                         </Button>
                       </Link>
                       <Link href="/contact" onClick={() => setIsOpen(false)}>
                         <Button variant="outline" className="w-full">
-                          <Mail className="w-4 h-4 mr-2" />
                           Contact Us
                         </Button>
                       </Link>
@@ -228,7 +270,7 @@ export function Navbar() {
       </div>
 
       {/* Category Bar - Desktop Only */}
-      <div className="hidden md:block bg-muted/60 border-b border-border">
+      <div className="hidden lg:block bg-muted/60 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center gap-1 py-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {categories.map((item) => {
