@@ -9,10 +9,27 @@ export function slugify(text: string): string {
 }
 
 /**
- * Convert category name to SEO-friendly URL slug
- * Example: "restaurants" → "restaurants-leander-tx"
+ * All supported city slugs for pattern matching
  */
-export function slugifyCategory(category: string): string {
+export const CITY_SLUGS = [
+  'leander-tx',
+  'cedar-park-tx',
+  'liberty-hill-tx',
+  'hutto-tx',
+  'pflugerville-tx',
+  'round-rock-tx',
+  'taylor-tx',
+  'austin-tx',
+  'georgetown-tx',
+] as const;
+
+export type CitySlug = typeof CITY_SLUGS[number];
+
+/**
+ * Convert category name to SEO-friendly URL slug for a specific city
+ * Example: slugifyCategoryForCity("restaurants", "leander-tx") → "restaurants-leander-tx"
+ */
+export function slugifyCategoryForCity(category: string, citySlug: CitySlug = 'leander-tx'): string {
   // Handle comma-separated categories (e.g., "American, Contemporary")
   const cleanCategory = category.split(',')[0].trim();
 
@@ -37,7 +54,41 @@ export function slugifyCategory(category: string): string {
   }
 
   // Add location suffix
-  return `${slug}-leander-tx`;
+  return `${slug}-${citySlug}`;
+}
+
+/**
+ * Legacy function - Convert category name to SEO-friendly URL slug (defaults to Leander)
+ * Example: "restaurants" → "restaurants-leander-tx"
+ */
+export function slugifyCategory(category: string): string {
+  return slugifyCategoryForCity(category, 'leander-tx');
+}
+
+/**
+ * Parse a category slug to extract category and city
+ * Example: parseCategorySlug("restaurants-leander-tx") → { category: "restaurants", citySlug: "leander-tx" }
+ */
+export function parseCategorySlug(slug: string): { category: string; citySlug: CitySlug; cityName: string } | null {
+  const cityMap: Record<CitySlug, string> = {
+    'leander-tx': 'Leander',
+    'cedar-park-tx': 'Cedar Park',
+    'liberty-hill-tx': 'Liberty Hill',
+    'hutto-tx': 'Hutto',
+    'pflugerville-tx': 'Pflugerville',
+    'round-rock-tx': 'Round Rock',
+    'taylor-tx': 'Taylor',
+    'austin-tx': 'Austin',
+    'georgetown-tx': 'Georgetown',
+  };
+
+  for (const citySlug of CITY_SLUGS) {
+    if (slug.endsWith(`-${citySlug}`)) {
+      const category = slug.replace(`-${citySlug}`, '');
+      return { category, citySlug, cityName: cityMap[citySlug] };
+    }
+  }
+  return null;
 }
 
 /**
@@ -45,8 +96,13 @@ export function slugifyCategory(category: string): string {
  * Example: "restaurants-leander-tx" → "Restaurants"
  */
 export function unslugify(slug: string): string {
-  return slug
-    .replace(/-leander-tx$/i, '')
+  // Remove any city suffix
+  let cleanSlug = slug;
+  for (const citySlug of CITY_SLUGS) {
+    cleanSlug = cleanSlug.replace(new RegExp(`-${citySlug}$`, 'i'), '');
+  }
+
+  return cleanSlug
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');

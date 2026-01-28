@@ -4,41 +4,12 @@ import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { BusinessCardVertical } from '@/components/business-card-vertical'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, MapPin } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { ArrowLeft, MapPin, Building2 } from 'lucide-react'
+import { getAllNeighborhoods, getCityByName, type NeighborhoodItem } from '@/lib/locations-config'
 
-// City/neighborhood data - includes both cities and subdivisions
-const NEIGHBORHOODS = [
-  // Main Cities
-  { slug: 'cedar-park-tx', city: 'Cedar Park', displayName: 'Cedar Park', state: 'TX', type: 'city' },
-  { slug: 'leander-tx', city: 'Leander', displayName: 'Leander', state: 'TX', type: 'city' },
-  { slug: 'liberty-hill-tx', city: 'Liberty Hill', displayName: 'Liberty Hill', state: 'TX', type: 'city' },
-  { slug: 'austin-tx', city: 'Austin', displayName: 'Austin', state: 'TX', type: 'city' },
-  { slug: 'georgetown-tx', city: 'Georgetown', displayName: 'Georgetown', state: 'TX', type: 'city' },
-
-  // Leander Subdivisions
-  { slug: 'crystal-falls-leander-tx', city: 'Leander', displayName: 'Crystal Falls', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
-  { slug: 'travisso-leander-tx', city: 'Leander', displayName: 'Travisso', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
-  { slug: 'bryson-leander-tx', city: 'Leander', displayName: 'Bryson', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
-  { slug: 'vista-ridge-leander-tx', city: 'Leander', displayName: 'Vista Ridge', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
-  { slug: 'mason-hills-leander-tx', city: 'Leander', displayName: 'Mason Hills', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
-  { slug: 'summerlyn-leander-tx', city: 'Leander', displayName: 'Summerlyn', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
-  { slug: 'north-creek-leander-tx', city: 'Leander', displayName: 'North Creek', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
-  { slug: 'benbrook-ranch-leander-tx', city: 'Leander', displayName: 'Benbrook Ranch', state: 'TX', type: 'subdivision', parentCity: 'Leander' },
-
-  // Cedar Park Subdivisions
-  { slug: 'buttercup-creek-cedar-park-tx', city: 'Cedar Park', displayName: 'Buttercup Creek', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
-  { slug: 'ranch-at-cypress-creek-cedar-park-tx', city: 'Cedar Park', displayName: 'Ranch at Cypress Creek', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
-  { slug: 'cypress-canyon-cedar-park-tx', city: 'Cedar Park', displayName: 'Cypress Canyon', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
-  { slug: 'whitestone-oaks-cedar-park-tx', city: 'Cedar Park', displayName: 'Whitestone Oaks', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
-  { slug: 'anderson-mill-west-cedar-park-tx', city: 'Cedar Park', displayName: 'Anderson Mill West', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
-  { slug: 'twin-creeks-cedar-park-tx', city: 'Cedar Park', displayName: 'Twin Creeks', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
-  { slug: 'carriage-hills-cedar-park-tx', city: 'Cedar Park', displayName: 'Carriage Hills', state: 'TX', type: 'subdivision', parentCity: 'Cedar Park' },
-
-  // Liberty Hill Subdivisions
-  { slug: 'santa-rita-ranch-liberty-hill-tx', city: 'Liberty Hill', displayName: 'Santa Rita Ranch', state: 'TX', type: 'subdivision', parentCity: 'Liberty Hill' },
-  { slug: 'clearwater-ranch-liberty-hill-tx', city: 'Liberty Hill', displayName: 'Clearwater Ranch', state: 'TX', type: 'subdivision', parentCity: 'Liberty Hill' },
-  { slug: 'gabriel-woods-liberty-hill-tx', city: 'Liberty Hill', displayName: 'Gabriel Woods', state: 'TX', type: 'subdivision', parentCity: 'Liberty Hill' },
-]
+// Get all neighborhoods from centralized config
+const NEIGHBORHOODS = getAllNeighborhoods()
 
 // Generate static params for all neighborhoods
 export async function generateStaticParams() {
@@ -48,8 +19,14 @@ export async function generateStaticParams() {
 }
 
 // Helper to get neighborhood from slug
-function getNeighborhoodFromSlug(slug: string) {
+function getNeighborhoodFromSlug(slug: string): NeighborhoodItem | null {
   return NEIGHBORHOODS.find(n => n.slug === slug) || null
+}
+
+// Check if a city has data
+function cityHasData(cityName: string): boolean {
+  const city = getCityByName(cityName)
+  return city?.hasData ?? false
 }
 
 // Generate metadata for SEO
@@ -140,6 +117,7 @@ export default async function NeighborhoodPage({
   const businesses = await getBusinessesByCity(neighborhood.city)
   const year = new Date().getFullYear()
   const isSubdivision = neighborhood.type === 'subdivision'
+  const hasData = cityHasData(neighborhood.city)
   const locationContext = isSubdivision
     ? `${neighborhood.displayName} in ${neighborhood.parentCity}`
     : neighborhood.displayName
@@ -207,9 +185,16 @@ export default async function NeighborhoodPage({
                 <MapPin className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-                  {isSubdivision ? `${neighborhood.displayName}` : `${neighborhood.displayName} Businesses`}
-                </h1>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
+                    {isSubdivision ? `${neighborhood.displayName}` : `${neighborhood.displayName} Businesses`}
+                  </h1>
+                  {!hasData && (
+                    <Badge variant="secondary" className="bg-amber-100 text-amber-800">
+                      Coming Soon
+                    </Badge>
+                  )}
+                </div>
                 {isSubdivision && (
                   <p className="text-lg text-primary font-medium mt-1">
                     {neighborhood.parentCity}, Texas
@@ -220,30 +205,67 @@ export default async function NeighborhoodPage({
             <p className="text-lg text-muted-foreground max-w-3xl">
               {isSubdivision ? (
                 <>
-                  Looking for businesses near {neighborhood.displayName}? Browse {businesses.length} local businesses
-                  serving the {neighborhood.displayName} neighborhood in {neighborhood.parentCity}, TX.
+                  Looking for businesses near {neighborhood.displayName}?
+                  {businesses.length > 0 ? (
+                    <>Browse {businesses.length} local businesses serving the {neighborhood.displayName} neighborhood in {neighborhood.parentCity}, TX.</>
+                  ) : (
+                    <>We're currently adding businesses serving the {neighborhood.displayName} neighborhood. Check back soon!</>
+                  )}
                 </>
               ) : (
                 <>
-                  Discover {businesses.length} local businesses in {neighborhood.displayName}, {neighborhood.state}.
-                  Find restaurants, services, and more with reviews, photos, and contact information.
+                  {businesses.length > 0 ? (
+                    <>Discover {businesses.length} local businesses in {neighborhood.displayName}, {neighborhood.state}. Find restaurants, services, and more with reviews, photos, and contact information.</>
+                  ) : (
+                    <>We're expanding to {neighborhood.displayName}, {neighborhood.state}! Business listings for this area are coming soon. Subscribe to be notified when we launch.</>
+                  )}
                 </>
               )}
             </p>
           </div>
 
-          {/* Results Count */}
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-muted-foreground">
-              Showing <span className="font-medium text-foreground">{businesses.length}</span> businesses in {neighborhood.displayName}
-            </p>
-            <Button variant="outline" asChild>
-              <Link href="/search">Search All</Link>
-            </Button>
-          </div>
+          {/* Results Count / Coming Soon Banner */}
+          {businesses.length > 0 ? (
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-muted-foreground">
+                Showing <span className="font-medium text-foreground">{businesses.length}</span> businesses in {neighborhood.displayName}
+              </p>
+              <Button variant="outline" asChild>
+                <Link href="/search">Search All</Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-lg p-6 mb-8">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                  <Building2 className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
+                    {neighborhood.displayName} Directory Coming Soon
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    We're actively adding local businesses in {neighborhood.displayName} to our directory.
+                    In the meantime, browse businesses in nearby areas like Leander, Cedar Park, and Liberty Hill.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button asChild>
+                      <Link href="/neighborhoods/leander-tx">Browse Leander</Link>
+                    </Button>
+                    <Button variant="outline" asChild>
+                      <Link href="/neighborhoods/cedar-park-tx">Browse Cedar Park</Link>
+                    </Button>
+                    <Button variant="outline" asChild>
+                      <Link href="/search">Search All</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Business Grid */}
-          {businesses.length > 0 ? (
+          {businesses.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {businesses.map((business) => (
                 <BusinessCardVertical
@@ -264,31 +286,50 @@ export default async function NeighborhoodPage({
                 />
               ))}
             </div>
-          ) : (
-            <div className="text-center py-16 bg-background rounded-lg border">
-              <h3 className="text-xl font-semibold text-foreground mb-2">No businesses found</h3>
-              <p className="text-muted-foreground mb-6">
-                We don't have any businesses listed in {neighborhood.displayName} yet.
-              </p>
-              <Button asChild>
-                <Link href="/search">Browse All Businesses</Link>
-              </Button>
-            </div>
           )}
 
-          {/* Other Neighborhoods */}
+          {/* Other Neighborhoods - Group by type */}
           <div className="mt-16">
             <h2 className="text-2xl font-bold text-foreground mb-6">Explore Other Areas</h2>
-            <div className="flex flex-wrap gap-3">
-              {NEIGHBORHOODS.filter(n => n.slug !== slug).map((n) => (
-                <Link
-                  key={n.slug}
-                  href={`/neighborhoods/${n.slug}`}
-                  className="px-4 py-2 bg-card border rounded-full text-sm font-medium hover:bg-muted transition-colors"
-                >
-                  {n.displayName}
-                </Link>
-              ))}
+
+            {/* Cities */}
+            <div className="mb-6">
+              <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-3">Cities</h3>
+              <div className="flex flex-wrap gap-3">
+                {NEIGHBORHOODS.filter(n => n.type === 'city' && n.slug !== slug).map((n) => {
+                  const nHasData = cityHasData(n.city)
+                  return (
+                    <Link
+                      key={n.slug}
+                      href={`/neighborhoods/${n.slug}`}
+                      className={`px-4 py-2 border rounded-full text-sm font-medium transition-colors ${
+                        nHasData
+                          ? 'bg-card hover:bg-muted'
+                          : 'bg-muted/50 text-muted-foreground hover:bg-muted'
+                      }`}
+                    >
+                      {n.displayName}
+                      {!nHasData && <span className="ml-1 text-xs">(Soon)</span>}
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Subdivisions */}
+            <div>
+              <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-3">Neighborhoods</h3>
+              <div className="flex flex-wrap gap-3">
+                {NEIGHBORHOODS.filter(n => n.type === 'subdivision' && n.slug !== slug).slice(0, 20).map((n) => (
+                  <Link
+                    key={n.slug}
+                    href={`/neighborhoods/${n.slug}`}
+                    className="px-4 py-2 bg-card border rounded-full text-sm font-medium hover:bg-muted transition-colors"
+                  >
+                    {n.displayName}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -301,13 +342,13 @@ export default async function NeighborhoodPage({
               {isSubdivision ? (
                 <>
                   {neighborhood.displayName} is a popular neighborhood in {neighborhood.parentCity}, Texas,
-                  part of the growing Leander/Cedar Park metro area. Residents of {neighborhood.displayName}
+                  part of the growing Austin metro area. Residents of {neighborhood.displayName}
                   enjoy easy access to local restaurants, shops, and services. Our directory makes it easy
                   to discover businesses serving the {neighborhood.displayName} community.
                 </>
               ) : (
                 <>
-                  {neighborhood.displayName} is a vibrant community in the greater Leander, Texas area.
+                  {neighborhood.displayName} is a vibrant community in the greater Austin, Texas area.
                   Our directory features verified local businesses including restaurants, professional services,
                   health & wellness providers, and more. Whether you're a resident or visitor, Leander Scoop
                   makes it easy to find and support local businesses in {neighborhood.displayName}.

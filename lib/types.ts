@@ -216,6 +216,20 @@ export const CATEGORIES: CategoryInfo[] = [
   { id: "home-services", name: "Home Services", icon: "🔧", description: "Plumbing, electric, HVAC" },
 ]
 
-// City configuration
-export const CITIES = ["Leander", "Cedar Park", "Liberty Hill"] as const
+// City configuration - All supported cities
+export const CITIES = [
+  "Leander",
+  "Cedar Park",
+  "Liberty Hill",
+  "Hutto",
+  "Pflugerville",
+  "Round Rock",
+  "Taylor",
+  "Austin",
+  "Georgetown"
+] as const
 export type City = typeof CITIES[number]
+
+// Cities with business data currently available
+export const CITIES_WITH_DATA = ["Leander", "Cedar Park", "Liberty Hill"] as const
+export type CityWithData = typeof CITIES_WITH_DATA[number]
