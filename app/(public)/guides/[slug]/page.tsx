@@ -6,84 +6,14 @@ import { supabase } from '@/lib/supabase'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Star, MapPin, ArrowRight } from 'lucide-react'
-
-// Define available guides
-const GUIDES = [
-  {
-    slug: 'best-restaurants-leander-tx',
-    title: 'Best Restaurants in Leander, TX',
-    subtitle: 'Top-Rated Dining Spots for 2026',
-    description: 'Discover the best restaurants in Leander, Texas. From family-friendly spots to date-night destinations, here are the top-rated places to eat.',
-    category: 'restaurants',
-    city: 'Leander',
-  },
-  {
-    slug: 'best-restaurants-cedar-park-tx',
-    title: 'Best Restaurants in Cedar Park, TX',
-    subtitle: 'Top-Rated Dining Spots for 2026',
-    description: 'Discover the best restaurants in Cedar Park, Texas. From casual eats to fine dining, here are the top places to enjoy a meal.',
-    category: 'restaurants',
-    city: 'Cedar Park',
-  },
-  {
-    slug: 'best-restaurants-liberty-hill-tx',
-    title: 'Best Restaurants in Liberty Hill, TX',
-    subtitle: 'Top-Rated Dining Spots for 2026',
-    description: 'Discover the best restaurants in Liberty Hill, Texas. Local favorites and hidden gems for every taste.',
-    category: 'restaurants',
-    city: 'Liberty Hill',
-  },
-  {
-    slug: 'best-bbq-leander-cedar-park-tx',
-    title: 'Best BBQ in Leander & Cedar Park, TX',
-    subtitle: 'Top Texas Barbecue Spots for 2026',
-    description: 'Find the best BBQ joints in Leander and Cedar Park, Texas. Authentic Texas barbecue at its finest.',
-    category: 'restaurants',
-    city: null, // Both cities
-    tags: ['bbq', 'barbecue', 'smokehouse'],
-  },
-  {
-    slug: 'best-mexican-food-leander-tx',
-    title: 'Best Mexican Food in Leander, TX',
-    subtitle: 'Top Tex-Mex & Authentic Mexican for 2026',
-    description: 'The best Mexican restaurants in Leander, Texas. Tacos, enchiladas, and authentic flavors.',
-    category: 'restaurants',
-    city: 'Leander',
-    tags: ['mexican', 'tex-mex', 'tacos'],
-  },
-  {
-    slug: 'best-pizza-leander-cedar-park-tx',
-    title: 'Best Pizza in Leander & Cedar Park, TX',
-    subtitle: 'Top Pizza Places for 2026',
-    description: 'Craving pizza? Here are the best pizza restaurants in Leander and Cedar Park, Texas.',
-    category: 'restaurants',
-    city: null,
-    tags: ['pizza', 'italian'],
-  },
-  {
-    slug: 'best-coffee-shops-leander-tx',
-    title: 'Best Coffee Shops in Leander, TX',
-    subtitle: 'Top Cafes & Coffee Spots for 2026',
-    description: 'Find the best coffee shops and cafes in Leander, Texas. Perfect spots for your morning brew or afternoon pick-me-up.',
-    category: 'restaurants',
-    city: 'Leander',
-    tags: ['coffee', 'cafe', 'breakfast'],
-  },
-  {
-    slug: 'best-family-restaurants-leander-tx',
-    title: 'Best Family-Friendly Restaurants in Leander, TX',
-    subtitle: 'Top Kid-Friendly Dining for 2026',
-    description: 'Looking for a great place to eat with the kids? Here are the best family-friendly restaurants in Leander, Texas.',
-    category: 'restaurants',
-    city: 'Leander',
-    tags: ['family', 'kids', 'casual'],
-  },
-]
+import { Star, MapPin, ArrowRight, ArrowLeft } from 'lucide-react'
+import { getAllGuides, getGuideBySlug, type GuideConfig } from '@/lib/guides-config'
+import { CATEGORY_DISPLAY_NAMES } from '@/lib/slugify'
+import { CITIES } from '@/lib/locations-config'
 
 // Generate static params for all guides
 export async function generateStaticParams() {
-  return GUIDES.map(guide => ({
+  return getAllGuides().map(guide => ({
     slug: guide.slug,
   }))
 }
@@ -95,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const guide = GUIDES.find(g => g.slug === slug)
+  const guide = getGuideBySlug(slug)
 
   if (!guide) {
     return {
@@ -104,17 +34,21 @@ export async function generateMetadata({
     }
   }
 
+  const year = new Date().getFullYear()
+  const cityName = guide.city?.name || 'the area'
+
   return {
-    title: `${guide.title} ${new Date().getFullYear()} | Leander Scoop`,
+    title: `${guide.title} ${year} | Leander Scoop`,
     description: guide.description,
     keywords: [
       guide.title.toLowerCase(),
-      `${guide.category} ${guide.city || 'leander'} tx`,
+      `${guide.category} ${cityName.toLowerCase()} tx`,
       `best ${guide.category} near me`,
       `top rated ${guide.category} texas`,
+      ...(guide.tags || []).map(t => `${t} ${cityName.toLowerCase()}`),
     ],
     openGraph: {
-      title: `${guide.title} ${new Date().getFullYear()}`,
+      title: `${guide.title} ${year}`,
       description: guide.description,
       type: 'article',
       url: `https://directory.leanderscoop.com/guides/${slug}`,
@@ -125,8 +59,8 @@ export async function generateMetadata({
   }
 }
 
-async function getBusinessesForGuide(guide: typeof GUIDES[0]) {
-  // Get location ID for Leander
+async function getBusinessesForGuide(guide: GuideConfig) {
+  // Get location ID for Leander (our data source)
   const { data: location } = await supabase
     .from('locations')
     .select('id')
@@ -146,7 +80,7 @@ async function getBusinessesForGuide(guide: typeof GUIDES[0]) {
 
   // Filter by city if specified
   if (guide.city) {
-    query = query.eq('address_city', guide.city)
+    query = query.ilike('address_city', guide.city.name)
   }
 
   const { data: businesses, error } = await query.limit(20)
@@ -184,7 +118,7 @@ export default async function GuidePage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const guide = GUIDES.find(g => g.slug === slug)
+  const guide = getGuideBySlug(slug)
 
   if (!guide) {
     notFound()
@@ -192,6 +126,18 @@ export default async function GuidePage({
 
   const businesses = await getBusinessesForGuide(guide)
   const year = new Date().getFullYear()
+  const cityName = guide.city?.name || 'the Area'
+  const categoryDisplay = CATEGORY_DISPLAY_NAMES[guide.category] || guide.category
+
+  // Get related guides in same city
+  const relatedGuides = getAllGuides()
+    .filter(g => g.city?.slug === guide.city?.slug && g.slug !== guide.slug)
+    .slice(0, 4)
+
+  // Get same category in other cities
+  const sameCategoryOtherCities = getAllGuides()
+    .filter(g => g.category === guide.category && g.city?.slug !== guide.city?.slug && g.city?.hasData)
+    .slice(0, 4)
 
   // JSON-LD Schema
   const jsonLd = {
@@ -252,10 +198,24 @@ export default async function GuidePage({
             <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
               <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
               <span>/</span>
-              <Link href="/search" className="hover:text-foreground transition-colors">Directory</Link>
+              <Link href="/guides" className="hover:text-foreground transition-colors">Guides</Link>
               <span>/</span>
-              <span className="text-foreground">Guides</span>
+              {guide.city && (
+                <>
+                  <Link href={`/neighborhoods/${guide.city.slug}`} className="hover:text-foreground transition-colors">
+                    {guide.city.name}
+                  </Link>
+                  <span>/</span>
+                </>
+              )}
+              <span className="text-foreground">{categoryDisplay}</span>
             </nav>
+
+            {/* Back Link */}
+            <Link href="/guides" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Guides
+            </Link>
 
             <div className="max-w-3xl">
               <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
@@ -278,76 +238,76 @@ export default async function GuidePage({
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto space-y-6">
             {businesses.map((business, index) => (
-                <Card
-                  key={business.id}
-                  className="overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <CardContent className="p-0">
-                    <div className="flex flex-col md:flex-row">
-                      {/* Rank Number */}
-                      <div className="flex md:flex-col items-center justify-center p-4 md:p-6 bg-muted/50">
-                        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground">
-                          <span className="text-xl font-bold">{index + 1}</span>
-                        </div>
-                      </div>
-
-                      {/* Image */}
-                      <div className="relative w-full md:w-48 h-48 md:h-auto flex-shrink-0">
-                        <Image
-                          src={business.image || '/images/placeholders/restaurant.svg'}
-                          alt={business.name}
-                          fill
-                          className="object-cover"
-                        />
-                        {business.is_featured && (
-                          <Badge className="absolute top-2 left-2 bg-primary">
-                            Featured
-                          </Badge>
-                        )}
-                      </div>
-
-                      {/* Content */}
-                      <div className="flex-1 p-6">
-                        <div className="flex items-start justify-between gap-4 mb-3">
-                          <div>
-                            <h2 className="text-xl font-bold text-foreground mb-1">
-                              {business.name}
-                            </h2>
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <MapPin className="w-4 h-4" />
-                              <span>{business.address_city}, {business.address_state}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-1 bg-primary/10 px-3 py-1.5 rounded-full">
-                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                            <span className="font-bold">{business.rating}</span>
-                            <span className="text-muted-foreground text-sm">({business.review_count})</span>
-                          </div>
-                        </div>
-
-                        <p className="text-muted-foreground mb-4 line-clamp-2">
-                          {business.description || `${business.name} is a popular ${guide.category} destination in ${business.address_city}.`}
-                        </p>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {(business.specialties || []).slice(0, 3).map((specialty: string) => (
-                            <Badge key={specialty} variant="secondary" className="text-xs">
-                              {specialty}
-                            </Badge>
-                          ))}
-                        </div>
-
-                        <Button asChild className="group">
-                          <Link href={`/business/${business.slug}`}>
-                            View Details
-                            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                          </Link>
-                        </Button>
+              <Card
+                key={business.id}
+                className="overflow-hidden hover:shadow-lg transition-shadow"
+              >
+                <CardContent className="p-0">
+                  <div className="flex flex-col md:flex-row">
+                    {/* Rank Number */}
+                    <div className="flex md:flex-col items-center justify-center p-4 md:p-6 bg-muted/50">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground">
+                        <span className="text-xl font-bold">{index + 1}</span>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+
+                    {/* Image */}
+                    <div className="relative w-full md:w-48 h-48 md:h-auto flex-shrink-0">
+                      <Image
+                        src={business.image || '/images/placeholders/restaurant.svg'}
+                        alt={business.name}
+                        fill
+                        className="object-cover"
+                      />
+                      {business.is_featured && (
+                        <Badge className="absolute top-2 left-2 bg-primary">
+                          Featured
+                        </Badge>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 p-6">
+                      <div className="flex items-start justify-between gap-4 mb-3">
+                        <div>
+                          <h2 className="text-xl font-bold text-foreground mb-1">
+                            {business.name}
+                          </h2>
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <MapPin className="w-4 h-4" />
+                            <span>{business.address_city}, {business.address_state}</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 bg-primary/10 px-3 py-1.5 rounded-full">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <span className="font-bold">{business.rating}</span>
+                          <span className="text-muted-foreground text-sm">({business.review_count})</span>
+                        </div>
+                      </div>
+
+                      <p className="text-muted-foreground mb-4 line-clamp-2">
+                        {business.description || `${business.name} is a popular ${categoryDisplay.toLowerCase()} destination in ${business.address_city}.`}
+                      </p>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {(business.specialties || []).slice(0, 3).map((specialty: string) => (
+                          <Badge key={specialty} variant="secondary" className="text-xs">
+                            {specialty}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      <Button asChild className="group">
+                        <Link href={`/business/${business.slug}`}>
+                          View Details
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
 
@@ -364,6 +324,51 @@ export default async function GuidePage({
             </div>
           )}
 
+          {/* Related Guides Section */}
+          {relatedGuides.length > 0 && (
+            <div className="max-w-4xl mx-auto mt-16">
+              <h2 className="text-2xl font-bold text-foreground mb-6">
+                More Guides in {cityName}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {relatedGuides.map((related) => (
+                  <Link key={related.slug} href={`/guides/${related.slug}`}>
+                    <Card className="hover:shadow-md transition-shadow">
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-foreground mb-1">
+                          {related.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground line-clamp-1">
+                          {related.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Same Category in Other Cities */}
+          {sameCategoryOtherCities.length > 0 && (
+            <div className="max-w-4xl mx-auto mt-12">
+              <h2 className="text-2xl font-bold text-foreground mb-6">
+                {categoryDisplay} in Other Cities
+              </h2>
+              <div className="flex flex-wrap gap-3">
+                {sameCategoryOtherCities.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/guides/${related.slug}`}
+                    className="px-4 py-2 bg-card border rounded-full text-sm font-medium hover:bg-muted transition-colors"
+                  >
+                    {related.city?.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* SEO Content Section */}
           <div className="max-w-4xl mx-auto mt-16 prose prose-gray">
             <h2 className="text-2xl font-bold text-foreground mb-4">
@@ -372,7 +377,7 @@ export default async function GuidePage({
             <p className="text-muted-foreground">
               This guide to {guide.title.toLowerCase()} is updated regularly to ensure you have access to the best
               local options. Our rankings are based on customer reviews, ratings, and local popularity.
-              Whether you're a longtime resident or just visiting the {guide.city || 'Leander'} area,
+              Whether you're a longtime resident or just visiting the {cityName} area,
               these top picks will help you discover great places to visit.
             </p>
           </div>
