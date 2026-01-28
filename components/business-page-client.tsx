@@ -19,6 +19,15 @@ interface BusinessPageClientProps {
 export function BusinessPageClient({ business, similarBusinesses }: BusinessPageClientProps) {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
 
+  // Defensive check - should never happen but prevents client crash
+  if (!business) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">Business not found</p>
+      </div>
+    )
+  }
+
   const handleContactClick = () => {
     setIsContactModalOpen(true)
   }
@@ -79,7 +88,7 @@ export function BusinessPageClient({ business, similarBusinesses }: BusinessPage
       </div>
 
       {/* Similar Businesses - Full Width Section at Bottom */}
-      {similarBusinesses.length > 0 && (
+      {similarBusinesses && similarBusinesses.length > 0 && (
         <SimilarBusinessesSection
           businesses={similarBusinesses}
           category={business.category}
