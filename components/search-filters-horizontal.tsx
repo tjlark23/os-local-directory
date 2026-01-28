@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { RotateCcw } from "lucide-react"
+import { siteConfig } from "@/lib/site-config"
 
 // Categories that match both navbar and database
 // Navbar uses: food, health-beauty, auto-services, home-services, entertainment, pets, services
@@ -39,7 +40,8 @@ const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
   "financial": "Financial",
 }
 
-const CITIES = ["Austin", "Cedar Park", "Georgetown", "Leander", "Liberty Hill", "Pflugerville", "Round Rock"]
+// All cities from site config
+const ALL_CITIES = siteConfig.allCities.sort()
 
 const RATINGS = [
   { value: "4.5", label: "4.5+ Stars" },
@@ -62,6 +64,7 @@ interface SearchFiltersHorizontalProps {
   resultCount: number
   totalCount: number
   loading?: boolean
+  source?: "leander" | "roundrock" | null
 }
 
 export function SearchFiltersHorizontal({
@@ -71,8 +74,14 @@ export function SearchFiltersHorizontal({
   resultCount,
   totalCount,
   loading = false,
+  source = null,
 }: SearchFiltersHorizontalProps) {
   const hasActiveFilters = filters.category !== "all" || filters.city !== "all" || filters.rating > 0
+
+  // Get available cities based on source filter
+  const availableCities = source
+    ? siteConfig.sources[source].cities.sort()
+    : ALL_CITIES
 
   // Get display name for current category value
   const getCategoryDisplayName = (category: string) => {
@@ -113,8 +122,10 @@ export function SearchFiltersHorizontal({
               <SelectValue placeholder="All Cities" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Cities</SelectItem>
-              {CITIES.map((city) => (
+              <SelectItem value="all">
+                {source ? `All ${source === 'leander' ? 'Leander Area' : 'Round Rock Area'}` : 'All Cities'}
+              </SelectItem>
+              {availableCities.map((city) => (
                 <SelectItem key={city} value={city}>
                   {city}
                 </SelectItem>

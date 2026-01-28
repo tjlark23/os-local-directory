@@ -3,10 +3,11 @@
 import { useState, useEffect, useCallback } from "react"
 import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Building2 } from "lucide-react"
+import { Building2, ExternalLink } from "lucide-react"
 import { supabase } from "@/lib/supabase"
 import { BusinessCardVertical } from "@/components/business-card-vertical"
 import { SearchFiltersHorizontal } from "@/components/search-filters-horizontal"
+import { siteConfig } from "@/lib/site-config"
 
 // Map navbar categories to database categories
 const CATEGORY_MAP: Record<string, string[]> = {
@@ -84,6 +85,10 @@ export function SearchPageContent() {
   const urlQuery = searchParams.get("q") || ""
   const urlCategory = searchParams.get("category") || "all"
   const urlCity = searchParams.get("city") || "all"
+  const urlSource = searchParams.get("source") as "leander" | "roundrock" | null
+
+  // Get source configuration for filtering
+  const sourceConfig = urlSource ? siteConfig.sources[urlSource] : null
 
   const [filters, setFilters] = useState<FiltersState>({
     category: urlCategory,
@@ -125,6 +130,9 @@ export function SearchPageContent() {
       // Apply city filter
       if (filters.city && filters.city !== "all") {
         query = query.eq('address_city', filters.city)
+      } else if (sourceConfig) {
+        // If source parameter is set, filter to only those cities
+        query = query.in('address_city', sourceConfig.cities)
       }
 
       // Apply rating filter
@@ -181,7 +189,7 @@ export function SearchPageContent() {
     } finally {
       setLoading(false)
     }
-  }, [filters, urlQuery])
+  }, [filters, urlQuery, sourceConfig])
 
   useEffect(() => {
     fetchBusinesses()
@@ -238,12 +246,37 @@ export function SearchPageContent() {
 
   return (
     <div className="min-h-screen bg-muted/30">
+      {/* Source Attribution Banner */}
+      {sourceConfig && (
+        <div className="bg-primary/10 border-b border-primary/20">
+          <div className="container mx-auto px-4 py-3">
+            <div className="flex items-center justify-center gap-2 text-sm">
+              <span className="text-foreground">{sourceConfig.attribution}</span>
+              <a
+                href={sourceConfig.attributionLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary font-medium hover:underline inline-flex items-center gap-1"
+              >
+                Visit Site
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="container mx-auto px-4 py-6 md:py-8">
         {/* Page Title */}
         <div className="mb-6">
           <h1 className="text-2xl md:text-3xl font-bold text-foreground">
             {getPageTitle()}
           </h1>
+          {sourceConfig && (
+            <p className="text-sm text-muted-foreground mt-1">
+              Showing businesses in {sourceConfig.cities.join(", ")}
+            </p>
+          )}
         </div>
 
         {/* Horizontal Filters */}
@@ -254,6 +287,7 @@ export function SearchPageContent() {
           resultCount={businesses.length}
           totalCount={totalCount}
           loading={loading}
+          source={urlSource}
         />
 
         {/* Loading State */}
