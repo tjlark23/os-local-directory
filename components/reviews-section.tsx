@@ -1,16 +1,21 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Star, MessageSquare, ChevronDown, User } from "lucide-react"
 import { createClient } from "@supabase/supabase-js"
 
-// Create Supabase client for client-side
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// Create Supabase client lazily to ensure env vars are available
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  if (!url || !key) {
+    console.error('Supabase env vars not available:', { url: !!url, key: !!key })
+    return null
+  }
+  return createClient(url, key)
+}
 
 interface Review {
   id: string
@@ -197,6 +202,13 @@ export function ReviewsSection({
   }, [businessId])
 
   async function loadReviews(loadMore = false) {
+    const supabase = getSupabaseClient()
+    if (!supabase) {
+      console.error("Failed to create Supabase client")
+      setLoading(false)
+      return
+    }
+
     if (loadMore) {
       setLoadingMore(true)
     } else {
@@ -206,12 +218,16 @@ export function ReviewsSection({
     try {
       const offset = loadMore ? (page + 1) * REVIEWS_PER_PAGE : 0
 
+      console.log("Fetching reviews for business:", businessId, "offset:", offset)
+
       const { data, error } = await supabase
         .from("reviews")
         .select("id, author_name, author_image, rating, text, review_date, likes")
         .eq("business_id", businessId)
         .order("review_date", { ascending: false, nullsFirst: false })
         .range(offset, offset + REVIEWS_PER_PAGE - 1)
+
+      console.log("Reviews fetched:", data?.length || 0, "error:", error)
 
       if (error) {
         console.error("Error loading reviews:", error)
