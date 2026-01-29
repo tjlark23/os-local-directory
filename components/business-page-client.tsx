@@ -8,7 +8,7 @@ import { FeaturedBanner } from "@/components/featured-banner"
 import { UpgradeCTA } from "@/components/upgrade-cta"
 import { SimilarBusinessesSection } from "@/components/similar-businesses-section"
 import { PremiumContentSections } from "@/components/premium-content-sections"
-import { ReviewsPlaceholder } from "@/components/reviews-placeholder"
+import { ReviewsSection } from "@/components/reviews-section"
 import { ContactModal } from "@/components/contact-modal"
 
 interface BusinessPageClientProps {
@@ -56,8 +56,13 @@ export function BusinessPageClient({ business, similarBusinesses }: BusinessPage
               <PremiumContentSections business={business} section="why-choose-us" />
             )}
 
-            {/* Reviews Section - placeholder for all businesses */}
-            <ReviewsPlaceholder businessName={business.name} />
+            {/* Reviews Section */}
+            <ReviewsSection
+              businessId={business.uuid}
+              businessName={business.name}
+              totalReviews={business.reviewCount || 0}
+              averageRating={business.rating || 0}
+            />
 
             {/* Premium: Services & FAQ (featured only) */}
             {isPremium && (

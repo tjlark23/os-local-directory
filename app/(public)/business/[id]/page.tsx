@@ -207,6 +207,7 @@ function transformBusiness(dbBusiness: any) {
 
   return {
     id: dbBusiness.slug,
+    uuid: dbBusiness.id, // Actual database UUID for queries
     name: dbBusiness.name,
     description: description,
     shortDescription: description.length > 150 ? description.slice(0, 150) + '...' : description,
