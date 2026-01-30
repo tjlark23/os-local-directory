@@ -32,6 +32,7 @@ interface ReviewsSectionProps {
   businessName: string
   totalReviews: number
   averageRating: number
+  initialReviews?: Review[]
 }
 
 function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "md" | "lg" }) {
@@ -188,18 +189,23 @@ export function ReviewsSection({
   businessId,
   businessName,
   totalReviews,
-  averageRating
+  averageRating,
+  initialReviews = []
 }: ReviewsSectionProps) {
-  const [reviews, setReviews] = useState<Review[]>([])
-  const [loading, setLoading] = useState(true)
+  // Use initial reviews if provided (server-side rendered)
+  const [reviews, setReviews] = useState<Review[]>(initialReviews)
+  const [loading, setLoading] = useState(initialReviews.length === 0)
   const [loadingMore, setLoadingMore] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
-  const [page, setPage] = useState(0)
+  const [hasMore, setHasMore] = useState(initialReviews.length >= 5)
+  const [page, setPage] = useState(initialReviews.length > 0 ? 1 : 0)
   const REVIEWS_PER_PAGE = 5
 
   useEffect(() => {
-    loadReviews()
-  }, [businessId])
+    // Only fetch if we don't have initial reviews
+    if (initialReviews.length === 0) {
+      loadReviews()
+    }
+  }, [businessId, initialReviews.length])
 
   async function loadReviews(loadMore = false) {
     const supabase = getSupabaseClient()

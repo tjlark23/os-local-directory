@@ -11,12 +11,23 @@ import { PremiumContentSections } from "@/components/premium-content-sections"
 import { ReviewsSection } from "@/components/reviews-section"
 import { ContactModal } from "@/components/contact-modal"
 
+interface Review {
+  id: string
+  author_name: string | null
+  author_image: string | null
+  rating: number
+  text: string
+  review_date: string | null
+  likes: number
+}
+
 interface BusinessPageClientProps {
   business: any
   similarBusinesses: any[]
+  initialReviews?: Review[]
 }
 
-export function BusinessPageClient({ business, similarBusinesses }: BusinessPageClientProps) {
+export function BusinessPageClient({ business, similarBusinesses, initialReviews = [] }: BusinessPageClientProps) {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
 
   // Defensive check - should never happen but prevents client crash
@@ -62,6 +73,7 @@ export function BusinessPageClient({ business, similarBusinesses }: BusinessPage
               businessName={business.name}
               totalReviews={business.reviewCount || 0}
               averageRating={business.rating || 0}
+              initialReviews={initialReviews}
             />
 
             {/* Premium: Services & FAQ (featured only) */}

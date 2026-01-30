@@ -44,6 +44,23 @@ async function getBusinessBySlug(slug: string) {
   return transformBusiness(data)
 }
 
+// Fetch initial reviews for a business (server-side)
+async function getBusinessReviews(businessId: string, limit = 5) {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select('id, author_name, author_image, rating, text, review_date, likes')
+    .eq('business_id', businessId)
+    .order('review_date', { ascending: false, nullsFirst: false })
+    .limit(limit)
+
+  if (error) {
+    console.error('Error fetching reviews:', error)
+    return []
+  }
+
+  return data || []
+}
+
 // Fetch similar businesses from Supabase
 async function getSimilarBusinesses(slug: string, category: string, limit = 8) {
   const { data: location } = await supabase
@@ -360,7 +377,12 @@ export default async function BusinessPage({ params }: { params: Promise<{ id: s
     notFound()
   }
 
-  const similarBusinesses = await getSimilarBusinesses(id, business.category, 8)
+  // Fetch reviews and similar businesses in parallel
+  const [similarBusinesses, initialReviews] = await Promise.all([
+    getSimilarBusinesses(id, business.category, 8),
+    getBusinessReviews(business.uuid, 5)
+  ])
+
   const jsonLd = generateJsonLd(business)
 
   return (
@@ -372,7 +394,11 @@ export default async function BusinessPage({ params }: { params: Promise<{ id: s
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <BusinessPageClient business={business} similarBusinesses={similarBusinesses} />
+      <BusinessPageClient
+        business={business}
+        similarBusinesses={similarBusinesses}
+        initialReviews={initialReviews}
+      />
     </>
   )
 }
