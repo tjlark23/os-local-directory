@@ -48,15 +48,15 @@ export function generatePageMeta(
   const year = new Date().getFullYear()
   const cityName = city.name
 
-  // Title: Best {Category} in {City}, TX {Year} | WilCo Guide
-  // Max 60 chars - adjust based on length
+  // Title: Best {Category} in {City}, TX {Year}
+  // NOTE: Don't include site name here - layout template adds "| WilCo Guide"
+  // Max ~45 chars to leave room for " | WilCo Guide" suffix
   let title = `Best ${categoryDisplay} in ${cityName}, TX ${year}`
-  if (title.length > 50) {
+  if (title.length > 45) {
     title = `${categoryDisplay} in ${cityName}, TX ${year}`
   }
-  title = `${title} | ${SITE_NAME}`
-  if (title.length > 60) {
-    title = `${categoryDisplay} in ${cityName} ${year} | ${SITE_NAME}`
+  if (title.length > 45) {
+    title = `${categoryDisplay} in ${cityName} ${year}`
   }
 
   // Description: Unique based on actual data
