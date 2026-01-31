@@ -50,9 +50,15 @@ interface BusinessPageHeaderProps {
 export function BusinessPageHeader({ business, onContactClick }: BusinessPageHeaderProps) {
   const [copied, setCopied] = useState(false)
 
-  const heroImage = business.photos?.[0] || "/images/placeholders/business-default.jpg"
-  const hasMultiplePhotos = business.photos && business.photos.length > 1
-  const galleryImages = hasMultiplePhotos ? business.photos.slice(1, 5) : []
+  // Filter out invalid/empty photo URLs
+  const validPhotos = (business.photos || []).filter(photo =>
+    photo && photo.trim() !== '' && !photo.includes('placeholder')
+  )
+
+  const heroImage = validPhotos[0] || "/images/placeholders/business-default.jpg"
+  const hasMultiplePhotos = validPhotos.length > 1
+  // Only get gallery images that actually exist
+  const galleryImages = hasMultiplePhotos ? validPhotos.slice(1, 5) : []
 
   // Only show deals banner for premium/featured listings
   const showDealsBanner = business.dealsBanner &&
@@ -97,40 +103,44 @@ export function BusinessPageHeader({ business, onContactClick }: BusinessPageHea
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
 
-          {/* Right: 2x2 grid of smaller images (50%) */}
-          <div className="hidden md:grid grid-cols-2 grid-rows-2 gap-2">
-            {[0, 1, 2, 3].map((index) => {
-              const photo = galleryImages[index]
-              const isLastWithMore = index === 3 && business.photos && business.photos.length > 5
+          {/* Right: 2x2 grid of smaller images (50%) - only show if we have additional photos */}
+          {galleryImages.length > 0 && (
+            <div className="hidden md:grid grid-cols-2 grid-rows-2 gap-2">
+              {[0, 1, 2, 3].map((index) => {
+                const photo = galleryImages[index]
+                const isLastWithMore = index === galleryImages.length - 1 && validPhotos.length > 5
 
-              return (
-                <div key={index} className="relative group cursor-pointer overflow-hidden bg-muted rounded-lg">
-                  {photo ? (
-                    <>
-                      <Image
-                        src={photo}
-                        alt={`${business.name} photo ${index + 2}`}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        quality={75}
-                      />
-                      <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors" />
-                      {isLastWithMore && (
-                        <div className="absolute inset-0 bg-foreground/60 flex items-center justify-center">
-                          <span className="text-primary-foreground font-semibold text-lg">
-                            +{business.photos!.length - 5} more
-                          </span>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    /* Empty placeholder - shows as white */
-                    <div className="absolute inset-0 bg-white" />
-                  )}
-                </div>
-              )
-            })}
-          </div>
+                // Don't render empty slots
+                if (!photo) {
+                  return <div key={index} className="bg-muted/30 rounded-lg" />
+                }
+
+                return (
+                  <div key={index} className="relative group cursor-pointer overflow-hidden bg-muted rounded-lg">
+                    <Image
+                      src={photo}
+                      alt={`${business.name} photo ${index + 2}`}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      quality={75}
+                      onError={(e) => {
+                        // Hide broken images
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors" />
+                    {isLastWithMore && (
+                      <div className="absolute inset-0 bg-foreground/60 flex items-center justify-center">
+                        <span className="text-primary-foreground font-semibold text-lg">
+                          +{validPhotos.length - 5} more
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
       </div>
 

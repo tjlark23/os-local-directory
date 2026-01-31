@@ -99,13 +99,6 @@ export function BusinessCardVertical({ business, isFavorite = false, onToggleFav
           quality={75}
         />
 
-        {/* Category Badge - Top Left */}
-        <Badge
-          className="absolute top-3 left-3 bg-background/90 text-foreground hover:bg-background/90 backdrop-blur-sm"
-        >
-          {getCategoryDisplayName(business.category)}
-        </Badge>
-
         {/* Rating Badge - Top Right */}
         <div className="absolute top-3 right-3 flex items-center gap-1 bg-background/90 backdrop-blur-sm px-2 py-1 rounded-md">
           <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />

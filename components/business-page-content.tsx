@@ -21,10 +21,20 @@ export function BusinessPageContent({ business }: BusinessPageContentProps) {
   const [activeTab, setActiveTab] = useState("overview")
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
 
+  // Filter out invalid/empty photo URLs
+  const validPhotos = business.photos.filter(photo =>
+    photo && photo.trim() !== '' && !photo.includes('placeholder')
+  )
+
+  // Filter out invalid/empty video URLs
+  const validVideos = business.videos.filter(video =>
+    video && video.trim() !== ''
+  )
+
   const tabs = [
     { id: "overview", label: "Overview", icon: Info },
-    { id: "photos", label: `Photos (${business.photos.length})`, icon: Camera },
-    { id: "videos", label: `Videos (${business.videos.length})`, icon: Video },
+    { id: "photos", label: `Photos (${validPhotos.length})`, icon: Camera },
+    { id: "videos", label: `Videos (${validVideos.length})`, icon: Video },
   ]
 
   return (
@@ -58,37 +68,46 @@ export function BusinessPageContent({ business }: BusinessPageContentProps) {
                 <Camera className="w-5 h-5 text-primary" />
                 <h3 className="text-xl font-semibold">Photos & Videos</h3>
               </div>
+              {/* Show up to 8 photos in 2 rows of 4 */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {business.photos.slice(0, 3).map((photo, index) => (
+                {validPhotos.slice(0, 8).map((photo, index) => (
                   <div
                     key={index}
                     onClick={() => setSelectedImage(photo)}
                     className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group"
                   >
                     <Image
-                      src={photo || "/placeholder.svg"}
-                      alt={`Photo ${index + 1}`}
+                      src={photo}
+                      alt={`${business.name} photo ${index + 1}`}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        // Hide broken images
+                        e.currentTarget.parentElement?.classList.add('hidden')
+                      }}
                     />
                     <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors" />
                   </div>
                 ))}
-                {business.videos.length > 0 && (
-                  <div className="relative aspect-square rounded-xl overflow-hidden bg-muted cursor-pointer group hover:bg-muted/80 transition-colors">
+                {/* Show videos tile if there are videos */}
+                {validVideos.length > 0 && (
+                  <div
+                    onClick={() => setActiveTab("videos")}
+                    className="relative aspect-square rounded-xl overflow-hidden bg-muted cursor-pointer group hover:bg-muted/80 transition-colors"
+                  >
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                       <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
                         <Play className="w-6 h-6 text-primary ml-1" />
                       </div>
-                      <p className="font-medium text-foreground">+{business.videos.length}</p>
-                      <p className="text-sm text-muted-foreground">Videos</p>
+                      <p className="font-medium text-foreground">{validVideos.length}</p>
+                      <p className="text-sm text-muted-foreground">Video{validVideos.length > 1 ? 's' : ''}</p>
                     </div>
                   </div>
                 )}
               </div>
-              {business.photos.length > 3 && (
+              {validPhotos.length > 8 && (
                 <Button variant="outline" className="w-full mt-4 bg-transparent" onClick={() => setActiveTab("photos")}>
-                  View all {business.photos.length} photos
+                  View all {validPhotos.length} photos
                 </Button>
               )}
             </CardContent>
@@ -127,27 +146,34 @@ export function BusinessPageContent({ business }: BusinessPageContentProps) {
       {activeTab === "photos" && (
         <Card className="overflow-hidden border-border/50 animate-fade-in">
           <CardContent className="p-6">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {business.photos.map((photo, index) => (
-                <div
-                  key={index}
-                  onClick={() => setSelectedImage(photo)}
-                  className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group"
-                >
-                  <Image
-                    src={photo || "/placeholder.svg"}
-                    alt={`Photo ${index + 1}`}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors flex items-center justify-center">
-                    <div className="w-10 h-10 bg-background/80 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Camera className="w-5 h-5" />
+            {validPhotos.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {validPhotos.map((photo, index) => (
+                  <div
+                    key={index}
+                    onClick={() => setSelectedImage(photo)}
+                    className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group"
+                  >
+                    <Image
+                      src={photo}
+                      alt={`${business.name} photo ${index + 1}`}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        e.currentTarget.parentElement?.classList.add('hidden')
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors flex items-center justify-center">
+                      <div className="w-10 h-10 bg-background/80 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Camera className="w-5 h-5" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-muted-foreground text-center py-8">No photos available</p>
+            )}
           </CardContent>
         </Card>
       )}
@@ -155,21 +181,25 @@ export function BusinessPageContent({ business }: BusinessPageContentProps) {
       {activeTab === "videos" && (
         <Card className="overflow-hidden border-border/50 animate-fade-in">
           <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {business.videos.map((video, index) => (
-                <div
-                  key={index}
-                  className="relative aspect-video rounded-xl overflow-hidden bg-muted cursor-pointer group"
-                >
-                  <Image src={video || "/placeholder.svg"} alt={`Video ${index + 1}`} fill className="object-cover" />
-                  <div className="absolute inset-0 bg-foreground/30 flex items-center justify-center group-hover:bg-foreground/40 transition-colors">
-                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
-                      <Play className="w-8 h-8 text-primary-foreground ml-1" />
+            {validVideos.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {validVideos.map((video, index) => (
+                  <div
+                    key={index}
+                    className="relative aspect-video rounded-xl overflow-hidden bg-muted cursor-pointer group"
+                  >
+                    <Image src={video} alt={`${business.name} video ${index + 1}`} fill className="object-cover" />
+                    <div className="absolute inset-0 bg-foreground/30 flex items-center justify-center group-hover:bg-foreground/40 transition-colors">
+                      <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
+                        <Play className="w-8 h-8 text-primary-foreground ml-1" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-muted-foreground text-center py-8">No videos available</p>
+            )}
           </CardContent>
         </Card>
       )}

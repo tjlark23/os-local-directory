@@ -240,11 +240,30 @@ export function ReviewsSection({
         return
       }
 
+      // Deduplicate reviews by text content
+      const dedupeReviews = (newReviews: Review[], existingReviews: Review[] = []) => {
+        const seen = new Set<string>()
+        // Add existing review texts to seen set
+        existingReviews.forEach(r => {
+          const key = (r.text || '').substring(0, 100).toLowerCase().trim()
+          seen.add(key)
+        })
+        // Filter new reviews
+        return newReviews.filter(r => {
+          const key = (r.text || '').substring(0, 100).toLowerCase().trim()
+          if (seen.has(key)) return false
+          seen.add(key)
+          return true
+        })
+      }
+
       if (loadMore) {
-        setReviews((prev) => [...prev, ...(data || [])])
+        const uniqueNew = dedupeReviews(data || [], reviews)
+        setReviews((prev) => [...prev, ...uniqueNew])
         setPage((p) => p + 1)
       } else {
-        setReviews(data || [])
+        const uniqueData = dedupeReviews(data || [])
+        setReviews(uniqueData)
       }
 
       setHasMore((data?.length || 0) === REVIEWS_PER_PAGE)

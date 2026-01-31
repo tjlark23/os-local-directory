@@ -45,20 +45,36 @@ async function getBusinessBySlug(slug: string) {
 }
 
 // Fetch initial reviews for a business (server-side)
+// Deduplicates by review text to prevent showing same review twice
 async function getBusinessReviews(businessId: string, limit = 5) {
+  // Fetch more than needed to account for deduplication
   const { data, error } = await supabase
     .from('reviews')
     .select('id, author_name, author_image, rating, text, review_date, likes')
     .eq('business_id', businessId)
     .order('review_date', { ascending: false, nullsFirst: false })
-    .limit(limit)
+    .limit(limit * 2)
 
   if (error) {
     console.error('Error fetching reviews:', error)
     return []
   }
 
-  return data || []
+  if (!data) return []
+
+  // Deduplicate by review text (same text = duplicate review)
+  const seen = new Set<string>()
+  const uniqueReviews = data.filter(review => {
+    // Create a key from the first 100 chars of text (handles slight variations)
+    const textKey = (review.text || '').substring(0, 100).toLowerCase().trim()
+    if (seen.has(textKey)) {
+      return false
+    }
+    seen.add(textKey)
+    return true
+  })
+
+  return uniqueReviews.slice(0, limit)
 }
 
 // Fetch similar businesses from Supabase
@@ -186,23 +202,45 @@ function generateBetterDescription(business: any): string {
   return description
 }
 
+// Check if description mentions a wrong city
+function descriptionHasCityMismatch(description: string, actualCity: string): boolean {
+  if (!description || !actualCity) return false
+
+  const descLower = description.toLowerCase()
+  const actualCityLower = actualCity.toLowerCase()
+
+  // List of all WilCo cities to check for
+  const allCities = ['leander', 'cedar park', 'liberty hill', 'round rock', 'georgetown', 'pflugerville', 'hutto', 'taylor', 'austin']
+
+  // Check if description mentions a different city
+  for (const city of allCities) {
+    if (city !== actualCityLower && descLower.includes(`in ${city}`) || descLower.includes(`located in ${city}`)) {
+      return true
+    }
+  }
+
+  return false
+}
+
 // Transform database business to app format
 function transformBusiness(dbBusiness: any) {
-  // Priority: 1) custom_description, 2) valid database description, 3) generated description
+  // Priority: 1) custom_description, 2) valid database description (without city mismatch), 3) generated description
   let description = ''
+  const actualCity = dbBusiness.address_city || ''
 
   // Use custom description if available (admin/owner set)
   if (dbBusiness.custom_description && dbBusiness.custom_description.trim()) {
     description = dbBusiness.custom_description
   }
-  // Use database description if it's valid (not JSON, not empty, not too short)
+  // Use database description if it's valid (not JSON, not empty, not too short, no city mismatch)
   else if (dbBusiness.description &&
            !dbBusiness.description.startsWith('{') &&
            !dbBusiness.description.startsWith('[') &&
-           dbBusiness.description.trim().length > 20) {
+           dbBusiness.description.trim().length > 20 &&
+           !descriptionHasCityMismatch(dbBusiness.description, actualCity)) {
     description = dbBusiness.description
   }
-  // Generate a better fallback description
+  // Generate a better fallback description using the CORRECT city
   else {
     description = generateBetterDescription(dbBusiness)
   }
@@ -256,7 +294,8 @@ function transformBusiness(dbBusiness: any) {
       saturday: { open: "10:00 AM", close: "4:00 PM", isOpen: true },
       sunday: { open: "Closed", close: "Closed", isOpen: false },
     },
-    currentlyOpen: true,
+    // Don't show Open/Closed badge - hours data is not reliable enough
+    currentlyOpen: undefined,
     rating: rating,
     reviewCount: reviewCount,
     priceRange: dbBusiness.price_range || '$',

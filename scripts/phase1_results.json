@@ -1,0 +1,1022 @@
+[
+  {
+    "about": {
+      "Accessibility": {
+        "Wheelchair accessible entrance": true,
+        "Wheelchair accessible parking lot": true,
+        "Wheelchair accessible restroom": true,
+        "Wheelchair accessible seating": true
+      },
+      "Amenities": {
+        "Bar onsite": true,
+        "Restroom": true,
+        "Wi-Fi": true
+      },
+      "Atmosphere": {
+        "Casual": true,
+        "Cozy": true,
+        "Trendy": true
+      },
+      "Children": {
+        "Good for kids": true,
+        "High chairs": true,
+        "Kids' menu": true
+      },
+      "Crowd": {
+        "Family-friendly": true,
+        "Groups": true,
+        "Tourists": true
+      },
+      "Dining options": {
+        "Breakfast": true,
+        "Brunch": true,
+        "Catering": true,
+        "Dessert": true,
+        "Dinner": true,
+        "Lunch": true,
+        "Seating": true,
+        "Table service": true
+      },
+      "Highlights": {
+        "Fast service": true,
+        "Great beer selection": true,
+        "Great cocktails": true,
+        "Serves local specialty": true
+      },
+      "Offerings": {
+        "Alcohol": true,
+        "Beer": true,
+        "Cocktails": true,
+        "Coffee": true,
+        "Comfort food": true,
+        "Happy hour drinks": true,
+        "Happy hour food": true,
+        "Hard liquor": true,
+        "Late-night food": true,
+        "Quick bite": true,
+        "Small plates": true,
+        "Wine": true
+      },
+      "Parking": {
+        "Free parking lot": true,
+        "Free street parking": true,
+        "Parking": true
+      },
+      "Payments": {
+        "Credit cards": true,
+        "Debit cards": true,
+        "NFC mobile payments": true
+      },
+      "Pets": {
+        "Dogs allowed outside": true
+      },
+      "Planning": {
+        "Accepts reservations": true
+      },
+      "Popular for": {
+        "Breakfast": true,
+        "Dinner": true,
+        "Lunch": true,
+        "Solo dining": true
+      },
+      "Service options": {
+        "Delivery": true,
+        "Dine-in": true,
+        "Outdoor seating": true,
+        "Takeout": true
+      }
+    },
+    "address": "1530 I 35 N Frontage Rd, Round Rock, TX 78681",
+    "area_service": false,
+    "booking_appointment_link": null,
+    "business_status": "OPERATIONAL",
+    "category": "restaurants",
+    "cid": "12058563782602053674",
+    "city": "Round Rock",
+    "country": "United States of America",
+    "country_code": "US",
+    "county": null,
+    "description": "Buzzy Mexican cafe dishing up fajitas, handmade tortillas & margaritas (plus breakfast) since 1988.",
+    "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+    "h3": "8948985b4b3ffff",
+    "kgmid": "/g/1td4dytg",
+    "latitude": 30.523124099999997,
+    "located_google_id": null,
+    "located_in": null,
+    "location_link": "https://www.google.com/maps/place/La+Margarita+Restaurante/@30.523124099999997,-97.69035339999999,14z/data=!4m8!1m2!2m1!1sLa+Margarita+Restaurante!3m4!1s0x8644d17ece664159:0xa7589fdf0b62d82a!8m2!3d30.523124099999997!4d-97.69035339999999",
+    "location_reviews_link": "https://www.google.com/maps/place/La+Margarita+Restaurante/@30.523124099999997,-97.69035339999999,13.99z/data=!4m16!1m7!3m6!1s0x8644d17ece664159:0xa7589fdf0b62d82a!2sLa+Margarita+Restaurante!8m2!3d30.523124099999997!4d-97.69035339999999!16s%2Fg%2F11ckvg1dmb!3m7!1s0x8644d17ece664159:0xa7589fdf0b62d82a!8m2!3d30.523124099999997!4d-97.69035339999999!9m1!1b1!16s%2Fg%2F11ckvg1dmb?entry=ttu",
+    "logo": "https://lh6.googleusercontent.com/-E7uEilAtVd0/AAAAAAAAAAI/AAAAAAAAAAA/tPdUwd8oSvo/s44-p-k-no-ns-nd/photo.jpg",
+    "longitude": -97.69035339999999,
+    "menu_link": null,
+    "name": "La Margarita Restaurante",
+    "name_for_emails": "La Margarita Restaurante",
+    "order_links": null,
+    "other_hours": [
+      {
+        "breakfast": {
+          "Friday": "8 AM-1 PM",
+          "Monday": "Closed",
+          "Saturday": "8 AM-1 PM",
+          "Sunday": "8 AM-1 PM",
+          "Thursday": "Closed",
+          "Tuesday": "Closed",
+          "Wednesday": "Closed"
+        }
+      }
+    ],
+    "owner_id": "112281294042053007636",
+    "owner_link": "https://www.google.com/maps/contrib/112281294042053007636",
+    "owner_title": "La Margarita Restaurante",
+    "phone": "+1 512-388-1103",
+    "photo": "https://lh3.googleusercontent.com/p/AF1QipNYtyuGc7LvZaINGvsW3tNnD0yo709ClbcRUrlz=w800-h500-k-no",
+    "photos_count": 1314,
+    "place_id": "ChIJWUFmzn7RRIYRKthiC9-fWKc",
+    "plus_code": null,
+    "popular_times": null,
+    "postal_code": "78681",
+    "posts": null,
+    "prices": null,
+    "query": "Mexican restaurants in Round Rock, TX",
+    "range": "$$",
+    "rating": 4.3,
+    "reservation_links": null,
+    "reviews": 3328,
+    "reviews_data": [
+      {
+        "author_id": "111123635844120832912",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjUyA8Xl8acWjZwinnH_91zxBzFhJmuuhQRDTkSa6HqNxyccQhFA=s120-c-rp-mo-ba5-br100",
+        "author_link": "https://www.google.com/maps/contrib/111123635844120832912?hl=en",
+        "author_ratings_count": 0,
+        "author_reviews_count": 136,
+        "author_title": "T P",
+        "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "10/06/2025 21:51:04",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT21vM056RkhNV2hwWkhkbVprbFRlVWR0ZDBsVVJWRRAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvfPVwcJg8N2uWIBMkQs64nhqhmUvvezEOE-Jhdt2vupMAAxvBeDRzkE8XJD_lcIrT1kyW3pupv4lA8lQ70MEfZ8CeGmBCfQHM1c-FGUS1a0DCPhTRk3yFqFVo1n0lpDaBBiDwwicIho6o",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvfPVwcJg8N2uWIBMkQs64nhqhmUvvezEOE-Jhdt2vupMAAxvBeDRzkE8XJD_lcIrT1kyW3pupv4lA8lQ70MEfZ8CeGmBCfQHM1c-FGUS1a0DCPhTRk3yFqFVo1n0lpDaBBiDwwicIho6o",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9psav81GGa3XHBfBJPDvrkLfImwJ5NeOkR2Wl_3Jl_jtAgc5PFOZtkFlorxL2K8rxQDZ8OtW9xTTGZvv-b4tj5fGGzcz1ASXi9WHe_mZ3qBx8BXpFFX4_FGsSHax6tQNjKb80h3v7ze7EcEz",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptO9SvckMB2jaOfXAdNNGdh3A7nSUzOPdwSkC19nA08y66R_3tT8sPHUTGOWX0-XA2hqloGcAH7wcUKgREXxfsf8MZpyYkuYXtvw7t9tm9nNIePp2-FMijY1PELUo7Cs6kyKrHp1iOGcCg3",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pup_LRlYOhG2yjXCrSgL4QNxkwVWo_PgGU7Zak5N3jfwEpdGyhcbUxg2Jsf4fxj5pfgGnSpCHAQfM5T_qlufe236SR2prElHoaRew4ybgWY3JkEp0HZG25FsAToh1GRH4rwJPIUCVliPhs"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21vM056RkhNV2hwWkhkbVprbFRlVWR0ZDBsVVJWRRAB!2m1!1s0x0:0xa7589fdf0b62d82a!3m1!1s2@1:CAIQACodChtycF9oOmo3NzFHMWhpZHdmZklTeUdtd0lURVE%7C0ct2b7jL0MR%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFBUnBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZDVldsZlgxOWZSV2hDU1dKYU1rcEZhMjVTYVdwbFQyMDNVVUZCUVVGQlIyZHVPVEpRU1VOYWExSXRValpWV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIABIhDDu1TpAa6wUJ9Ddbf3fv6U",
+          "CIABIhAMShbT_HThSZ0r1GxLIwb7",
+          "CIABIhCqvAaPLiBeIIkAvppEcmA-",
+          "CIABIhCbt269MllJuuLbrTS9pgJ3"
+        ],
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "4",
+          "Service": "5"
+        },
+        "review_rating": 4,
+        "review_text": "Not a bad experience! The staff (Ana in particular) were so friendly and helpful. I tried the street tacos (carne asada) which were excellent and had a barbacoa taco. I loved the street tacos the best! We had a bit of a snafu with my friend’s order but it was cleared up nicely.\n\nPro Tip: They only serve the barbacoa taco Saturday and Sundays for brunch.\n\n8/10 Tacos 🌮",
+        "review_timestamp": 1759787464,
+        "reviews_id": "-6388180291107497942"
+      },
+      {
+        "author_id": "103501751399717841256",
+        "author_image": "https://lh3.googleusercontent.com/a/ACg8ocIyFjSg2pXhz4HjwwikQzD1ROqPJHmB4C7Z4Ahf-HEovpDl9A=s120-c-rp-mo-ba4-br100",
+        "author_link": "https://www.google.com/maps/contrib/103501751399717841256?hl=en",
+        "author_ratings_count": 9,
+        "author_reviews_count": 46,
+        "author_title": "Dee Arnold",
+        "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "05/24/2025 00:12:52",
+        "review_id": "ChZDSUhNMG9nS0VJQ0FnSUNKNHZEZE5REAE",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptFW1DShxtgm_x5OikAhkKXNtrxwbHkS7LZ4b_ypdKqL589LjshN12umCoEtqv3W9kmOoYnxNr539rUxe2qJT_rjRmI-Ddpjw0llRm1MVWZRL-0HZyqgIUutq7YkQfnTuYgXJc",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptFW1DShxtgm_x5OikAhkKXNtrxwbHkS7LZ4b_ypdKqL589LjshN12umCoEtqv3W9kmOoYnxNr539rUxe2qJT_rjRmI-Ddpjw0llRm1MVWZRL-0HZyqgIUutq7YkQfnTuYgXJc",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvJfhAqLzzd0ykHF7XpRCwSYaKf92Ive9kLKfXHyJCNnCDi1EjynrgUfaxMrCO3xeFOaK1CIQNqG0MkPD3XVD6oT3y_jdL4rAp9-LyhKupdj6bme5XFebAvu6ga0YelwKM1AXnPHw",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pt9c5eW-Sa5V6HeoYwh-tiggXQVF1zv72ZuR40Fko11BRhNsAl0AwMyAdoMZYRERywhzJxSsw90zHyaIeJDNqKvNflWUFQRWi71fql4VdVJ5bCFOfSJ6PichI7ESjl-slpxtRB5",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pue292N4cSRg-fgBWSUKb7Xmsi8Iqz-rOj4yOI7_13TS-YZZNR7Mfyot_o7RR8KeKkFXW5oCiBvaxBKAsLlif5NRaLAyy2asqqHEpNzOmkNho-bR3F9l1t_7nJCMjoyKa-pnkGw"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUNKNHZEZE5REAE!2m1!1s0x0:0xa7589fdf0b62d82a!3m1!1s2@1:CIHM0ogKEICAgICJ4vDdNQ%7CCgwIhJ7EwQYQ0NKU3gE%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFBaHBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZHT0ZOZlgxOWZSV2hDUTI0d01VSlpSRTVZYlhRM1drcE1jMEZCUVVGQlIyZHVPVEpRTkVOaFVVSmtWbTgwV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIHM0ogKEICAgICJ4vDddQ",
+          "CIHM0ogKEICAgICJ4vDd9QE",
+          "CIHM0ogKEICAgICJ4vDdDQ",
+          "CIHM0ogKEICAgICJ4vDdjQE"
+        ],
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "5",
+          "Meal type": "Lunch",
+          "Noise level": "Quiet, easy to talk",
+          "Price per person": "$30–50",
+          "Seating type": "Bar area",
+          "Service": "5"
+        },
+        "review_rating": 5,
+        "review_text": "We have visited La Margarita many times over the years and have never been disappointed. Staff is awesome and food is constantly on point and delicious. If I had to say one thing, it would be that the charro beans need more flavor. More onion and cilantro. Otherwise, we loved our meal!",
+        "review_timestamp": 1748045572,
+        "reviews_id": "-6388180291107497942"
+      },
+      {
+        "author_id": "100484919913918220762",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjUeVu856OHxNEF8TDOaP4-5VG8EU2G72aUNa6gTyKUh_ZBCpUpa=s120-c-rp-mo-ba6-br100",
+        "author_link": "https://www.google.com/maps/contrib/100484919913918220762?hl=en",
+        "author_ratings_count": 20,
+        "author_reviews_count": 500,
+        "author_title": "Lee Lastovica",
+        "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "05/31/2025 03:33:23",
+        "review_id": "ChdDSUhNMG9nS0VJQ0FnSUN2bXBtQ3N3RRAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptAEIsbu6ZR7eERD0qgCyqjvDJpSy-y1wi-mGP_uHDTj8PWN8lc-OBiEDh7N_iZRf_eR6S83f--LLAwKVZfRSBn8pdR6LIMtXhXkt2n90Lm5jPuncoFPq8xiLKiWyz2k0vIhXw",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptAEIsbu6ZR7eERD0qgCyqjvDJpSy-y1wi-mGP_uHDTj8PWN8lc-OBiEDh7N_iZRf_eR6S83f--LLAwKVZfRSBn8pdR6LIMtXhXkt2n90Lm5jPuncoFPq8xiLKiWyz2k0vIhXw",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvHewG-KHpLRpIxcSJKQ1SlH_fbDd5r2zyidgwlBGlUjfNW1KCu8veFn21VMX-7g5zeuxAOxWCSEPfuxiM00R-orsAVCKjURkNJAWgisLzGQb2xk_wunEsRHRBxEll2MchZuHHS7Q",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ps-TqBFQzIjePfXnNCMmS_nUjKl3CQQcjGrKMxM29YjtSX8r2gQmEFL-MHjQlLWHcRnG5XbtgjYq037308gk7-3yCQZutxq_s8lU0wsxgF4O2YVy96q1GqH3UpAnvlvWHzQ9uGw",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9psMz2qIHYQ7FdqdOHMbstbEZ7LYBqa7HSNt1-e1Qum9lzKLGiMyQW53ccb2THkQGi2mVdalewSw06UMiyu47hjm_Etz33pDIcPb8GUJDzxXjlNPB64ukKdfI39ffed1_DWMYZD_5g"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChdDSUhNMG9nS0VJQ0FnSUN2bXBtQ3N3RRAB!2m1!1s0x0:0xa7589fdf0b62d82a!3m1!1s2@1:CIHM0ogKEICAgICvmpmCswE%7CCgwIg_HpwQYQoNW53gI%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFBeHBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZJTlVoZlgxOWZSV2hFUTB3M01rVnliME5mYUdvNFIwOU5WVUZCUVVGQlIyZHVPVEpSU1VOaFRuVmFVRmRyV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIHM0ogKEICAgICvmpmCCw",
+          "CIHM0ogKEICAgICvmpmCiwE",
+          "CIHM0ogKEICAgICvmpmCSw",
+          "CIHM0ogKEICAgICvmpmCywE"
+        ],
+        "review_questions": {
+          "Atmosphere": "3",
+          "Food": "3",
+          "Meal type": "Lunch",
+          "Price per person": "$10–20",
+          "Service": "4"
+        },
+        "review_rating": 3,
+        "review_text": "Safe bet for your Tex Mex favorites. I had the lunch special chicken fajitas. The portion was nice for the price. The chicken itself was good, but needed some more spices or to be marinated. Salsa was decent. The rice and beans were pretty standard. Overall a good option for something on this side of town, but not a meal I would travel across  town for.",
+        "review_timestamp": 1748662403,
+        "reviews_id": "-6388180291107497942"
+      },
+      {
+        "author_id": "110687490194223813484",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjUeD04t67Jum_cJqLLzSoBOZwgItxThrn0lsA1_J3r3qTTN50SR=s120-c-rp-mo-ba4-br100",
+        "author_link": "https://www.google.com/maps/contrib/110687490194223813484?hl=en",
+        "author_ratings_count": 31,
+        "author_reviews_count": 62,
+        "author_title": "Daniel Rodriguez",
+        "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "06/03/2025 06:33:28",
+        "review_id": "ChZDSUhNMG9nS0VQR0FzOWI3a3Vic1d3EAE",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvxlg3hwGYj8nCbvGtBjwpRTfKwKVrqvEgrOeXCMSYLbaVMrUbHUyEejBe6YeW6GJ8fYZwPaRm8W6BC7yaJMYLlvc4U2OT6LBw-DGa4iTebwORfVHPl0U9o2MwXlTouW6UkxdK0wg",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvxlg3hwGYj8nCbvGtBjwpRTfKwKVrqvEgrOeXCMSYLbaVMrUbHUyEejBe6YeW6GJ8fYZwPaRm8W6BC7yaJMYLlvc4U2OT6LBw-DGa4iTebwORfVHPl0U9o2MwXlTouW6UkxdK0wg"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VQR0FzOWI3a3Vic1d3EAE!2m1!1s0x0:0xa7589fdf0b62d82a!3m1!1s2@1:CIHM0ogKEPGAs9b7kubsWw%7CCgwIuK76wQYQqJ3oywI%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFCQnBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZOVkc1ZlgxOWZSV2hEYlVoSFlreFVUWGRLWmxwWFlsWldjMEZCUVVGQlIyZHVPVEpSTUVOaFRYVkNVMjluV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIHM0ogKEKjRp97y8N_xmQE"
+        ],
+        "review_questions": {
+          "Atmosphere": "4",
+          "Food": "4",
+          "Kid-friendliness": null,
+          "Meal type": "Lunch",
+          "Noise level": "Moderate noise",
+          "Price per person": "$20–30",
+          "Recommendation for vegetarians": "Somewhat recommend",
+          "Service": "4",
+          "Wait time": "No wait",
+          "null": "Vegetarian options, Kid-friendliness"
+        },
+        "review_rating": 4,
+        "review_text": "I rented out the party room for $25 dollars an hour for two hours  for a party of 17 which it was big enough with a patio.\nThe food was decent. The service was fast. The  only issue I had was as soon as we paid the bill. No one ever came to check on use for refills or if we needed anything TOGO\nManagement never came by once or anything it was a little different from other places that I have rened party rooms from.",
+        "review_timestamp": 1748932408,
+        "reviews_id": "-6388180291107497942"
+      },
+      {
+        "author_id": "111778046721153612262",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjXUc3SqljlZmiRoohNngkYYDg8O22nTOAGK3gf2AK87SyewyQo=s120-c-rp-mo-ba4-br100",
+        "author_link": "https://www.google.com/maps/contrib/111778046721153612262?hl=en",
+        "author_ratings_count": 83,
+        "author_reviews_count": 116,
+        "author_title": "vicki wagher",
+        "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "01/20/2026 15:54:23",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT25nNU9URldPWHBSYkUxclkxSXpaa2x5YUZZek1WRRAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9puTDjClv5C8Xdj5Pu59FwCEZaCzZQUymOnyBnYZBcE9CQHinp0sdy9qkvDDthRG-XNnfK867TrA_ZgZi_vm8hXHecOwJCCVT7PHpBz0EpIeTeaoeSysQe9doYnfzhjI1sDbVKMk2Npu8vFJ",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9puTDjClv5C8Xdj5Pu59FwCEZaCzZQUymOnyBnYZBcE9CQHinp0sdy9qkvDDthRG-XNnfK867TrA_ZgZi_vm8hXHecOwJCCVT7PHpBz0EpIeTeaoeSysQe9doYnfzhjI1sDbVKMk2Npu8vFJ",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptqm8qyz2ujCgeFC17b4FkiNuku42RrvYiFmgDE2k5WC1D5qp0wCRg6GS7Sa_BMqYRvQICz5pevIvoo90ZsPRNAkwHkERhky-WKsk1JqzMzxTv4NLBwMR8Ty3N2GNHTm77KlBJ4yd5LTvM4"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT25nNU9URldPWHBSYkUxclkxSXpaa2x5YUZZek1WRRAB!2m1!1s0x0:0xa7589fdf0b62d82a!3m1!1s2@1:CAIQACodChtycF9oOng5OTFWOXpRbE1rY1IzZklyaFYzMVE%7C0dQuJjOSK4I%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFCUnBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZOZEVsZlgxOWZSV2hFTlRGdFYzcFpVbGhQVlhkblExVXpjMEZCUVVGQlIyZHVPVEpSTkVOYVExQnBkbkozV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIABIhDZ5sOfPk7J0pjjvo79momw",
+          "CIABIhAA3mKjjOSkkUNMiqfa5Htd"
+        ],
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "5",
+          "Service": "5"
+        },
+        "review_rating": 5,
+        "review_text": "The fajitas were great.  The charro beans were amazing.  And the Margaritas.",
+        "review_timestamp": 1768924463,
+        "reviews_id": "-6388180291107497942"
+      },
+      {
+        "author_id": "118237743873374619879",
+        "author_image": "https://lh3.googleusercontent.com/a/ACg8ocKE7URMYTuGvUQoZBvJnQyNYQQBm7fQAvLFyb5TTy782sKRTBc=s120-c-rp-mo-ba5-br100",
+        "author_link": "https://www.google.com/maps/contrib/118237743873374619879?hl=en",
+        "author_ratings_count": 30,
+        "author_reviews_count": 203,
+        "author_title": "M C",
+        "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "04/05/2025 04:51:19",
+        "review_id": "ChZDSUhNMG9nS0VJQ0FnTUNJeDl2MEFnEAE",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvqeyzVxFyulP7U302l1Q06SCIJyJySo1DHOy8LSIfJWpfCyWFrP72Zo87lw5_jlZm7v0UHsLTE7l34P22j1DXWdmkQRrt3vryJk52DZDLKwgaNoYUdfwZH3JGAKe4bLojAmGQnvw",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvqeyzVxFyulP7U302l1Q06SCIJyJySo1DHOy8LSIfJWpfCyWFrP72Zo87lw5_jlZm7v0UHsLTE7l34P22j1DXWdmkQRrt3vryJk52DZDLKwgaNoYUdfwZH3JGAKe4bLojAmGQnvw",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9puMINAk-of294AIb8Kz_sFzYwlxdlVEbhvH4RYlvROVXLovUzF7u8r1zcei8XECdKNM_BRqL2__cw6VMQTRQzJUZ3J2W88LGhbfv3RTuyuDjUSfCONlVuqsz_1et1K_0GFfYHAG",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptYbkPmGEnwshGtRNCDyPRWC0meRonwcl3KeDB6dxbtJ2ldS3OkMSLhQeEQmgNqVXY6UtNtWG5Z80WRlX1lgcAYXt1oNCipx_u7PkdR3Q-Y-4PfG1LcezbtchnnjQr_8nhSWzPhoQ",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9puPrJEezfDEhaeNzMMJitu8OdS3DbR4Bwc1jFb-ElB1lAS_gQNpw-rofG7p7Dl9VJ8qC3-BefdYRV2otn9X-1uWL8XW8M_Oh43llZ7loVOERJEs5HyQAO-KqIgx1UKUlNKIxOPt",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9psGounPQh4d7J9pwlWGtY_fNj-745RVuDsVYDWa00MMpd4qymJZY7XmnY3S6_knjCUANafAOClx2m0z3x-AR9IjjPsTpcSlGUPqTkmStYSfQ8zKcJSfhMAxaUfL2pjWiKjedzrPRw",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9psZTzUDXQkci_2tnLYOmhwcm2tZagf-J_USe8itPv5s425EO5IUHnbkMsZyuL8jKeldmnsubHTl7NnneISzj0fKY29gdlcVDZqBuN2-OxibN9bPgMs6C6yhmwLRUMr5o9O6zio",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvc4Y-clsR2rgaPhnl71OncngNQEEUMJgSavLSo2gPQ4n1nVa08PBfuxBEn2COQ3QQZJb8qILvRZshzasPHSRMRnXIdRKtlyZhRmjoh0dqEtoC_OWzdy_D2jcpUHN9sglOLrQEHow",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvIcdawZqjs-E5O7vYwKkfBmVJNrG8dopTZ7y7EHqrM8H61cT8YuNOuQ5_LC1VhfwFGeXDMMnDHh2ufcpgWGZQVWYP8wVdHIjhdGpju3BjoOLdacVsgHlbfwEcZPqlc37I40oyj",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pse_uFJ8iKRqIRd1Axpp-rflB4jLuy6m6GwRszUrFnuhc1oc2gj-SulvW2zr3k3LhfsTRC8lw2n6oOkTe8ElNd5C6hx6ZAXJG-jwF4l4UIEgl_ybLvCkqj2XrPTR8_h7_rLr3PISQ"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnTUNJeDl2MEFnEAE!2m1!1s0x0:0xa7589fdf0b62d82a!3m1!1s2@1:CIHM0ogKEICAgMCIx9v0Ag%7CCgsIx-3CvwYQ8LvCLg%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFCaHBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZPUmtGZlgxOWZSV2hEVlU5cGNGcElPVWd0TVVFeldsZDNSVUZCUVVGQlIyZHVPVEpST0VOaFpuVXlRbXRaV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIHM0ogKEICAgMCIx9v0wgE",
+          "CIHM0ogKEICAgMCIx9v0Ig",
+          "CIHM0ogKEICAgMCIx9v0ogE",
+          "CIHM0ogKEICAgMCIx9vmZg",
+          "CIHM0ogKEICAgMCIx9vm5gE",
+          "CIHM0ogKEICAgMCIx9vmFg",
+          "CIHM0ogKEICAgMCIx9vmlgE",
+          "CIHM0ogKEICAgMCIx9vmVg",
+          "CIHM0ogKEICAgMCIx9vm1gE"
+        ],
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "3",
+          "Meal type": "Dinner",
+          "Price per person": "$30–50",
+          "Recommended dishes": "Fajita, Shrimp",
+          "Service": "4"
+        },
+        "review_rating": 3,
+        "review_text": "Chunky guac wad indeed chunky guac. we thought it was good.  Salsa was pretty good too! I especially enjoyed mixing the salsa guac. And lime! Thats was where it was at!\n\nMargaritas were good too just a bit over priced for basic syrup bare minimal alcohol.\n\nMoving on to entrees. We ordered fajitas for two steak chicken and shrimp. We got just steak! And quite a bit. So when we asked our server about the other 2 meats she brought me 2 baby bowls of VERY LITTLE CHICKEN AND SHRIMP! All the meats were super tender just not flavorful. Even the tortillas server got wrong. We asked for corn and we got flour. I will admit they were good!\nKids got chicken flautas those were super large and pretty good. Rice was good and beans were meh.\nIt was our first visit here and idk it just wasnt an omg! We must come back.\n\nFor us, what made our experience was a balloon  character making lady! She was amazing and talented!",
+        "review_timestamp": 1743828679,
+        "reviews_id": "-6388180291107497942"
+      },
+      {
+        "author_id": "107405450419273383506",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjUnjQblGbhQhYX0zwn-8ilsjEPdMDPzx8XMA8hYxfocU93PYfQK=s120-c-rp-mo-ba3-br100",
+        "author_link": "https://www.google.com/maps/contrib/107405450419273383506?hl=en",
+        "author_ratings_count": 38,
+        "author_reviews_count": 64,
+        "author_title": "Magination Video",
+        "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "12/23/2025 15:42:07",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2xaMmJsSm1aMkpqYnpaalpHRlRia3RzU1RsUVpWRRAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptyyEU66DkyY2MakJY_hxWOnMBp3ECU_-AlfKq2dL-j8RH6nzqr-QuGwn_GGcmzP71RPKvw4kb0XfeOnmb5YsjEk_UcJVVkEjr5LE6V1Jwfm6_71TvKM7GEtP2WC0ID7loLL7BWGFE7mjoT",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptyyEU66DkyY2MakJY_hxWOnMBp3ECU_-AlfKq2dL-j8RH6nzqr-QuGwn_GGcmzP71RPKvw4kb0XfeOnmb5YsjEk_UcJVVkEjr5LE6V1Jwfm6_71TvKM7GEtP2WC0ID7loLL7BWGFE7mjoT",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvDIMNqrjAltJN0-D2I4o7LuQLJEYFzpwiHVw_Lrze9GojXwcQmj-y6ijRvKKr5vKUAh_hD6EDUJ6skpKBGm-1oE3vywsUCK4qb3LBJ68CN9BDu54bLAn3pcFWj24px46L2JpzwwYFlCYw",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptMIC0AvUSjo_urWUJ9njeIKODBo-IPk7_QhHknwS4DX2iTm2nJggfY7_wQhIhcxInUPHjT16JWclWlSzsP6j15qmu2v3bpX_yfsFYLikgJcqyJ94JQwHuT-t0TGvQNKxmA2s9LminV-rFH",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvvzhPVryTYhacn-D-5fPDZjeteb25jdsw3xNQ-9RCI8icZVGfWBPFxjgIw5tM6OiKC3vpP30KtoD4NYpvC1QCRH954bacJL_6Il_R2vFecSNzP2FSei7hpNWcYcoOc2kHxxKpWfMHD0nag",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptPdpOjWlsqPIprCOSEUVdInPIofSFnUz5RUnAKGLVxzE-VbWPLKsXzoFQTmTaK-svCvRLHf1DSdE2eVoJZSe1iwdK7G5vcnmsFV7Y4jBYiOKWQAamW0uJ2lHrIgFpD-tC8kf6_i2kMvZMw"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xaMmJsSm1aMkpqYnpaalpHRlRia3RzU1RsUVpWRRAB!2m1!1s0x0:0xa7589fdf0b62d82a!3m1!1s2@1:CAIQACodChtycF9oOlZ2blJmZ2JjbzZjZGFTbktsSTlQZVE%7C0dHfWE73boj%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFCeHBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZPZUhaZlgxOWZSV2hEY0cxVU5GVXpSVXBvTkcxVk5XZzRNRUZCUVVGQlIyZHVPVEpTUlVOYVRGRm5RM1ZCV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIABIhD4OEq3i69hKlU2kPPHbNaD",
+          "CIABIhAyajuUDHKfwQsILHMZr9FU",
+          "CIABIhAgBldx8n5Uc2hEPaugpqNw",
+          "CIABIhBnwv38CGjX_p8HY24n_KSG",
+          "CIABIhAQ-SnFSEebLHXQUjVS-Gym"
+        ],
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "5",
+          "Meal type": "Breakfast",
+          "Price per person": "$1–10",
+          "Recommended dishes": "Pancakes, Add Side Beef Fajita, Fajitas Combo, Carne Asada, Rice Beans, Fajitas for Two, Migas Con Queso, Lunch Fajitas",
+          "Service": "5",
+          "Wait time": "No wait"
+        },
+        "review_rating": 5,
+        "review_text": "Best Mexican food in the area.   Our go to\nSpot for Mexican food when in Round Rock",
+        "review_timestamp": 1766504527,
+        "reviews_id": "-6388180291107497942"
+      },
+      {
+        "author_id": "117523908369878393184",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjXT2zVbeed0dQjeROjk5JBao5O4ZI2-LijgtYCf6V8ebg_a2OI=s120-c-rp-mo-ba4-br100",
+        "author_link": "https://www.google.com/maps/contrib/117523908369878393184?hl=en",
+        "author_ratings_count": 65,
+        "author_reviews_count": 87,
+        "author_title": "Stephanie Hawkins-Lynch",
+        "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "12/22/2025 05:09:13",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2kxVVltd3lPRTl4UmpGdlNqQm5SRVJxVFU1Q01GRRAB",
+        "review_img_url": null,
+        "review_img_urls": null,
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2kxVVltd3lPRTl4UmpGdlNqQm5SRVJxVFU1Q01GRRAB!2m1!1s0x0:0xa7589fdf0b62d82a!3m1!1s2@1:CAIQACodChtycF9oOi1UYmwyOE9xRjFvSjBnRERqTU5CMFE%7C0dHC8tOznza%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFDQnBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZQYkhCZlgxOWZSV2hDT1V0U1NsVk1OMFpWVldWMVRYQktXVUZCUVVGQlIyZHVPVEpTVFVOYVRIVktNV0ZOV1VGRFNVRQ==",
+        "review_photo_ids": null,
+        "review_questions": {
+          "Atmosphere": "3",
+          "Food": "2",
+          "Group size": "3-4 people",
+          "Noise level": "Loud, but you can still talk",
+          "Price per person": "$10–20",
+          "Seating type": "Indoor dining area, Bar area, Outdoor patio / terrace, Booth seating",
+          "Service": "4"
+        },
+        "review_rating": 3,
+        "review_text": "We use to come here alot. Last few times (today for example), the food was very bland. The Verde sauce was very bad. Our fajitas had zero flavor. The charro beans tasted like hot water. The rice had very little flavor. The best part of our meal was the salsa. The tortillas were okay, normally they are usually better than what we had. They tasted kind of raw. We will not be back.",
+        "review_timestamp": 1766380153,
+        "reviews_id": "-6388180291107497942"
+      },
+      {
+        "author_id": "111076042527296193045",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjVsfpDnbKZyTs4HLzVSaf67EQV_JS4jZj7WfgpGIsO6c24tGQMCjQ=s120-c-rp-mo-ba5-br100",
+        "author_link": "https://www.google.com/maps/contrib/111076042527296193045?hl=en",
+        "author_ratings_count": 0,
+        "author_reviews_count": 185,
+        "author_title": "LM Fanava",
+        "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "07/29/2025 13:43:32",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2w5bGFXVXlSRTlJTkRodWRtWjBOMnBQZG5wdk9GRRAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvd_R7Xf4efCh7x9I-vZkYf5TmuWJBrBYw_h7iVRqqmZdWXWQCydAkmMzteoq6X7gBi3UK_xKRXTG169wx6g-OMCuqOQW0i1dg4XbJeNLI4yqvA5Ljk_O3OaOQeffuXxyvYndT1JKOXcGI",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvd_R7Xf4efCh7x9I-vZkYf5TmuWJBrBYw_h7iVRqqmZdWXWQCydAkmMzteoq6X7gBi3UK_xKRXTG169wx6g-OMCuqOQW0i1dg4XbJeNLI4yqvA5Ljk_O3OaOQeffuXxyvYndT1JKOXcGI"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2w5bGFXVXlSRTlJTkRodWRtWjBOMnBQZG5wdk9GRRAB!2m1!1s0x0:0xa7589fdf0b62d82a!3m1!1s2@1:CAIQACodChtycF9oOl9laWUyRE9INDhudmZ0N2pPdnpvOFE%7C0cXC-3uA3Tg%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFDUnBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZSTld4ZlgxOWZSV2hFVGtkdFRXVXhXSEJIYjFnNGFqUXRhMEZCUVVGQlIyZHVPVEpTWjBOYU5tMVVZa3BCV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIABIhD3qj0VdsOsPurCMHutstXR"
+        ],
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "5",
+          "Service": "5"
+        },
+        "review_rating": 5,
+        "review_text": "Wonderful greeting and clean, very clean tables.  Our waitress was very patient with us, and was very attentive.  The food was delicious, and it was very Mexican authentic.  I thought I was at my grandma’s having supper.  Food was that delicious.",
+        "review_timestamp": 1753796612,
+        "reviews_id": "-6388180291107497942"
+      },
+      {
+        "author_id": "113081816185064799667",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjXzge5MekEIv6PUrKO40fin1LRvqRuwAGSBnaiU4cZAmWqMEOgtLQ=s120-c-rp-mo-ba3-br100",
+        "author_link": "https://www.google.com/maps/contrib/113081816185064799667?hl=en",
+        "author_ratings_count": 7,
+        "author_reviews_count": 13,
+        "author_title": "Franco Estrada",
+        "google_id": "0x8644d17ece664159:0xa7589fdf0b62d82a",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "11/01/2025 06:26:13",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2tSTlIwVmlORzlpU1RrMmVYRmxlakkzY1hselExRRAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9pufZIRrTdeBxPR5vUXH_5M0zc_iwvgEQZen1g5c-5c7nIkw2Y-VFpncuSfIO0lpCZW8Vf7iSop7t5mnCpQrZSZV8LYWj-heiz5c_ddrBoRkiHbPewUkT_UdYg-FtWAUKBQQqGVHch71V9v2",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pufZIRrTdeBxPR5vUXH_5M0zc_iwvgEQZen1g5c-5c7nIkw2Y-VFpncuSfIO0lpCZW8Vf7iSop7t5mnCpQrZSZV8LYWj-heiz5c_ddrBoRkiHbPewUkT_UdYg-FtWAUKBQQqGVHch71V9v2"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tSTlIwVmlORzlpU1RrMmVYRmxlakkzY1hselExRRAB!2m1!1s0x0:0xa7589fdf0b62d82a!3m1!1s2@1:CAIQACodChtycF9oOkRNR0ViNG9iSTk2eXFlejI3cXlzQ1E%7C0d0PV439HBf%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFDaHBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZWVkMxZlgxOWZSV2hDY1hSVVVWUktVek5vZWkwMFprazRORUZCUVVGQlIyZHVPVEpUUlVOYVkwaHVja1JKV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIABIhD4caUCqhcu3ThgGRzOw7sx"
+        ],
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "5",
+          "Group size": "3-4 people, 5-8 people",
+          "Meal type": "Dinner",
+          "Price per person": "$10–20",
+          "Seating type": "Indoor dining area, Bar area, Outdoor patio / terrace",
+          "Service": "5"
+        },
+        "review_rating": 5,
+        "review_text": "Had the beef fajitas with the delicious flour tortillas. Hard to go wrong with such a perfect combination. But you will enjoy this place regardless of what you get! Also very much recommend the sopapilla cheesecake! It is lovely and like nothing I’ve ever tasted before 10/10",
+        "review_timestamp": 1761978373,
+        "reviews_id": "-6388180291107497942"
+      }
+    ],
+    "reviews_id": "-6388180291107497942",
+    "reviews_link": "https://search.google.com/local/reviews?placeid=ChIJWUFmzn7RRIYRKthiC9-fWKc&q=*&authuser=0&hl=en&gl=US",
+    "reviews_per_score": {
+      "1": 163,
+      "2": 124,
+      "3": 299,
+      "4": 734,
+      "5": 2008
+    },
+    "reviews_tags": null,
+    "state": "Texas",
+    "state_code": "TX",
+    "street": "1530 I 35 N Frontage Rd",
+    "street_view": "https://lh3.googleusercontent.com/p/AF1QipNYtyuGc7LvZaINGvsW3tNnD0yo709ClbcRUrlz=w1600-h1000-k-no",
+    "subtypes": "Mexican restaurant, Bar, Latin American restaurant",
+    "time_zone": "America/Chicago",
+    "type": "Mexican restaurant",
+    "typical_time_spent": null,
+    "verified": true,
+    "website": "https://lamargarita.us/",
+    "working_hours": {
+      "Friday": [
+        "8AM-10PM"
+      ],
+      "Monday": [
+        "11AM-9PM"
+      ],
+      "Saturday": [
+        "9AM-10PM"
+      ],
+      "Sunday": [
+        "8AM-9PM"
+      ],
+      "Thursday": [
+        "11AM-9PM"
+      ],
+      "Tuesday": [
+        "11AM-9PM"
+      ],
+      "Wednesday": [
+        "11AM-9PM"
+      ]
+    },
+    "working_hours_csv_compatible": "Sunday,8AM,9PM|Monday,11AM,9PM|Tuesday,11AM,9PM|Wednesday,11AM,9PM|Thursday,11AM,9PM|Friday,8AM,10PM|Saturday,9AM,10PM"
+  },
+  {
+    "about": {
+      "Accessibility": {
+        "Wheelchair accessible entrance": true,
+        "Wheelchair accessible parking lot": true,
+        "Wheelchair accessible seating": true
+      },
+      "Amenities": {
+        "Restroom": true
+      },
+      "Atmosphere": {
+        "Casual": true,
+        "Cozy": true
+      },
+      "Children": {
+        "Good for kids": true
+      },
+      "Dining options": {
+        "Dessert": true,
+        "Dinner": true
+      },
+      "Offerings": {
+        "Comfort food": true
+      },
+      "Parking": {
+        "Free parking lot": true,
+        "Free street parking": true
+      },
+      "Payments": {
+        "Credit cards": true,
+        "Debit cards": true
+      },
+      "Popular for": {
+        "Dinner": true,
+        "Solo dining": true
+      },
+      "Service options": {
+        "Delivery": false,
+        "Dine-in": true,
+        "Takeout": true
+      }
+    },
+    "address": "109 W Main St, Round Rock, TX 78664",
+    "area_service": false,
+    "booking_appointment_link": null,
+    "business_status": "OPERATIONAL",
+    "category": "restaurants",
+    "cid": "9130316269834273550",
+    "city": "Round Rock",
+    "country": "United States of America",
+    "country_code": "US",
+    "county": "Round Rock Original Plat",
+    "description": null,
+    "google_id": "0x8644d170246c3c1b:0x7eb56645de71030e",
+    "h3": "89489e25a73ffff",
+    "kgmid": "/g/11ytt3tc7j",
+    "latitude": 30.5082253,
+    "located_google_id": null,
+    "located_in": null,
+    "location_link": "https://www.google.com/maps/place/Casita+on+the+Main/@30.5082253,-97.6792634,14z/data=!4m8!1m2!2m1!1sCasita+on+the+Main!3m4!1s0x8644d170246c3c1b:0x7eb56645de71030e!8m2!3d30.5082253!4d-97.6792634",
+    "location_reviews_link": "https://www.google.com/maps/place/Casita+on+the+Main/@30.5082253,-97.6792634,13.99z/data=!4m16!1m7!3m6!1s0x8644d170246c3c1b:0x7eb56645de71030e!2sCasita+on+the+Main!8m2!3d30.5082253!4d-97.6792634!16s%2Fg%2F11ckvg1dmb!3m7!1s0x8644d170246c3c1b:0x7eb56645de71030e!8m2!3d30.5082253!4d-97.6792634!9m1!1b1!16s%2Fg%2F11ckvg1dmb?entry=ttu",
+    "logo": "https://lh4.googleusercontent.com/-9Spua5hKHlA/AAAAAAAAAAI/AAAAAAAAAAA/ydyRKLgHZwE/s44-p-k-no-ns-nd/photo.jpg",
+    "longitude": -97.6792634,
+    "menu_link": null,
+    "name": "Casita on the Main",
+    "name_for_emails": "Casita On The Main",
+    "order_links": null,
+    "other_hours": null,
+    "owner_id": "114044257735618035859",
+    "owner_link": "https://www.google.com/maps/contrib/114044257735618035859",
+    "owner_title": "Casita on the Main",
+    "phone": "+1 512-677-7391",
+    "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHVAweo_y-UKpM204Sb2mSyDzsXiCW6K4tYy96_wdXvxHb4XB7qmPiCchilYpNDLI-HoXVUEkd8oVgzOoeSG26FfQ_DZhejmTpfUANWUUKxXklpcUKFEP0NAyhNCGVvB9_Kp7rwEL3IGXazAgYM=w800-h500-k-no",
+    "photos_count": 20,
+    "place_id": "ChIJGzxsJHDRRIYRDgNx3kVmtX4",
+    "plus_code": null,
+    "popular_times": null,
+    "postal_code": "78664",
+    "posts": null,
+    "prices": null,
+    "query": "Mexican restaurants in Round Rock, TX",
+    "range": null,
+    "rating": 4.9,
+    "reservation_links": null,
+    "reviews": 15,
+    "reviews_data": [
+      {
+        "author_id": "112520326808404663498",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjVGs3UxKpbI7zV-LMwkAKjL7-JXgo9kXeKO2XxI_0D_-X9Y0pke=s120-c-rp-mo-ba3-br100",
+        "author_link": "https://www.google.com/maps/contrib/112520326808404663498?hl=en",
+        "author_ratings_count": 0,
+        "author_reviews_count": 35,
+        "author_title": "Ryan Brenner",
+        "google_id": "0x8644d170246c3c1b:0x7eb56645de71030e",
+        "owner_answer": "Thanks Ryan. We appreciate your feedback and hope we can continue to provide great food and service as we grow.  Come back soon!",
+        "owner_answer_timestamp": 1768336431,
+        "owner_answer_timestamp_datetime_utc": "01/13/2026 20:33:51",
+        "review_datetime_utc": "01/13/2026 15:39:23",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2xFd2VUVnBla3AzV2pObmFsWkxSV2gxUld4NlRtYxAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptsrqAag-ah611WsjWDs8F_3EaIImJCMEcyiFwgTR6ry42bwHL4ORTSz5Sj-cLq1gCIU9kSuHy6Efjcv_jFqU_1MP-A5ZhWBljcOC2x36zu1Uol9L_tc0PJb5EMj9JLpH1SNl4Zc2SpthTI",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptsrqAag-ah611WsjWDs8F_3EaIImJCMEcyiFwgTR6ry42bwHL4ORTSz5Sj-cLq1gCIU9kSuHy6Efjcv_jFqU_1MP-A5ZhWBljcOC2x36zu1Uol9L_tc0PJb5EMj9JLpH1SNl4Zc2SpthTI"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xFd2VUVnBla3AzV2pObmFsWkxSV2gxUld4NlRtYxAB!2m1!1s0x0:0x7eb56645de71030e!3m1!1s2@1:CAIQACodChtycF9oOlEweTVpekp3WjNnalZLRWh1RWx6Tmc%7C0dOaRfOMnjZ%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFBUnBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZDVlZoZlgxOWZSV2hFZDNCVFdHZzBPV3hoWW1SeWRYSllTVUZCUVVGQlIyZHVPVEpRU1VOYVJXWTRYMncwV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIABIhBkfwq1MWoP1H_D9kdmMVg5"
+        ],
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "5",
+          "Meal type": "Breakfast",
+          "Price per person": "$10–20",
+          "Service": "5"
+        },
+        "review_rating": 5,
+        "review_text": "If you want quick classic breakfast this is the place to go. There are plenty of overly fancy places with pour over coffee and non tradition tacos, but when it comes to hospitality and quality food without a giant price tag this is the place to go.\n\n$2 coffee\n$3.75 breakfast tacos\n$4 street tacos\n\nGood portions with great flavor. Friendly staff. Family owned. Plus their salsa as made in-house and the green is where it’s at 👌 highly recommend.",
+        "review_timestamp": 1768318763,
+        "reviews_id": "9130316269834273550"
+      },
+      {
+        "author_id": "115134030721119782747",
+        "author_image": "https://lh3.googleusercontent.com/a/ACg8ocKNF9swRiLyPyGXvqWLoPQ3h1l5Q8pX6Po1QMrxE0mljZey5w=s120-c-rp-mo-ba2-br100",
+        "author_link": "https://www.google.com/maps/contrib/115134030721119782747?hl=en",
+        "author_ratings_count": 0,
+        "author_reviews_count": 21,
+        "author_title": "Dio Rodriguez",
+        "google_id": "0x8644d170246c3c1b:0x7eb56645de71030e",
+        "owner_answer": "Thanks for enjoying our food in the food truck and now at Casita on the Main. We appreciate your family continuing your birthday celebration here. The carnitas will be ready for you next time as well since it is a daily offering now. Come back soon!",
+        "owner_answer_timestamp": 1768353767,
+        "owner_answer_timestamp_datetime_utc": "01/14/2026 01:22:47",
+        "review_datetime_utc": "01/14/2026 01:13:39",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2pRMWNWVlJZMDlPWm04MVoxSTVhMHhEZFhwaFZrRRAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvQttQH0X2ZwK4TvphdGAsFRbLkaUIxBWgL2wRDDZOxa4nApoQzHPdEnnVmcWM3EyBimGCtoDz-YVe_g2cuE3HC7r6CnK_JofKTIEdOLud3b1AyjeAAsJdFETAdKtbj-Ymnsjv4pumY5ZLQ",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvQttQH0X2ZwK4TvphdGAsFRbLkaUIxBWgL2wRDDZOxa4nApoQzHPdEnnVmcWM3EyBimGCtoDz-YVe_g2cuE3HC7r6CnK_JofKTIEdOLud3b1AyjeAAsJdFETAdKtbj-Ymnsjv4pumY5ZLQ",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvHK5D4GsqiDVkKPGwNEnCvTe_rfqL0rTG_VdeHNJH0eXzh7yULCjaDmz8wlSytSSzVgS0PjjLpFnv747Trxasny5pUFsJR1XUBynV9IEPVQMsk2heT9M0zNcxTFihWoju_Ec0aI4kvJVot"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pRMWNWVlJZMDlPWm04MVoxSTVhMHhEZFhwaFZrRRAB!2m1!1s0x0:0x7eb56645de71030e!3m1!1s2@1:CAIQACodChtycF9oOjQ1cVVRY09OZm81Z1I5a0xDdXphVkE%7C0dOir2o7yjU%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFBaHBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZDV2tsZlgxOWZSV2hDV2sxM1JIQmFkaTFVZW1aSVpsb3paMEZCUVVGQlIyZHVPVEpRU1VOYVJWaDJUM1F3V1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIABIhAtrz5itd8Bz7qCdXJ0i-ZL",
+          "CIABIhCdbQEr4EcqYJABJCCDnSaq"
+        ],
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "5",
+          "Meal type": "Dinner",
+          "Recommended dishes": "Casitamelt Pork, Carnitas with Beans and Rice, Quesadilla Pork",
+          "Service": "5"
+        },
+        "review_rating": 5,
+        "review_text": "Absolutely loved the delicious food, awesome service and vibe! 😋 If my Abuelita made puerco en chile verde, it would be like this. My family and I are looking forward to our next visit to try different dishes. Highly recommend!",
+        "review_timestamp": 1768353219,
+        "reviews_id": "9130316269834273550"
+      },
+      {
+        "author_id": "102029833213985776315",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjVLJmA8qOnzvYq4B0XsaEVD_Za7D1rpWwlnBwCl6XzpB32g0Mn4_w=s120-c-rp-mo-ba5-br100",
+        "author_link": "https://www.google.com/maps/contrib/102029833213985776315?hl=en",
+        "author_ratings_count": 31,
+        "author_reviews_count": 346,
+        "author_title": "Catholic Camper",
+        "google_id": "0x8644d170246c3c1b:0x7eb56645de71030e",
+        "owner_answer": "Thank you Catholic Camper for your review. We are excited to continue to grow our menu and share our unique dishes. Come back soon!",
+        "owner_answer_timestamp": 1767732388,
+        "owner_answer_timestamp_datetime_utc": "01/06/2026 20:46:28",
+        "review_datetime_utc": "12/31/2025 04:27:53",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2t4MU1XVkZUMU5YT1VscmFtOUdaVE13U25CYWVHYxAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9pv3zCTPZbCOQT43vXNfUTBY4sxK542cskGKdsJ6ChuNYeI_Y5BZRxd0mtVxZQAPOaN9crhVmNs69dN_uHO1cFzKxiVGWWgFWg5Liyo_hPxrQb25XqIy1CpGAqPCK3zHCXAPOq-io_s6RfRe",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pv3zCTPZbCOQT43vXNfUTBY4sxK542cskGKdsJ6ChuNYeI_Y5BZRxd0mtVxZQAPOaN9crhVmNs69dN_uHO1cFzKxiVGWWgFWg5Liyo_hPxrQb25XqIy1CpGAqPCK3zHCXAPOq-io_s6RfRe",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pt0zhYpaDkqapNrKjnQVWpMByyawLi2Xbajl_UtPN9b1Q3zmjLLEQW5w90sNyIgASMXrlr_nXT228WIQlsjWJt4SyB5buHIXOVLe358rkRDQNHrDOQScu7hXmCDtOABvrFPgmLNBYAX8voa"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2t4MU1XVkZUMU5YT1VscmFtOUdaVE13U25CYWVHYxAB!2m1!1s0x0:0x7eb56645de71030e!3m1!1s2@1:CAIQACodChtycF9oOkx1MWVFT1NXOUlram9GZTMwSnBaeGc%7C0dK9O8hF5gl%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFBeHBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZFU21OZlgxOWZSV2hEWkRWTk4zSjRPV0pUVEZOeU9FaFRXVUZCUVVGQlIyZHVPVEpRWTBOYVNURlhZaTFCV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIABIhClp4cMl6R6FkwOrLZ8-5fo",
+          "CIABIhCjMKSeeDi0WUyWhVzX4ccp"
+        ],
+        "review_questions": null,
+        "review_rating": 5,
+        "review_text": "On the main street in Round Rock, an eatery reminiscent of my grandmother's kitchen comes into view. With familiar smells and cozy hospitality, the concise menu satisfied my appetite for unique Mexican food. Fusion is key here with traditional dishes. Wow!",
+        "review_timestamp": 1767155273,
+        "reviews_id": "9130316269834273550"
+      },
+      {
+        "author_id": "115812730832021213766",
+        "author_image": "https://lh3.googleusercontent.com/a-/ALV-UjXem5dnyrQRhUFeqAHxMqiOhUGGAnymVFNWGMg8q3qowYByu3cm=s120-c-rp-mo-br100",
+        "author_link": "https://www.google.com/maps/contrib/115812730832021213766?hl=en",
+        "author_ratings_count": 0,
+        "author_reviews_count": 4,
+        "author_title": "Alexandria Jones",
+        "google_id": "0x8644d170246c3c1b:0x7eb56645de71030e",
+        "owner_answer": "Thank you so much for coming by and letting us know how we did. We appreciate your feedback and will work to do our best each and every day. ",
+        "owner_answer_timestamp": 1767063729,
+        "owner_answer_timestamp_datetime_utc": "12/30/2025 03:02:09",
+        "review_datetime_utc": "12/29/2025 01:33:10",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT21WVWNrSXhRMll3UW1kVFVUQmlOa3hUY1RWb2RHYxAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9psvR-dti4-FXIonbisjCcQV_fdX7xYa0vbFk65NE2Mg-azZdgiZfu9kq8gcZeaq_iIzz_l2R4Zt7AVEKDT8jQZwxjWt9uxyO4VbSkqI1G6l10i3EaZtyA2iTwPpCcl8H9amu9U6e2FG26Lb",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9psvR-dti4-FXIonbisjCcQV_fdX7xYa0vbFk65NE2Mg-azZdgiZfu9kq8gcZeaq_iIzz_l2R4Zt7AVEKDT8jQZwxjWt9uxyO4VbSkqI1G6l10i3EaZtyA2iTwPpCcl8H9amu9U6e2FG26Lb",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9pvltygZYCAE0y06BwYVOSX7T68cihgXUn0zHnv9tA-EBHI0HuCMNt_b-cjGztqp3ViHzoW8e-DI6tW4nQ8HWshVPSdSHwwLSBoZZ9pSv_Vap3fS9b_h8Z_zTekqSALoblL2WJIw7skwGMw"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21WVWNrSXhRMll3UW1kVFVUQmlOa3hUY1RWb2RHYxAB!2m1!1s0x0:0x7eb56645de71030e!3m1!1s2@1:CAIQACodChtycF9oOmVUckIxQ2YwQmdTUTBiNkxTcTVodGc%7C0dJSdLSoQFd%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFCQnBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZGUjBsZlgxOWZSV2hDVlZSdGQyZDRPRTVqYlZKd1JEVnphMEZCUVVGQlIyZHVPVEpRYTBOYVNtaEVTR2h6V1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIABIhBEm5AUzR47CUTDr9wcq9xO",
+          "CIABIhA6J6qASoFlrpR4CVBMe1V3"
+        ],
+        "review_questions": null,
+        "review_rating": 5,
+        "review_text": "Amazing food and great service! Will definitely be coming back!!",
+        "review_timestamp": 1766971990,
+        "reviews_id": "9130316269834273550"
+      },
+      {
+        "author_id": "111762168426326578100",
+        "author_image": "https://lh3.googleusercontent.com/a/ACg8ocIb_aFCBuTtJKVtAsxzyCnK5OrAciJHX6__Q2cM12a5Yps3Zw=s120-c-rp-mo-br100",
+        "author_link": "https://www.google.com/maps/contrib/111762168426326578100?hl=en",
+        "author_ratings_count": 0,
+        "author_reviews_count": 1,
+        "author_title": "Lou McMillen",
+        "google_id": "0x8644d170246c3c1b:0x7eb56645de71030e",
+        "owner_answer": "Thank you Lou for your feedback. We are excited to be a part of downtown Round Rock and to be in a restaurant while still growing our food truck business. Come back soon!\n",
+        "owner_answer_timestamp": 1767732336,
+        "owner_answer_timestamp_datetime_utc": "01/06/2026 20:45:36",
+        "review_datetime_utc": "01/06/2026 18:40:47",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2t4dFdVdGlNM1ZMTmw5MVNFSkViVGd3Ym5KRVFVRRAB",
+        "review_img_url": null,
+        "review_img_urls": null,
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2t4dFdVdGlNM1ZMTmw5MVNFSkViVGd3Ym5KRVFVRRAB!2m1!1s0x0:0x7eb56645de71030e!3m1!1s2@1:CAIQACodChtycF9oOkxtWUtiM3VLNl91SEJEbTgwbnJEQUE%7C0dMKRjQQYF3%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFCUnBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZoU1dOZlgxOWZSV2hDZW01MFprOUlTMjlNYURWdWVFbExVVUZCUVVGQlIyZHVPVEpUT0VOYVIzUnFZbkJ6V1VGRFNVRQ==",
+        "review_photo_ids": null,
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "5",
+          "Meal type": "Lunch",
+          "Parking": null,
+          "Parking options": "Free street parking",
+          "Parking space": "Plenty of parking",
+          "Price per person": "$10–20",
+          "Service": "5",
+          "null": "Parking"
+        },
+        "review_rating": 5,
+        "review_text": "Small place with a big heart. Quaint and cozy. Great tamales - so filling!",
+        "review_timestamp": 1767724847,
+        "reviews_id": "9130316269834273550"
+      },
+      {
+        "author_id": "102245518263453616655",
+        "author_image": "https://lh3.googleusercontent.com/a/ACg8ocIlpTTtZ4YU2dbvqtP4g8iTRSjrInJts7VL_pYCK0bUJvTMKq0=s120-c-rp-mo-br100",
+        "author_link": "https://www.google.com/maps/contrib/102245518263453616655?hl=en",
+        "author_ratings_count": 0,
+        "author_reviews_count": 1,
+        "author_title": "Mia Rodriguez",
+        "google_id": "0x8644d170246c3c1b:0x7eb56645de71030e",
+        "owner_answer": "Thank you Mia for your feedback. Al pastor de puerco in a quesadilla or taco is absolutely one of our most popular dishes. Glad you enjoyed it. Come back soon.",
+        "owner_answer_timestamp": 1768427630,
+        "owner_answer_timestamp_datetime_utc": "01/14/2026 21:53:50",
+        "review_datetime_utc": "01/14/2026 02:45:03",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2pJdFdHOVJjamxKU2w5cFYwbEpXSHBLWlZwWGMwRRAB",
+        "review_img_url": "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptSoUHf1b0HjGRfgTLJ67rm4WLW-9c1SBgN8WyyZreAY8P5792Ee2JCWROrQ3bB7ZT55DFbDVozM_2Y-XUX1MAGREPnAirGLgIYn61U7701hm86XmsN37S8LsYqeLRgviL55M1RJ4PZebY",
+        "review_img_urls": [
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9ptSoUHf1b0HjGRfgTLJ67rm4WLW-9c1SBgN8WyyZreAY8P5792Ee2JCWROrQ3bB7ZT55DFbDVozM_2Y-XUX1MAGREPnAirGLgIYn61U7701hm86XmsN37S8LsYqeLRgviL55M1RJ4PZebY",
+          "https://lh3.googleusercontent.com/geougc-cs/ABOP9psb-j5YIfkI6caftHsaD434LHGodEQJj8kDmt4ev3pgQbYl2UfA1G6Fext80s2oE6jHvgq5iVDt3MVIsd2UZKRDDF6v6fQiMJDf2mvM_1lHuMhzussg8ScztrJWRTD1gq3yGeq-3iAzRjKi"
+        ],
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pJdFdHOVJjamxKU2w5cFYwbEpXSHBLWlZwWGMwRRAB!2m1!1s0x0:0x7eb56645de71030e!3m1!1s2@1:CAIQACodChtycF9oOjItWG9RcjlJSl9pV0lJWHpKZVpXc0E%7C0dOkBjUkwlh%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFCaHBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUZqU1hGZlgxOWZSV2hEZDFaWmRXWkdZMFZyWDNVM1VVZENhMEZCUVVGQlIyZHVPVEpVVVVOYVJWZGlhbXhOV1VGRFNVRQ==",
+        "review_photo_ids": [
+          "CIABIhBFgutkHlI-xD4OU7YiWx-c",
+          "CIABIhDLi93lFZTDS1FJpLoJv5sF"
+        ],
+        "review_questions": {
+          "Atmosphere": "5",
+          "Food": "5",
+          "Meal type": "Dinner",
+          "Price per person": "$10–20",
+          "Recommended dishes": "Quesadilla Pork",
+          "Service": "5"
+        },
+        "review_rating": 5,
+        "review_text": "Very tasty food!",
+        "review_timestamp": 1768358703,
+        "reviews_id": "9130316269834273550"
+      },
+      {
+        "author_id": "100964499459736110494",
+        "author_image": "https://lh3.googleusercontent.com/a/ACg8ocKWjZcdwmc_M8j8Ua-Xbx10i3gAQGWkR7arAf3tXbsNypNdZw=s120-c-rp-mo-br100",
+        "author_link": "https://www.google.com/maps/contrib/100964499459736110494?hl=en",
+        "author_ratings_count": 0,
+        "author_reviews_count": 7,
+        "author_title": "adam sommer",
+        "google_id": "0x8644d170246c3c1b:0x7eb56645de71030e",
+        "owner_answer": "Thank you Adam. We will continue to strive to provide great food and service.  ",
+        "owner_answer_timestamp": 1767048393,
+        "owner_answer_timestamp_datetime_utc": "12/29/2025 22:46:33",
+        "review_datetime_utc": "12/29/2025 01:18:55",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2tsSlUwazRPRWh4TTFwNlFtNXlaak42ZURsVmRYYxAB",
+        "review_img_url": null,
+        "review_img_urls": null,
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tsSlUwazRPRWh4TTFwNlFtNXlaak42ZURsVmRYYxAB!2m1!1s0x0:0x7eb56645de71030e!3m1!1s2@1:CAIQACodChtycF9oOklJU0k4OEhxM1p6Qm5yZjN6eDlVdXc%7C0dJSQzZPb09%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFCeHBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURUpqVDJoZlgxOWZSV2hFYkZReGVHeERRbmxpY2t0RFJrbDVkMEZCUVVGQlIyZHVPVEprUVVOYVNtaFJTMWxWV1VGRFNVRQ==",
+        "review_photo_ids": null,
+        "review_questions": null,
+        "review_rating": 5,
+        "review_text": "From food truck to brick and mortar the service and food remain stellar! Still in soft opening stages but already knocking it out of the park.",
+        "review_timestamp": 1766971135,
+        "reviews_id": "9130316269834273550"
+      },
+      {
+        "author_id": "114473378985738513734",
+        "author_image": "https://lh3.googleusercontent.com/a/ACg8ocKL5gkEnVjNyFIhKt119AaQ_J0MNSzGCcuGSO7Pyp1jXB546A=s120-c-rp-mo-ba4-br100",
+        "author_link": "https://www.google.com/maps/contrib/114473378985738513734?hl=en",
+        "author_ratings_count": 45,
+        "author_reviews_count": 173,
+        "author_title": "Victoria Chase",
+        "google_id": "0x8644d170246c3c1b:0x7eb56645de71030e",
+        "owner_answer": "Hi Victoria thank you for sharing your feedback. We are happy to hear that you enjoyed your quesadillas. Come back soon and spread the word please!",
+        "owner_answer_timestamp": 1768151981,
+        "owner_answer_timestamp_datetime_utc": "01/11/2026 17:19:41",
+        "review_datetime_utc": "01/10/2026 19:00:45",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT2s1MU1tNUhkREp6UlZGa1ozUm9lbXBsWVhWWlRIYxAB",
+        "review_img_url": null,
+        "review_img_urls": null,
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2s1MU1tNUhkREp6UlZGa1ozUm9lbXBsWVhWWlRIYxAB!2m1!1s0x0:0x7eb56645de71030e!3m1!1s2@1:CAIQACodChtycF9oOk51Mm5HdDJzRVFkZ3RoemplYXVZTHc%7C0dNe6Snl-Rf%7C?hl=en",
+        "review_pagination_id": "CAESY0NBRVFDQnBFUTJwRlNVRlNTWEJEWjI5QlVEZGZURWxCTURWZlgxOWZSV2hEWjJJMlkwSnNSRk5CY2pVM05WZFRZMEZCUVVGQlIyZHVPVE5rVFVOYVJtRXpkRlpOV1VGRFNVRQ==",
+        "review_photo_ids": null,
+        "review_questions": {
+          "Atmosphere": "4",
+          "Food": "5",
+          "Price per person": "$10–20",
+          "Reservation": "Reservations not required",
+          "Seating type": "Indoor dining area",
+          "Service": "5"
+        },
+        "review_rating": 5,
+        "review_text": "Great quesadillas",
+        "review_timestamp": 1768071645,
+        "reviews_id": "9130316269834273550"
+      },
+      {
+        "author_id": "104445087974440393818",
+        "author_image": "https://lh3.googleusercontent.com/a/ACg8ocIZ20b6E2VE9tlBndhNNOsWjvLLlhs9AZrpQ7D55SlmF7RE5w=s120-c-rp-mo-ba6-br100",
+        "author_link": "https://www.google.com/maps/contrib/104445087974440393818?hl=en",
+        "author_ratings_count": 8,
+        "author_reviews_count": 868,
+        "author_title": "Mark C",
+        "google_id": "0x8644d170246c3c1b:0x7eb56645de71030e",
+        "owner_answer": null,
+        "owner_answer_timestamp": null,
+        "owner_answer_timestamp_datetime_utc": null,
+        "review_datetime_utc": "01/26/2026 01:41:30",
+        "review_id": "Ci9DQUlRQUNvZENodHljRjlvT21kYVVHaGhYM0pSY1ZvelVVMXFaR1JCWm1rMGFsRRAB",
+        "review_img_url": null,
+        "review_img_urls": null,
+        "review_likes": null,
+        "review_link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21kYVVHaGhYM0pSY1ZvelVVMXFaR1JCWm1rMGFsRRAB!2m1!1s0x0:0x7eb56645de71030e!3m1!1s2@1:CAIQACodChtycF9oOmdaUGhhX3JRcVozUU1qZGRBZmk0alE%7C0dSgO9rHU6i%7C?hl=en",
+        "review_pagination_id": null,
+        "review_photo_ids": null,
+        "review_questions": {
+          "Atmosphere": "4",
+          "Food": "5",
+          "Meal type": "Dinner",
+          "Price per person": "$10–20",
+          "Service": "5"
+        },
+        "review_rating": 4,
+        "review_text": "They're just starting out so the menu is somewhat limited. I had the sandwich (forgot what it was called). I opted for beef and it came with cheese on Texas Toast. Oh was it ever good. I'll be going back to have that again for sure. Service was very friendly.",
+        "review_timestamp": 1769391690,
+        "reviews_id": "9130316269834273550"
+      }
+    ],
+    "reviews_id": "9130316269834273550",
+    "reviews_link": "https://search.google.com/local/reviews?placeid=ChIJGzxsJHDRRIYRDgNx3kVmtX4&q=*&authuser=0&hl=en&gl=US",
+    "reviews_per_score": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 1,
+      "5": 14
+    },
+    "reviews_tags": null,
+    "state": "Texas",
+    "state_code": "TX",
+    "street": "109 W Main St",
+    "street_view": "https://lh3.googleusercontent.com/gps-cs-s/AHVAweo_y-UKpM204Sb2mSyDzsXiCW6K4tYy96_wdXvxHb4XB7qmPiCchilYpNDLI-HoXVUEkd8oVgzOoeSG26FfQ_DZhejmTpfUANWUUKxXklpcUKFEP0NAyhNCGVvB9_Kp7rwEL3IGXazAgYM=w1600-h1000-k-no",
+    "subtypes": "Mexican restaurant",
+    "time_zone": "America/Chicago",
+    "type": "Mexican restaurant",
+    "typical_time_spent": null,
+    "verified": true,
+    "website": "http://www.casitaonthemaintx.com/",
+    "working_hours": {
+      "Friday": [
+        "7AM-2PM",
+        "5-9PM"
+      ],
+      "Monday": [
+        "7AM-2PM",
+        "5-9PM"
+      ],
+      "Saturday": [
+        "7AM-2PM",
+        "5-9PM"
+      ],
+      "Sunday": [
+        "10AM-2PM"
+      ],
+      "Thursday": [
+        "7AM-2PM",
+        "5-9PM"
+      ],
+      "Tuesday": [
+        "7AM-2PM",
+        "5-9PM"
+      ],
+      "Wednesday": [
+        "7AM-2PM",
+        "5-9PM"
+      ]
+    },
+    "working_hours_csv_compatible": "Sunday,10AM,2PM|Monday,7AM,2PM|Monday,5,9PM|Tuesday,7AM,2PM|Tuesday,5,9PM|Wednesday,7AM,2PM|Wednesday,5,9PM|Thursday,7AM,2PM|Thursday,5,9PM|Friday,7AM,2PM|Friday,5,9PM|Saturday,7AM,2PM|Saturday,5,9PM"
+  }
+]
