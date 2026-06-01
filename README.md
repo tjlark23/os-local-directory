@@ -1,30 +1,56 @@
-# Hyperlocal directory platform
+# WilCo Guide
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+WilCo Guide is a public local-directory app for Williamson County, Texas. It helps people find local businesses by city, category, neighborhood, guide, and business profile.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/leander-scoop/v0-os-local-directory)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/rc88TrdarWf)
+This repository is intentionally public because it is the visible build log for the directory platform: code changes, security work, data import tooling, SEO pages, and operating docs all happen here in the open.
 
-## Overview
+## What This App Does
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+- Publishes business directory pages for Leander, Cedar Park, Liberty Hill, Round Rock, Georgetown, Hutto, and nearby Williamson County communities.
+- Generates programmatic SEO pages by category, city, guide, and neighborhood.
+- Supports business profile pages with reviews, contact information, similar businesses, and upgrade paths.
+- Includes admin surfaces for business management, reviews, users, and analytics.
+- Connects to Supabase for data and Stripe for paid featured listings.
 
-## Deployment
+## Active Workstreams
 
-Your project is live at:
+- **Security:** dependency patching, safer Next.js configuration, Stripe webhook verification, and public security policy.
+- **Directory quality:** cleaner business imports, photo/review validation, and duplicate checks.
+- **SEO:** category-city pages, guide pages, sitemap coverage, metadata, and structured data.
+- **Business revenue:** featured listing checkout, upgrade success flow, and business inquiry routing.
+- **Operator docs:** setup, verification, status reports, and maintenance notes that make the public repo understandable.
 
-**[https://vercel.com/leander-scoop/v0-os-local-directory](https://vercel.com/leander-scoop/v0-os-local-directory)**
+## Tech Stack
 
-## Build your app
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui components
+- Supabase
+- Stripe
+- Vercel
 
-Continue building your app on:
+## Local Development
 
-**[https://v0.dev/chat/projects/rc88TrdarWf](https://v0.dev/chat/projects/rc88TrdarWf)**
+```bash
+npm install
+npm run dev
+```
 
-## How It Works
+The app expects Supabase and Stripe environment variables for full production behavior. See `.env.example` once added for the current list.
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+## Verification
+
+Useful checks before opening or merging a PR:
+
+```bash
+npm run build
+npm audit
+```
+
+For build-only checks without real production credentials, use safe placeholder environment values. Do not use real service keys in local logs or public CI output.
+
+## Repository Status
+
+This repo started from a v0-generated app and is being converted into an active, maintainable public project. Expect small PRs that improve security, docs, data quality, user experience, and deployment confidence.
