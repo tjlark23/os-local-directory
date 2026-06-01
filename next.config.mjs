@@ -1,3 +1,31 @@
+const securityHeaders = [
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN',
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'strict-origin-when-cross-origin',
+  },
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(), microphone=(), geolocation=()',
+  },
+]
+
+const imageHosts = [
+  'lh3.googleusercontent.com',
+  'lh4.googleusercontent.com',
+  'lh5.googleusercontent.com',
+  'lh6.googleusercontent.com',
+  'streetviewpixels-pa.googleapis.com',
+  'maps.googleapis.com',
+]
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
@@ -18,12 +46,19 @@ const nextConfig = {
     // Cache optimized images for 1 year (aggressive caching)
     minimumCacheTTL: 31536000,
 
-    remotePatterns: [
+    remotePatterns: imageHosts.map((hostname) => ({
+      protocol: 'https',
+      hostname,
+    })),
+  },
+
+  async headers() {
+    return [
       {
-        protocol: 'https',
-        hostname: '**',
+        source: '/:path*',
+        headers: securityHeaders,
       },
-    ],
+    ]
   },
 
   // Enable compression for better performance
